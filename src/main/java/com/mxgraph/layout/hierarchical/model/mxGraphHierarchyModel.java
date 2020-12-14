@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Internal model of a hierarchical graph. This model stores nodes and edges
@@ -79,7 +79,7 @@ public class mxGraphHierarchyModel
 	public mxGraphHierarchyModel(mxHierarchicalLayout layout,
 			Object[] vertices, List<Object> roots, Object parent)
 	{
-		mxGraph graph = layout.getGraph();
+		JGraphX graph = layout.getGraph();
 		this.roots = roots;
 		this.parent = parent;
 
@@ -169,7 +169,7 @@ public class mxGraphHierarchyModel
 	protected void createInternalCells(mxHierarchicalLayout layout,
 			Object[] vertices, mxGraphHierarchyNode[] internalVertices)
 	{
-		mxGraph graph = layout.getGraph();
+		JGraphX graph = layout.getGraph();
 
 		// Create internal edges
 		for (int i = 0; i < vertices.length; i++)

@@ -2,10 +2,10 @@ package com.mxgraph.shape;
 
 import java.awt.Rectangle;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxDoubleRectangleShape extends mxRectangleShape
 {
@@ -13,11 +13,11 @@ public class mxDoubleRectangleShape extends mxRectangleShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		super.paintShape(canvas, state);
 
-		int inset = (int) Math.round((mxUtils.getFloat(state.getStyle(),
+		int inset = (int) Math.round((JGraphXUtils.getFloat(state.getStyle(),
 				mxConstants.STYLE_STROKEWIDTH, 1) + 3)
 				* canvas.getScale());
 

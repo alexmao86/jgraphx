@@ -8,7 +8,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 
 /**
  * Event handler that highlights cells. Inherits from mxCellMarker.
@@ -25,7 +25,7 @@ public class mxCellTracker extends mxCellMarker implements MouseListener,
 	/**
 	 * Constructs an event handler that highlights cells.
 	 */
-	public mxCellTracker(mxGraphComponent graphComponent, Color color)
+	public mxCellTracker(JGraphXComponent graphComponent, Color color)
 	{
 		super(graphComponent, color);
 

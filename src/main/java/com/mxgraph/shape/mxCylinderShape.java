@@ -4,8 +4,8 @@ import java.awt.Rectangle;
 import java.awt.geom.Area;
 import java.awt.geom.Ellipse2D;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxCylinderShape extends mxBasicShape
 {
@@ -13,7 +13,7 @@ public class mxCylinderShape extends mxBasicShape
 	/**
 	 * Draws a cylinder for the given parameters.
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		Rectangle rect = state.getRectangle();
 		int x = rect.x;

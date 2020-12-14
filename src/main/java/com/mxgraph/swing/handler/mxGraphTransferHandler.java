@@ -15,12 +15,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JComponent;
 import javax.swing.TransferHandler;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxGraphTransferable;
 import com.mxgraph.util.mxCellRenderer;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * 
@@ -186,10 +186,10 @@ public class mxGraphTransferHandler extends TransferHandler
 	 */
 	public Transferable createTransferable(JComponent c)
 	{
-		if (c instanceof mxGraphComponent)
+		if (c instanceof JGraphXComponent)
 		{
-			mxGraphComponent graphComponent = (mxGraphComponent) c;
-			mxGraph graph = graphComponent.getGraph();
+			JGraphXComponent graphComponent = (JGraphXComponent) c;
+			JGraphX graph = graphComponent.getGraph();
 
 			if (!graph.isSelectionEmpty())
 			{
@@ -214,9 +214,9 @@ public class mxGraphTransferHandler extends TransferHandler
 	 * 
 	 */
 	public mxGraphTransferable createGraphTransferable(
-			mxGraphComponent graphComponent, Object[] cells, ImageIcon icon)
+			JGraphXComponent graphComponent, Object[] cells, ImageIcon icon)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxPoint tr = graph.getView().getTranslate();
 		double scale = graph.getView().getScale();
 
@@ -235,7 +235,7 @@ public class mxGraphTransferHandler extends TransferHandler
 	 * 
 	 */
 	public mxGraphTransferable createGraphTransferable(
-			mxGraphComponent graphComponent, Object[] cells,
+			JGraphXComponent graphComponent, Object[] cells,
 			mxRectangle bounds, ImageIcon icon)
 	{
 		return new mxGraphTransferable(graphComponent.getGraph().cloneCells(
@@ -245,7 +245,7 @@ public class mxGraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	public ImageIcon createTransferableImage(mxGraphComponent graphComponent,
+	public ImageIcon createTransferableImage(JGraphXComponent graphComponent,
 			Object[] cells)
 	{
 		ImageIcon icon = null;
@@ -270,7 +270,7 @@ public class mxGraphTransferHandler extends TransferHandler
 	{
 		initialImportCount = 1;
 		
-		if (c instanceof mxGraphComponent
+		if (c instanceof JGraphXComponent
 				&& data instanceof mxGraphTransferable)
 		{
 			// Requires that the graph handler resets the location to null if the drag leaves the
@@ -279,7 +279,7 @@ public class mxGraphTransferHandler extends TransferHandler
 
 			if (action == TransferHandler.MOVE && !isLocalDrop)
 			{
-				removeCells((mxGraphComponent) c, originalCells);
+				removeCells((JGraphXComponent) c, originalCells);
 				initialImportCount = 0;
 			}
 		}
@@ -292,7 +292,7 @@ public class mxGraphTransferHandler extends TransferHandler
 	/**
 	 * 
 	 */
-	protected void removeCells(mxGraphComponent graphComponent, Object[] cells)
+	protected void removeCells(JGraphXComponent graphComponent, Object[] cells)
 	{
 		graphComponent.getGraph().removeCells(cells);
 	}
@@ -324,9 +324,9 @@ public class mxGraphTransferHandler extends TransferHandler
 			{
 				updateImportCount(t);
 
-				if (c instanceof mxGraphComponent)
+				if (c instanceof JGraphXComponent)
 				{
-					mxGraphComponent graphComponent = (mxGraphComponent) c;
+					JGraphXComponent graphComponent = (JGraphXComponent) c;
 
 					if (graphComponent.isEnabled()
 							&& t.isDataFlavorSupported(mxGraphTransferable.dataFlavor))
@@ -371,14 +371,14 @@ public class mxGraphTransferHandler extends TransferHandler
 	/**
 	 * Returns true if the cells have been imported using importCells.
 	 */
-	protected boolean importGraphTransferable(mxGraphComponent graphComponent,
+	protected boolean importGraphTransferable(JGraphXComponent graphComponent,
 			mxGraphTransferable gt)
 	{
 		boolean result = false;
 
 		try
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			double scale = graph.getView().getScale();
 			mxRectangle bounds = gt.getBounds();
 			double dx = 0, dy = 0;
@@ -430,7 +430,7 @@ public class mxGraphTransferHandler extends TransferHandler
 	/**
 	 * Returns the drop target for the given transferable and location.
 	 */
-	protected Object getDropTarget(mxGraphComponent graphComponent,
+	protected Object getDropTarget(JGraphXComponent graphComponent,
 			mxGraphTransferable gt)
 	{
 		Object[] cells = gt.getCells();
@@ -460,11 +460,11 @@ public class mxGraphTransferHandler extends TransferHandler
 	 * mxGraph.isSplitTarget. Selects and returns the cells that have been
 	 * imported.
 	 */
-	protected Object[] importCells(mxGraphComponent graphComponent,
+	protected Object[] importCells(JGraphXComponent graphComponent,
 			mxGraphTransferable gt, double dx, double dy)
 	{
 		Object target = getDropTarget(graphComponent, gt);
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		Object[] cells = gt.getCells();
 
 		cells = graphComponent.getImportableCells(cells);

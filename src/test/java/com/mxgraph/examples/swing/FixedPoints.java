@@ -2,8 +2,8 @@ package com.mxgraph.examples.swing;
 
 import javax.swing.JFrame;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.view.JGraphX;
 
 public class FixedPoints extends JFrame
 {
@@ -18,7 +18,7 @@ public class FixedPoints extends JFrame
 	{
 		super("Hello, World!");
 
-		mxGraph graph = new mxGraph();
+		JGraphX graph = new JGraphX();
 		Object parent = graph.getDefaultParent();
 
 		graph.getModel().beginUpdate();
@@ -48,7 +48,7 @@ public class FixedPoints extends JFrame
 			graph.getModel().endUpdate();
 		}
 
-		mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		JGraphXComponent graphComponent = new JGraphXComponent(graph);
 		getContentPane().add(graphComponent);
 	}
 

@@ -9,15 +9,15 @@ import java.awt.event.MouseEvent;
 import java.util.Collection;
 import java.util.LinkedList;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.swing.view.mxCellStatePreview;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Connection handler creates new connections between cells. This control is used to display the connector
@@ -28,7 +28,7 @@ public class mxMovePreview extends mxEventSource
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Maximum number of cells to preview individually. Default is 200.
@@ -64,12 +64,12 @@ public class mxMovePreview extends mxEventSource
 	/**
 	 * 
 	 */
-	protected transient mxCellState startState;
+	protected transient JGraphXCellState startState;
 
 	/**
 	 * 
 	 */
-	protected transient mxCellState[] previewStates;
+	protected transient JGraphXCellState[] previewStates;
 
 	/**
 	 * 
@@ -101,7 +101,7 @@ public class mxMovePreview extends mxEventSource
 	 * 
 	 * @param graphComponent Component that contains the rubberband.
 	 */
-	public mxMovePreview(mxGraphComponent graphComponent)
+	public mxMovePreview(JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 
@@ -215,9 +215,9 @@ public class mxMovePreview extends mxEventSource
 	/**
 	 * 
 	 */
-	public Object[] getCells(mxCellState initialState)
+	public Object[] getCells(JGraphXCellState initialState)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 
 		return graph.getMovableCells(graph.getSelectionCells());
 	}
@@ -225,14 +225,14 @@ public class mxMovePreview extends mxEventSource
 	/**
 	 * Returns the states that are affected by the move operation.
 	 */
-	protected mxCellState[] getPreviewStates()
+	protected JGraphXCellState[] getPreviewStates()
 	{
-		mxGraph graph = graphComponent.getGraph();
-		Collection<mxCellState> result = new LinkedList<mxCellState>();
+		JGraphX graph = graphComponent.getGraph();
+		Collection<JGraphXCellState> result = new LinkedList<JGraphXCellState>();
 
 		for (Object cell : movingCells)
 		{
-			mxCellState cellState = graph.getView().getState(cell);
+			JGraphXCellState cellState = graph.getView().getState(cell);
 
 			if (cellState != null)
 			{
@@ -252,7 +252,7 @@ public class mxMovePreview extends mxEventSource
 					{
 						if (!graph.isCellSelected(edge))
 						{
-							mxCellState edgeState = graph.getView().getState(
+							JGraphXCellState edgeState = graph.getView().getState(
 									edge);
 
 							if (edgeState != null)
@@ -271,7 +271,7 @@ public class mxMovePreview extends mxEventSource
 			}
 		}
 
-		return result.toArray(new mxCellState[result.size()]);
+		return result.toArray(new JGraphXCellState[result.size()]);
 	}
 
 	/**
@@ -285,7 +285,7 @@ public class mxMovePreview extends mxEventSource
 	/**
 	 * Sets the translation of the preview.
 	 */
-	public void start(MouseEvent e, mxCellState state)
+	public void start(MouseEvent e, JGraphXCellState state)
 	{
 		startState = state;
 		movingCells = getCells(state);
@@ -305,9 +305,9 @@ public class mxMovePreview extends mxEventSource
 	/**
 	 * 
 	 */
-	protected mxRectangle getPlaceholderBounds(mxCellState startState)
+	protected mxRectangle getPlaceholderBounds(JGraphXCellState startState)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 
 		return graph.getView().getBounds(graph.getSelectionCells());
 	}
@@ -336,7 +336,7 @@ public class mxMovePreview extends mxEventSource
 	 */
 	public void update(MouseEvent e, double dx, double dy, boolean clone)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 
 		if (placeholder != null)
 		{
@@ -352,7 +352,7 @@ public class mxMovePreview extends mxEventSource
 			preview.setOpacity(graphComponent.getPreviewAlpha());
 
 			// Combines the layout result with the move preview
-			for (mxCellState previewState : previewStates)
+			for (JGraphXCellState previewState : previewStates)
 			{
 				preview.moveState(previewState, dx, dy, false, false);
 
@@ -420,7 +420,7 @@ public class mxMovePreview extends mxEventSource
 	 */
 	protected void reset()
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 
 		if (placeholder != null)
 		{
@@ -462,7 +462,7 @@ public class mxMovePreview extends mxEventSource
 		Object[] cells = movingCells;
 		reset();
 
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		graph.getModel().beginUpdate();
 		try
 		{

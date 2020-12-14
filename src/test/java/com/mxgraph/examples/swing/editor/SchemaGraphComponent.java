@@ -5,14 +5,14 @@ import java.awt.Component;
 import javax.swing.JTable;
 import javax.swing.JViewport;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.JGraphXCellState;
 
-public class SchemaGraphComponent extends mxGraphComponent
+public class SchemaGraphComponent extends JGraphXComponent
 {
 
 	/**
@@ -24,18 +24,18 @@ public class SchemaGraphComponent extends mxGraphComponent
 	 * 
 	 * @param graph
 	 */
-	public SchemaGraphComponent(mxGraph graph)
+	public SchemaGraphComponent(JGraphX graph)
 	{
 		super(graph);
 
-		mxGraphView graphView = new mxGraphView(graph)
+		GraphView graphView = new GraphView(graph)
 		{
 
 			/**
 			 * 
 			 */
-			public void updateFloatingTerminalPoint(mxCellState edge,
-					mxCellState start, mxCellState end, boolean isSource)
+			public void updateFloatingTerminalPoint(JGraphXCellState edge,
+                                                    JGraphXCellState start, JGraphXCellState end, boolean isSource)
 			{
 				int col = getColumn(edge, isSource);
 
@@ -86,17 +86,17 @@ public class SchemaGraphComponent extends mxGraphComponent
 	 * @param isSource
 	 * @return the column number the edge is attached to
 	 */
-	public int getColumn(mxCellState state, boolean isSource)
+	public int getColumn(JGraphXCellState state, boolean isSource)
 	{
 		if (state != null)
 		{
 			if (isSource)
 			{
-				return mxUtils.getInt(state.getStyle(), "sourceRow", -1);
+				return JGraphXUtils.getInt(state.getStyle(), "sourceRow", -1);
 			}
 			else
 			{
-				return mxUtils.getInt(state.getStyle(), "targetRow", -1);
+				return JGraphXUtils.getInt(state.getStyle(), "targetRow", -1);
 			}
 		}
 
@@ -106,8 +106,8 @@ public class SchemaGraphComponent extends mxGraphComponent
 	/**
 	 * 
 	 */
-	public int getColumnLocation(mxCellState edge, mxCellState terminal,
-			int column)
+	public int getColumnLocation(JGraphXCellState edge, JGraphXCellState terminal,
+                                 int column)
 	{
 		Component[] c = components.get(terminal.getCell());
 		int y = 0;
@@ -136,7 +136,7 @@ public class SchemaGraphComponent extends mxGraphComponent
 	/**
 	 * 
 	 */
-	public Component[] createComponents(mxCellState state)
+	public Component[] createComponents(JGraphXCellState state)
 	{
 		if (getGraph().getModel().isVertex(state.getCell()))
 		{

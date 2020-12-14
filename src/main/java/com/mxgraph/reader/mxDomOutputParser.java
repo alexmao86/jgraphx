@@ -3,10 +3,9 @@ package com.mxgraph.reader;
 import java.util.Hashtable;
 import java.util.Map;
 
+import com.mxgraph.canvas.ICanvas2D;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
-
-import com.mxgraph.canvas.mxICanvas2D;
 
 /**
  *
@@ -55,7 +54,7 @@ public class mxDomOutputParser
 	/**
 	 * 
 	 */
-	protected mxICanvas2D canvas;
+	protected ICanvas2D canvas;
 
 	/**
 	 * 
@@ -65,7 +64,7 @@ public class mxDomOutputParser
 	/**
 	 * 
 	 */
-	public mxDomOutputParser(mxICanvas2D canvas)
+	public mxDomOutputParser(ICanvas2D canvas)
 	{
 		this.canvas = canvas;
 		initHandlers();

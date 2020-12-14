@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxMouseAdapter;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
@@ -16,7 +16,7 @@ import com.mxgraph.util.mxEventSource;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 public class mxInsertHandler extends mxMouseAdapter
 {
@@ -24,7 +24,7 @@ public class mxInsertHandler extends mxMouseAdapter
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Specifies if this handler is enabled. Default is true.
@@ -69,7 +69,7 @@ public class mxInsertHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	public mxInsertHandler(mxGraphComponent graphComponent, String style)
+	public mxInsertHandler(JGraphXComponent graphComponent, String style)
 	{
 		this.graphComponent = graphComponent;
 		this.style = style;
@@ -92,7 +92,7 @@ public class mxInsertHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	public mxGraphComponent getGraphComponent()
+	public JGraphXComponent getGraphComponent()
 	{
 		return graphComponent;
 	}
@@ -181,7 +181,7 @@ public class mxInsertHandler extends mxMouseAdapter
 		if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 				&& current != null)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			double scale = graph.getView().getScale();
 			mxPoint tr = graph.getView().getTranslate();
 			current.setX(current.getX() / scale - tr.getX());

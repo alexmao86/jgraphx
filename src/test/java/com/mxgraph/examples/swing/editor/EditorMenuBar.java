@@ -14,13 +14,10 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 
-import com.mxgraph.analysis.StructuralException;
-import com.mxgraph.analysis.mxGraphProperties.GraphType;
-import com.mxgraph.analysis.mxAnalysisGraph;
-import com.mxgraph.analysis.mxGraphProperties;
-import com.mxgraph.analysis.mxGraphStructure;
-import com.mxgraph.analysis.mxTraversal;
-import com.mxgraph.costfunction.mxCostFunction;
+import com.mxgraph.analysis.*;
+import com.mxgraph.analysis.GraphProperties.GraphType;
+import com.mxgraph.analysis.AnalysisGraph;
+import com.mxgraph.costfunction.CostFunction;
 import com.mxgraph.examples.swing.editor.EditorActions.AlignCellsAction;
 import com.mxgraph.examples.swing.editor.EditorActions.AutosizeAction;
 import com.mxgraph.examples.swing.editor.EditorActions.BackgroundAction;
@@ -58,13 +55,13 @@ import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
 import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
 import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxGraphActions;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.GraphView;
 
 public class EditorMenuBar extends JMenuBar
 {
@@ -81,9 +78,9 @@ public class EditorMenuBar extends JMenuBar
 
 	public EditorMenuBar(final BasicGraphEditor editor)
 	{
-		final mxGraphComponent graphComponent = editor.getGraphComponent();
-		final mxGraph graph = graphComponent.getGraph();
-		mxAnalysisGraph aGraph = new mxAnalysisGraph();
+		final JGraphXComponent graphComponent = editor.getGraphComponent();
+		final JGraphX graph = graphComponent.getGraph();
+		AnalysisGraph aGraph = new AnalysisGraph();
 
 		JMenu menu = null;
 		JMenu submenu = null;
@@ -167,7 +164,7 @@ public class EditorMenuBar extends JMenuBar
 			{
 				if (e.getSource() instanceof TogglePropertyItem)
 				{
-					final mxGraphComponent graphComponent = editor.getGraphComponent();
+					final JGraphXComponent graphComponent = editor.getGraphComponent();
 					TogglePropertyItem toggleItem = (TogglePropertyItem) e.getSource();
 
 					if (toggleItem.isSelected())
@@ -229,8 +226,8 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_PAGE)));
-		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(mxGraphComponent.ZOOM_POLICY_WIDTH)));
+		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(JGraphXComponent.ZOOM_POLICY_PAGE)));
+		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(JGraphXComponent.ZOOM_POLICY_WIDTH)));
 
 		menu.addSeparator();
 
@@ -269,10 +266,10 @@ public class EditorMenuBar extends JMenuBar
 
 		submenu.addSeparator();
 
-		submenu.add(editor.bind(mxResources.get("dashed"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DASHED)));
-		submenu.add(editor.bind(mxResources.get("dot"), new GridStyleAction(mxGraphComponent.GRID_STYLE_DOT)));
-		submenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(mxGraphComponent.GRID_STYLE_LINE)));
-		submenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(mxGraphComponent.GRID_STYLE_CROSS)));
+		submenu.add(editor.bind(mxResources.get("dashed"), new GridStyleAction(JGraphXComponent.GRID_STYLE_DASHED)));
+		submenu.add(editor.bind(mxResources.get("dot"), new GridStyleAction(JGraphXComponent.GRID_STYLE_DOT)));
+		submenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(JGraphXComponent.GRID_STYLE_LINE)));
+		submenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(JGraphXComponent.GRID_STYLE_CROSS)));
 
 		menu.addSeparator();
 
@@ -798,13 +795,13 @@ public class EditorMenuBar extends JMenuBar
 		 */
 		protected GraphType graphType;
 
-		protected mxAnalysisGraph aGraph;
+		protected AnalysisGraph aGraph;
 
 		/**
 		 * @param aGraph 
 		 * 
 		 */
-		public InsertGraph(GraphType tree, mxAnalysisGraph aGraph)
+		public InsertGraph(GraphType tree, AnalysisGraph aGraph)
 		{
 			this.graphType = tree;
 			this.aGraph = aGraph;
@@ -815,10 +812,10 @@ public class EditorMenuBar extends JMenuBar
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() instanceof mxGraphComponent)
+			if (e.getSource() instanceof JGraphXComponent)
 			{
-				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
-				mxGraph graph = graphComponent.getGraph();
+				JGraphXComponent graphComponent = (JGraphXComponent) e.getSource();
+				JGraphX graph = graphComponent.getGraph();
 
 				// dialog = new FactoryConfigDialog();
 				String dialogText = "";
@@ -889,7 +886,7 @@ public class EditorMenuBar extends JMenuBar
 		 */
 		private static final long serialVersionUID = 6926170745240507985L;
 
-		mxAnalysisGraph aGraph;
+		AnalysisGraph aGraph;
 
 		/**
 		 * 
@@ -899,7 +896,7 @@ public class EditorMenuBar extends JMenuBar
 		/**
 		 * Examples for calling analysis methods from mxGraphStructure 
 		 */
-		public AnalyzeGraph(AnalyzeType analyzeType, mxAnalysisGraph aGraph)
+		public AnalyzeGraph(AnalyzeType analyzeType, AnalysisGraph aGraph)
 		{
 			this.analyzeType = analyzeType;
 			this.aGraph = aGraph;
@@ -907,15 +904,15 @@ public class EditorMenuBar extends JMenuBar
 
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() instanceof mxGraphComponent)
+			if (e.getSource() instanceof JGraphXComponent)
 			{
-				mxGraphComponent graphComponent = (mxGraphComponent) e.getSource();
-				mxGraph graph = graphComponent.getGraph();
+				JGraphXComponent graphComponent = (JGraphXComponent) e.getSource();
+				JGraphX graph = graphComponent.getGraph();
 				aGraph.setGraph(graph);
 
 				if (analyzeType == AnalyzeType.IS_CONNECTED)
 				{
-					boolean isConnected = mxGraphStructure.isConnected(aGraph);
+					boolean isConnected = GraphStructure.isConnected(aGraph);
 
 					if (isConnected)
 					{
@@ -928,7 +925,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_SIMPLE)
 				{
-					boolean isSimple = mxGraphStructure.isSimple(aGraph);
+					boolean isSimple = GraphStructure.isSimple(aGraph);
 
 					if (isSimple)
 					{
@@ -941,7 +938,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_CYCLIC_DIRECTED)
 				{
-					boolean isCyclicDirected = mxGraphStructure.isCyclicDirected(aGraph);
+					boolean isCyclicDirected = GraphStructure.isCyclicDirected(aGraph);
 
 					if (isCyclicDirected)
 					{
@@ -954,7 +951,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_CYCLIC_UNDIRECTED)
 				{
-					boolean isCyclicUndirected = mxGraphStructure.isCyclicUndirected(aGraph);
+					boolean isCyclicUndirected = GraphStructure.isCyclicUndirected(aGraph);
 
 					if (isCyclicUndirected)
 					{
@@ -969,16 +966,16 @@ public class EditorMenuBar extends JMenuBar
 				{
 					graph.getModel().beginUpdate();
 
-					mxGraphStructure.complementaryGraph(aGraph);
+					GraphStructure.complementaryGraph(aGraph);
 
-					mxGraphStructure.setDefaultGraphStyle(aGraph, true);
+					GraphStructure.setDefaultGraphStyle(aGraph, true);
 					graph.getModel().endUpdate();
 				}
 				else if (analyzeType == AnalyzeType.REGULARITY)
 				{
 					try
 					{
-						int regularity = mxGraphStructure.regularity(aGraph);
+						int regularity = GraphStructure.regularity(aGraph);
 						System.out.println("Graph regularity is: " + regularity);
 					}
 					catch (StructuralException e1)
@@ -988,7 +985,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.COMPONENTS)
 				{
-					Object[][] components = mxGraphStructure.getGraphComponents(aGraph);
+					Object[][] components = GraphStructure.getGraphComponents(aGraph);
 					mxIGraphModel model = aGraph.getGraph().getModel();
 
 					for (int i = 0; i < components.length; i++)
@@ -1010,21 +1007,21 @@ public class EditorMenuBar extends JMenuBar
 				{
 					graph.getModel().beginUpdate();
 
-					if (!mxGraphStructure.isConnected(aGraph))
+					if (!GraphStructure.isConnected(aGraph))
 					{
-						mxGraphStructure.makeConnected(aGraph);
-						mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+						GraphStructure.makeConnected(aGraph);
+						GraphStructure.setDefaultGraphStyle(aGraph, false);
 					}
 
 					graph.getModel().endUpdate();
 				}
 				else if (analyzeType == AnalyzeType.MAKE_SIMPLE)
 				{
-					mxGraphStructure.makeSimple(aGraph);
+					GraphStructure.makeSimple(aGraph);
 				}
 				else if (analyzeType == AnalyzeType.IS_TREE)
 				{
-					boolean isTree = mxGraphStructure.isTree(aGraph);
+					boolean isTree = GraphStructure.isTree(aGraph);
 
 					if (isTree)
 					{
@@ -1041,7 +1038,7 @@ public class EditorMenuBar extends JMenuBar
 					{
 						graph.getModel().beginUpdate();
 						aGraph.getGenerator().oneSpanningTree(aGraph, true, true);
-						mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+						GraphStructure.setDefaultGraphStyle(aGraph, false);
 						graph.getModel().endUpdate();
 					}
 					catch (StructuralException e1)
@@ -1051,7 +1048,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_DIRECTED)
 				{
-					boolean isDirected = mxGraphProperties.isDirected(aGraph.getProperties(), mxGraphProperties.DEFAULT_DIRECTED);
+					boolean isDirected = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
 
 					if (isDirected)
 					{
@@ -1064,7 +1061,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.GET_CUT_VERTEXES)
 				{
-					Object[] cutVertices = mxGraphStructure.getCutVertices(aGraph);
+					Object[] cutVertices = GraphStructure.getCutVertices(aGraph);
 
 					System.out.print("Cut vertices of the graph are: [");
 					mxIGraphModel model = aGraph.getGraph().getModel();
@@ -1078,7 +1075,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.GET_CUT_EDGES)
 				{
-					Object[] cutEdges = mxGraphStructure.getCutEdges(aGraph);
+					Object[] cutEdges = GraphStructure.getCutEdges(aGraph);
 
 					System.out.print("Cut edges of the graph are: [");
 					mxIGraphModel model = aGraph.getGraph().getModel();
@@ -1095,7 +1092,7 @@ public class EditorMenuBar extends JMenuBar
 				{
 					try
 					{
-						Object[] sourceVertices = mxGraphStructure.getSourceVertices(aGraph);
+						Object[] sourceVertices = GraphStructure.getSourceVertices(aGraph);
 						System.out.print("Source vertices of the graph are: [");
 						mxIGraphModel model = aGraph.getGraph().getModel();
 
@@ -1115,7 +1112,7 @@ public class EditorMenuBar extends JMenuBar
 				{
 					try
 					{
-						Object[] sinkVertices = mxGraphStructure.getSinkVertices(aGraph);
+						Object[] sinkVertices = GraphStructure.getSinkVertices(aGraph);
 						System.out.print("Sink vertices of the graph are: [");
 						mxIGraphModel model = aGraph.getGraph().getModel();
 
@@ -1137,7 +1134,7 @@ public class EditorMenuBar extends JMenuBar
 				}
 				else if (analyzeType == AnalyzeType.IS_BICONNECTED)
 				{
-					boolean isBiconnected = mxGraphStructure.isBiconnected(aGraph);
+					boolean isBiconnected = GraphStructure.isBiconnected(aGraph);
 
 					if (isBiconnected)
 					{
@@ -1163,7 +1160,7 @@ public class EditorMenuBar extends JMenuBar
 					try
 					{
 						//only this line is needed to get the result from Floyd-Roy-Warshall, the rest is code for displaying the result
-						FWIresult = mxTraversal.floydRoyWarshall(aGraph);
+						FWIresult = Traversal.floydRoyWarshall(aGraph);
 
 						Object[][] dist = FWIresult.get(0);
 						Object[][] paths = FWIresult.get(1);
@@ -1185,8 +1182,8 @@ public class EditorMenuBar extends JMenuBar
 
 						System.out.println("Path info:");
 
-						mxCostFunction costFunction = aGraph.getGenerator().getCostFunction();
-						mxGraphView view = aGraph.getGraph().getView();
+						CostFunction costFunction = aGraph.getGenerator().getCostFunction();
+						GraphView view = aGraph.getGraph().getView();
 
 						for (int i = 0; i < vertexNum; i++)
 						{
@@ -1209,7 +1206,7 @@ public class EditorMenuBar extends JMenuBar
 
 						try
 						{
-							Object[] path = mxTraversal.getWFIPath(aGraph, FWIresult, vertices[0], vertices[vertexNum - 1]);
+							Object[] path = Traversal.getWFIPath(aGraph, FWIresult, vertices[0], vertices[vertexNum - 1]);
 							System.out.print("The path from " + costFunction.getCost(view.getState(vertices[0])) + " to "
 									+ costFunction.getCost((view.getState(vertices[vertexNum - 1]))) + " is:");
 

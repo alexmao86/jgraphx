@@ -7,18 +7,18 @@ import java.util.Arrays;
 
 import javax.swing.JFrame;
 
+import com.mxgraph.swing.handler.JGraphXRubberband;
+import com.mxgraph.view.Multiplicity;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.handler.mxKeyboardHandler;
-import com.mxgraph.swing.handler.mxRubberband;
 import com.mxgraph.util.mxDomUtils;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxMultiplicity;
+import com.mxgraph.view.JGraphX;
 
 public class Validation extends JFrame
 {
@@ -37,7 +37,7 @@ public class Validation extends JFrame
 		Element targetNode = xmlDocument.createElement("Target");
 		Element subtargetNode = xmlDocument.createElement("Subtarget");
 
-		mxGraph graph = new mxGraph();
+		JGraphX graph = new JGraphX();
 		Object parent = graph.getDefaultParent();
 
 		graph.getModel().beginUpdate();
@@ -65,34 +65,34 @@ public class Validation extends JFrame
 			graph.getModel().endUpdate();
 		}
 
-		mxMultiplicity[] multiplicities = new mxMultiplicity[3];
+		Multiplicity[] multiplicities = new Multiplicity[3];
 
 		// Source nodes needs 1..2 connected Targets
-		multiplicities[0] = new mxMultiplicity(true, "Source", null, null, 1,
+		multiplicities[0] = new Multiplicity(true, "Source", null, null, 1,
 				"2", Arrays.asList(new String[] { "Target" }),
 				"Source Must Have 1 or 2 Targets",
 				"Source Must Connect to Target", true);
 
 		// Source node does not want any incoming connections
-		multiplicities[1] = new mxMultiplicity(false, "Source", null, null, 0,
+		multiplicities[1] = new Multiplicity(false, "Source", null, null, 0,
 				"0", null, "Source Must Have No Incoming Edge", null, true); // Type does not matter
 
 		// Target needs exactly one incoming connection from Source
-		multiplicities[2] = new mxMultiplicity(false, "Target", null, null, 1,
+		multiplicities[2] = new Multiplicity(false, "Target", null, null, 1,
 				"1", Arrays.asList(new String[] { "Source" }),
 				"Target Must Have 1 Source", "Target Must Connect From Source",
 				true);
 
 		graph.setMultiplicities(multiplicities);
 
-		final mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		final JGraphXComponent graphComponent = new JGraphXComponent(graph);
 		graph.setMultigraph(false);
 		graph.setAllowDanglingEdges(false);
 		graphComponent.setConnectable(true);
 		graphComponent.setToolTips(true);
 
 		// Enables rubberband selection
-		new mxRubberband(graphComponent);
+		new JGraphXRubberband(graphComponent);
 		new mxKeyboardHandler(graphComponent);
 
 		// Installs automatic validation (use editor.validation = true

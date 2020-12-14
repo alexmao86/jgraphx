@@ -42,7 +42,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxGraphTransferable;
 import com.mxgraph.swing.util.mxMouseAdapter;
 import com.mxgraph.swing.util.mxSwingConstants;
@@ -52,9 +52,9 @@ import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 public class mxGraphHandler extends mxMouseAdapter implements
 		DropTargetListener
@@ -84,7 +84,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Specifies if the handler is enabled. Default is true.
@@ -230,7 +230,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	 * 
 	 * @param graphComponent
 	 */
-	public mxGraphHandler(final mxGraphComponent graphComponent)
+	public mxGraphHandler(final JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 		marker = createMarker();
@@ -457,7 +457,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 				boolean isLocal = th instanceof mxGraphTransferHandler
 						&& ((mxGraphTransferHandler) th).isLocalDrag();
 
-				mxGraph graph = graphComponent.getGraph();
+				JGraphX graph = graphComponent.getGraph();
 				Object cell = super.getCell(e);
 				Object[] cells = (isLocal) ? graph.getSelectionCells()
 						: dragCells;
@@ -468,7 +468,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 
 				while (parent != null)
 				{
-					if (mxUtils.contains(cells, parent))
+					if (JGraphXUtils.contains(cells, parent))
 					{
 						return null;
 					}
@@ -499,7 +499,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	/**
 	 * 
 	 */
-	public mxGraphComponent getGraphComponent()
+	public JGraphXComponent getGraphComponent()
 	{
 		return graphComponent;
 	}
@@ -775,7 +775,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 
 					if (gt.getBounds() != null)
 					{
-						mxGraph graph = graphComponent.getGraph();
+						JGraphX graph = graphComponent.getGraph();
 						double scale = graph.getView().getScale();
 						transferBounds = gt.getBounds();
 						int w = (int) Math.ceil((transferBounds.getWidth() + 1)
@@ -875,7 +875,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	 */
 	public Object[] getCells(Object initialCell)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 
 		return graph.getMovableCells(graph.getSelectionCells());
 	}
@@ -892,7 +892,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 		}
 		else
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 
 			// Constructs an array with cells that are indeed movable
 			cells = getCells(initialCell);
@@ -935,7 +935,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 
 			if (handler != null)
 			{
-				mxGraph graph = graphComponent.getGraph();
+				JGraphX graph = graphComponent.getGraph();
 				double scale = graph.getView().getScale();
 				Point pt = SwingUtilities.convertPoint(graphComponent,
 						e.getLocation(), graphComponent.getGraphControl());
@@ -1049,7 +1049,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 
 					if (graphComponent.isGridEnabledEvent(e))
 					{
-						mxGraph graph = graphComponent.getGraph();
+						JGraphX graph = graphComponent.getGraph();
 
 						dx = graph.snap(dx);
 						dy = graph.snap(dy);
@@ -1098,7 +1098,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 
 		if (first != null && cellBounds != null)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			double scale = graph.getView().getScale();
 			mxPoint trans = graph.getView().getTranslate();
 
@@ -1178,7 +1178,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	{
 		if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed())
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			double dx = 0;
 			double dy = 0;
 
@@ -1281,7 +1281,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 					}
 				}
 
-				mxCellState markedState = marker.getMarkedState();
+				JGraphXCellState markedState = marker.getMarkedState();
 				Object target = (markedState != null) ? markedState.getCell()
 						: null;
 
@@ -1322,7 +1322,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 					}
 				}
 
-				mxCellState targetState = marker.getValidState();
+				JGraphXCellState targetState = marker.getValidState();
 				Object target = (targetState != null) ? targetState.getCell()
 						: null;
 
@@ -1382,7 +1382,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	{
 		if (graphComponent.getGraph().getModel().isVertex(parent))
 		{
-			mxCellState pState = graphComponent.getGraph().getView()
+			JGraphXCellState pState = graphComponent.getGraph().getView()
 					.getState(parent);
 
 			return pState != null && !pState.contains(e.getX(), e.getY());
@@ -1400,7 +1400,7 @@ public class mxGraphHandler extends mxMouseAdapter implements
 	protected void moveCells(Object[] cells, double dx, double dy,
 			Object target, MouseEvent e)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		boolean clone = e.isControlDown() && isCloneEnabled();
 
 		if (clone)

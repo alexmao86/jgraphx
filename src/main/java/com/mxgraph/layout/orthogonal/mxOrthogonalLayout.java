@@ -5,7 +5,7 @@ package com.mxgraph.layout.orthogonal;
 
 import com.mxgraph.layout.mxGraphLayout;
 import com.mxgraph.layout.orthogonal.model.mxOrthogonalModel;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  *
@@ -30,7 +30,7 @@ public class mxOrthogonalLayout extends mxGraphLayout
   /**
    * 
    */
-  public mxOrthogonalLayout(mxGraph graph)
+  public mxOrthogonalLayout(JGraphX graph)
   {
      super(graph);
      orthModel = new mxOrthogonalModel(graph);

@@ -3,17 +3,18 @@
  */
 package com.mxgraph.shape;
 
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.util.XmlUtils;
+import com.mxgraph.view.JGraphXCellState;
 import org.w3c.dom.Node;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.util.mxXmlUtils;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.svg.AWTPathProducer;
 import com.mxgraph.util.svg.AWTPolygonProducer;
 import com.mxgraph.util.svg.AWTPolylineProducer;
 import com.mxgraph.util.svg.CSSConstants;
 import com.mxgraph.util.svg.ExtendedGeneralPath;
-import com.mxgraph.view.mxCellState;
+
 import java.awt.Color;
 import java.awt.Shape;
 import java.awt.geom.AffineTransform;
@@ -76,7 +77,7 @@ public class mxStencilShape extends mxBasicShape
 	 */
 	public mxStencilShape(String shapeXml)
 	{
-		this(mxXmlUtils.parseXml(shapeXml));
+		this(XmlUtils.parseXml(shapeXml));
 	}
 
 	public mxStencilShape(Document document)
@@ -125,7 +126,7 @@ public class mxStencilShape extends mxBasicShape
 	 * 
 	 */
 	@Override
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		double x = state.getX();
 		double y = state.getY();
@@ -150,8 +151,8 @@ public class mxStencilShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	public void paintNode(mxGraphics2DCanvas canvas, mxCellState state,
-			svgShape shape, double widthRatio, double heightRatio)
+	public void paintNode(Graphics2DCanvas canvas, JGraphXCellState state,
+                          svgShape shape, double widthRatio, double heightRatio)
 	{
 		Shape associatedShape = shape.shape;
 
@@ -164,9 +165,9 @@ public class mxStencilShape extends mxBasicShape
 
 		if (style != null)
 		{
-			String fillStyle = mxUtils.getString(style,
+			String fillStyle = JGraphXUtils.getString(style,
 					CSSConstants.CSS_FILL_PROPERTY);
-			String strokeStyle = mxUtils.getString(style,
+			String strokeStyle = JGraphXUtils.getString(style,
 					CSSConstants.CSS_STROKE_PROPERTY);
 
 			if (strokeStyle != null
@@ -179,7 +180,7 @@ public class mxStencilShape extends mxBasicShape
 				else if (strokeStyle.trim().startsWith("#"))
 				{
 					int hashIndex = strokeStyle.indexOf("#");
-					strokeColor = mxUtils.parseColor(strokeStyle
+					strokeColor = JGraphXUtils.parseColor(strokeStyle
 							.substring(hashIndex + 1));
 				}
 			}
@@ -193,7 +194,7 @@ public class mxStencilShape extends mxBasicShape
 				else if (fillStyle.trim().startsWith("#"))
 				{
 					int hashIndex = fillStyle.indexOf("#");
-					fillColor = mxUtils.parseColor(fillStyle
+					fillColor = JGraphXUtils.parseColor(fillStyle
 							.substring(hashIndex + 1));
 					fill = true;
 				}

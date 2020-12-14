@@ -13,15 +13,15 @@ import java.util.Map;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParserFactory;
 
+import com.mxgraph.canvas.IJGraphXCanvas;
+import com.mxgraph.canvas.JGraphXImageCanvas;
+import com.mxgraph.util.JGraphXUtils;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.canvas.mxICanvas;
-import com.mxgraph.canvas.mxImageCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
 
 /**
  * A converter that renders display XML data onto a graphics canvas. This
@@ -188,7 +188,7 @@ public class mxGraphViewImageReader extends mxGraphViewReader
 	 * @see
 	 * com.mxgraph.reader.mxGraphViewReader#createCanvas(java.util.Hashtable)
 	 */
-	public mxICanvas createCanvas(Map<String, Object> attrs)
+	public IJGraphXCanvas createCanvas(Map<String, Object> attrs)
 	{
 		int width = 0;
 		int height = 0;
@@ -206,11 +206,11 @@ public class mxGraphViewImageReader extends mxGraphViewReader
 		}
 		else
 		{
-			int x = (int) Math.round(mxUtils.getDouble(attrs, "x"));
-			int y = (int) Math.round(mxUtils.getDouble(attrs, "y"));
-			width = (int) (Math.round(mxUtils.getDouble(attrs, "width")))
+			int x = (int) Math.round(JGraphXUtils.getDouble(attrs, "x"));
+			int y = (int) Math.round(JGraphXUtils.getDouble(attrs, "y"));
+			width = (int) (Math.round(JGraphXUtils.getDouble(attrs, "width")))
 					+ border + 3;
-			height = (int) (Math.round(mxUtils.getDouble(attrs, "height")))
+			height = (int) (Math.round(JGraphXUtils.getDouble(attrs, "height")))
 					+ border + 3;
 
 			if (isCropping())
@@ -225,7 +225,7 @@ public class mxGraphViewImageReader extends mxGraphViewReader
 			}
 		}
 
-		mxImageCanvas canvas = new mxImageCanvas(createGraphicsCanvas(), width,
+		JGraphXImageCanvas canvas = new JGraphXImageCanvas(createGraphicsCanvas(), width,
 				height, getBackground(), isAntiAlias());
 		canvas.setTranslate(dx, dy);
 
@@ -235,9 +235,9 @@ public class mxGraphViewImageReader extends mxGraphViewReader
 	/**
 	 * Hook that creates the graphics canvas.
 	 */
-	protected mxGraphics2DCanvas createGraphicsCanvas()
+	protected Graphics2DCanvas createGraphicsCanvas()
 	{
-		return new mxGraphics2DCanvas();
+		return new Graphics2DCanvas();
 	}
 
 	/**
@@ -279,9 +279,9 @@ public class mxGraphViewImageReader extends mxGraphViewReader
 		reader.setContentHandler(viewReader);
 		reader.parse(inputSource);
 
-		if (viewReader.getCanvas() instanceof mxImageCanvas)
+		if (viewReader.getCanvas() instanceof JGraphXImageCanvas)
 		{
-			result = ((mxImageCanvas) viewReader.getCanvas()).destroy();
+			result = ((JGraphXImageCanvas) viewReader.getCanvas()).destroy();
 		}
 
 		return result;

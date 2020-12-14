@@ -1,7 +1,7 @@
 package com.mxgraph.swing.util;
 
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public interface mxICellOverlay
 {
@@ -9,6 +9,6 @@ public interface mxICellOverlay
 	/**
 	 * 
 	 */
-	mxRectangle getBounds(mxCellState state);
+	mxRectangle getBounds(JGraphXCellState state);
 
 }

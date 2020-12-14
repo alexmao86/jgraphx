@@ -14,8 +14,8 @@ import com.mxgraph.examples.swing.editor.SchemaGraphComponent;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.JGraphXCellState;
 
 public class SchemaEditor extends BasicGraphEditor
 {
@@ -30,7 +30,7 @@ public class SchemaEditor extends BasicGraphEditor
 	 */
 	public SchemaEditor()
 	{
-		super("mxGraph for JFC/Swing", new SchemaGraphComponent(new mxGraph()
+		super("mxGraph for JFC/Swing", new SchemaGraphComponent(new JGraphX()
 		{
 			/**
 			 * Allows expanding tables
@@ -50,7 +50,7 @@ public class SchemaEditor extends BasicGraphEditor
 			/**
 			 * Disables folding icons.
 			 */
-			public ImageIcon getFoldingIcon(mxCellState state)
+			public ImageIcon getFoldingIcon(JGraphXCellState state)
 			{
 				return null;
 			}
@@ -83,7 +83,7 @@ public class SchemaEditor extends BasicGraphEditor
 		// Prefers default JComponent event-handling before mxCellHandler handling
 		//getGraphComponent().getGraphHandler().setKeepOnTop(false);
 
-		mxGraph graph = getGraphComponent().getGraph();
+		JGraphX graph = getGraphComponent().getGraph();
 		Object parent = graph.getDefaultParent();
 		graph.getModel().beginUpdate();
 		try

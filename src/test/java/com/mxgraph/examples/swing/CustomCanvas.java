@@ -6,13 +6,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
 
-import com.mxgraph.canvas.mxICanvas;
-import com.mxgraph.canvas.mxImageCanvas;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.handler.mxRubberband;
-import com.mxgraph.swing.view.mxInteractiveCanvas;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.canvas.IJGraphXCanvas;
+import com.mxgraph.canvas.JGraphXImageCanvas;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.swing.handler.JGraphXRubberband;
+import com.mxgraph.swing.view.JGraphXInteractiveCanvas;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.JGraphXCellState;
 
 public class CustomCanvas extends JFrame
 {
@@ -30,21 +30,21 @@ public class CustomCanvas extends JFrame
 		// Note: Use the heavyweight feature to allow for event handling in
 		// the Swing component that is used for rendering the vertex.
 
-		mxGraph graph = new mxGraph()
+		JGraphX graph = new JGraphX()
 		{
-			public void drawState(mxICanvas canvas, mxCellState state,
-					boolean drawLabel)
+			public void drawState(IJGraphXCanvas canvas, JGraphXCellState state,
+								  boolean drawLabel)
 			{
 				String label = (drawLabel) ? state.getLabel() : "";
 
 				// Indirection for wrapped swing canvas inside image canvas (used for creating
 				// the preview image when cells are dragged)
 				if (getModel().isVertex(state.getCell())
-						&& canvas instanceof mxImageCanvas
-						&& ((mxImageCanvas) canvas)
+						&& canvas instanceof JGraphXImageCanvas
+						&& ((JGraphXImageCanvas) canvas)
 								.getGraphicsCanvas() instanceof SwingCanvas)
 				{
-					((SwingCanvas) ((mxImageCanvas) canvas).getGraphicsCanvas())
+					((SwingCanvas) ((JGraphXImageCanvas) canvas).getGraphicsCanvas())
 							.drawVertex(state, label);
 				}
 				// Redirection of drawing vertices in SwingCanvas
@@ -77,14 +77,14 @@ public class CustomCanvas extends JFrame
 			graph.getModel().endUpdate();
 		}
 
-		mxGraphComponent graphComponent = new mxGraphComponent(graph)
+		JGraphXComponent graphComponent = new JGraphXComponent(graph)
 		{
 			/**
 			 * 
 			 */
 			private static final long serialVersionUID = 4683716829748931448L;
 
-			public mxInteractiveCanvas createCanvas()
+			public JGraphXInteractiveCanvas createCanvas()
 			{
 				return new SwingCanvas(this);
 			}
@@ -93,18 +93,18 @@ public class CustomCanvas extends JFrame
 		getContentPane().add(graphComponent);
 
 		// Adds rubberband selection
-		new mxRubberband(graphComponent);
+		new JGraphXRubberband(graphComponent);
 	}
 
-	public class SwingCanvas extends mxInteractiveCanvas
+	public class SwingCanvas extends JGraphXInteractiveCanvas
 	{
 		protected CellRendererPane rendererPane = new CellRendererPane();
 
 		protected JLabel vertexRenderer = new JLabel();
 
-		protected mxGraphComponent graphComponent;
+		protected JGraphXComponent graphComponent;
 
-		public SwingCanvas(mxGraphComponent graphComponent)
+		public SwingCanvas(JGraphXComponent graphComponent)
 		{
 			this.graphComponent = graphComponent;
 
@@ -116,7 +116,7 @@ public class CustomCanvas extends JFrame
 			vertexRenderer.setOpaque(true);
 		}
 
-		public void drawVertex(mxCellState state, String label)
+		public void drawVertex(JGraphXCellState state, String label)
 		{
 			vertexRenderer.setText(label);
 			// TODO: Configure other properties...

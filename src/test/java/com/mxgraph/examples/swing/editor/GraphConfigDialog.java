@@ -11,9 +11,9 @@ import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -24,22 +24,18 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import com.mxgraph.analysis.StructuralException;
-import com.mxgraph.analysis.mxAnalysisGraph;
-import com.mxgraph.analysis.mxGraphGenerator;
-import com.mxgraph.analysis.mxTraversal;
-import com.mxgraph.analysis.mxGraphProperties;
-import com.mxgraph.analysis.mxGraphProperties.GraphType;
-import com.mxgraph.analysis.mxGraphStructure;
+import com.mxgraph.analysis.*;
+import com.mxgraph.analysis.AnalysisGraph;
+import com.mxgraph.analysis.GraphProperties.GraphType;
+import com.mxgraph.costfunction.CostFunction;
+import com.mxgraph.costfunction.DoubleValCostFunction;
 import com.mxgraph.layout.mxCircleLayout;
 import com.mxgraph.layout.mxCompactTreeLayout;
 import com.mxgraph.layout.mxOrganicLayout;
 import com.mxgraph.model.mxCell;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraph.mxICellVisitor;
-import com.mxgraph.view.mxGraphView;
-import com.mxgraph.costfunction.mxCostFunction;
-import com.mxgraph.costfunction.mxDoubleValCostFunction;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.JGraphX.mxICellVisitor;
 
 public class GraphConfigDialog extends JDialog
 {
@@ -172,9 +168,9 @@ public class GraphConfigDialog extends JDialog
 
 	protected boolean insertGraph = false;
 
-	protected mxGraph graph;
+	protected JGraphX graph;
 
-	protected mxAnalysisGraph aGraph;
+	protected AnalysisGraph aGraph;
 
 	protected GraphType graphType;
 
@@ -256,14 +252,14 @@ public class GraphConfigDialog extends JDialog
 
 					if (graphType2 == GraphType.NULL)
 					{
-						mxGraphGenerator generator = new mxGraphGenerator(null, new mxDoubleValCostFunction());
+						GraphGenerator generator = new GraphGenerator(null, new DoubleValCostFunction());
 						Map<String, Object> props = new HashMap<String, Object>();
-						mxGraphProperties.setDirected(props, false);
+						GraphProperties.setDirected(props, false);
 						configAnalysisGraph(graph, generator, props);
 
 						generator.getNullGraph(aGraph, nodeCount);
 
-						mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+						GraphStructure.setDefaultGraphStyle(aGraph, false);
 						mxCircleLayout layout = new mxCircleLayout(graph);
 						layout.execute(graph.getDefaultParent());
 					}
@@ -271,16 +267,16 @@ public class GraphConfigDialog extends JDialog
 					{
 						graph.getModel().beginUpdate();
 
-						mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, false, 0, 10),
-								new mxDoubleValCostFunction());
+						GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, false, 0, 10),
+								new DoubleValCostFunction());
 						Map<String, Object> props = new HashMap<String, Object>();
-						mxGraphProperties.setDirected(props, false);
+						GraphProperties.setDirected(props, false);
 						configAnalysisGraph(graph, generator, props);
 
 						generator.getSimpleRandomTree(aGraph, nodeCount);
 
-						mxGraphProperties.setDirected(props, true);
-						mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+						GraphProperties.setDirected(props, true);
+						GraphStructure.setDefaultGraphStyle(aGraph, false);
 						setVisible(false);
 						mxCompactTreeLayout layout = new mxCompactTreeLayout(graph, false);
 						layout.execute(graph.getDefaultParent());
@@ -344,15 +340,15 @@ public class GraphConfigDialog extends JDialog
 
 					graph.selectAll();
 					graph.removeCells();
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
+					GraphProperties.setDirected(props, arrows);
 					configAnalysisGraph(graph, generator, props);
 
 					generator.getCompleteGraph(aGraph, vertexNumParam);
 
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 					mxCircleLayout layout = new mxCircleLayout(graph);
 					layout.execute(graph.getDefaultParent());
@@ -414,9 +410,9 @@ public class GraphConfigDialog extends JDialog
 					int numBranchesParam = Integer.parseInt(numBranchesField.getText());
 					int numVertexesInBranchParam = Integer.parseInt(numVertexesInBranchField.getText());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphProperties.setDirected(props, arrows);
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					configAnalysisGraph(graph, generator, props);
 
 					if (graphType2 == GraphType.FRIENDSHIP_WINDMILL)
@@ -429,7 +425,7 @@ public class GraphConfigDialog extends JDialog
 					}
 
 					generator.setWindmillGraphLayout(aGraph, numBranchesParam, numVertexesInBranchParam, 1000);
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 				}
 			});
@@ -483,9 +479,9 @@ public class GraphConfigDialog extends JDialog
 					int minWeightParam = Integer.parseInt(minWeightField.getText());
 					int maxWeightParam = Integer.parseInt(maxWeightField.getText());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphProperties.setDirected(props, arrows);
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					configAnalysisGraph(graph, generator, props);
 					graph.getModel().beginUpdate();
 					graph.selectAll();
@@ -507,7 +503,7 @@ public class GraphConfigDialog extends JDialog
 						generator.setPathGraphSpacing(aGraph, 80);
 					}
 
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 					graph.getModel().endUpdate();
 				}
@@ -560,16 +556,16 @@ public class GraphConfigDialog extends JDialog
 					int minWeightParam = Integer.parseInt(minWeightField.getText());
 					int maxWeightParam = Integer.parseInt(maxWeightField.getText());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphProperties.setDirected(props, arrows);
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					configAnalysisGraph(graph, generator, props);
 					graph.getModel().beginUpdate();
 					graph.selectAll();
 					graph.removeCells();
 
 					generator.getPetersenGraph(aGraph);
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 					mxCircleLayout layout = new mxCircleLayout(graph);
 					layout.execute(graph.getDefaultParent());
@@ -636,16 +632,16 @@ public class GraphConfigDialog extends JDialog
 					graph.selectAll();
 					graph.removeCells();
 
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
+					GraphProperties.setDirected(props, arrows);
 					configAnalysisGraph(graph, generator, props);
 
 					generator.getGridGraph(aGraph, xDim, yDim);
 					generator.setGridGraphSpacing(aGraph, spacing, spacing, xDim, yDim);
 
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 					graph.getModel().endUpdate();
 				}
@@ -699,9 +695,9 @@ public class GraphConfigDialog extends JDialog
 					int xDim = Integer.parseInt(numColumnsField.getText());
 					float spacing = Float.parseFloat(gridSpacingField.getText());
 
-					mxGraphGenerator generator = new mxGraphGenerator(null, new mxDoubleValCostFunction());
+					GraphGenerator generator = new GraphGenerator(null, new DoubleValCostFunction());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
+					GraphProperties.setDirected(props, arrows);
 					configAnalysisGraph(graph, generator, props);
 					graph.getModel().beginUpdate();
 					graph.selectAll();
@@ -717,7 +713,7 @@ public class GraphConfigDialog extends JDialog
 					}
 
 					generator.setGridGraphSpacing(aGraph, spacing, spacing, xDim, yDim);
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 					graph.getModel().endUpdate();
 				}
@@ -772,9 +768,9 @@ public class GraphConfigDialog extends JDialog
 					int xDim = Integer.parseInt(numColumnsField.getText());
 					int value = Integer.parseInt(startVertexValueField.getText());
 					float spacing = Float.parseFloat(gridSpacingField.getText());
-					mxGraphGenerator generator = new mxGraphGenerator(null, new mxDoubleValCostFunction());
+					GraphGenerator generator = new GraphGenerator(null, new DoubleValCostFunction());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, true);
+					GraphProperties.setDirected(props, true);
 					configAnalysisGraph(graph, generator, props);
 					graph.getModel().beginUpdate();
 					graph.selectAll();
@@ -790,7 +786,7 @@ public class GraphConfigDialog extends JDialog
 					}
 
 					generator.setGridGraphSpacing(aGraph, spacing, spacing, xDim, yDim);
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 					graph.getModel().endUpdate();
 				}
@@ -850,10 +846,10 @@ public class GraphConfigDialog extends JDialog
 					float spacing = Float.parseFloat(groupSpacingField.getText());
 					int minWeightParam = Integer.parseInt(minWeightField.getText());
 					int maxWeightParam = Integer.parseInt(maxWeightField.getText());
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
+					GraphProperties.setDirected(props, arrows);
 					configAnalysisGraph(graph, generator, props);
 					graph.getModel().beginUpdate();
 					graph.selectAll();
@@ -869,7 +865,7 @@ public class GraphConfigDialog extends JDialog
 					}
 
 					generator.setBipartiteGraphSpacing(aGraph, leftNodeCount, rightNodeCount, spacing, spacing * 2);
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
 					graph.getModel().endUpdate();
 				}
@@ -930,9 +926,9 @@ public class GraphConfigDialog extends JDialog
 					int minWeightParam = Integer.parseInt(minWeightField.getText());
 					int maxWeightParam = Integer.parseInt(maxWeightField.getText());
 					Map<String, Object> props = new HashMap<String, Object>();
-					mxGraphProperties.setDirected(props, arrows);
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphProperties.setDirected(props, arrows);
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					configAnalysisGraph(graph, generator, props);
 					graph.getModel().beginUpdate();
 					graph.selectAll();
@@ -940,7 +936,7 @@ public class GraphConfigDialog extends JDialog
 
 					generator.getSimpleRandomGraph(aGraph, nodeCount, edgeCount, allowSelfLoops, allowMultipleEdges, forceConnected);
 
-					mxGraphStructure.setDefaultGraphStyle(aGraph, false);
+					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					mxOrganicLayout layout = new mxOrganicLayout(graph);
 					layout.execute(graph.getDefaultParent());
 					graph.getModel().endUpdate();
@@ -992,13 +988,13 @@ public class GraphConfigDialog extends JDialog
 					int minWeightParam = Integer.parseInt(minWeightField.getText());
 					int maxWeightParam = Integer.parseInt(maxWeightField.getText());
 					Map<String, Object> props = aGraph.getProperties();
-					mxGraphProperties.setDirected(props, arrows);
-					mxGraphGenerator generator = new mxGraphGenerator(mxGraphGenerator.getGeneratorFunction(graph, weighted,
-							minWeightParam, maxWeightParam), new mxDoubleValCostFunction());
+					GraphProperties.setDirected(props, arrows);
+					GraphGenerator generator = new GraphGenerator(GraphGenerator.getGeneratorFunction(graph, weighted,
+							minWeightParam, maxWeightParam), new DoubleValCostFunction());
 					configAnalysisGraph(graph, generator, props);
 					graph.getModel().beginUpdate();
 
-					mxGraphStructure.setDefaultGraphStyle(aGraph, true);
+					GraphStructure.setDefaultGraphStyle(aGraph, true);
 
 					graph.getModel().endUpdate();
 					setVisible(false);
@@ -1046,7 +1042,7 @@ public class GraphConfigDialog extends JDialog
 				{
 					applyValues();
 					int value = Integer.parseInt(startVertexValueField.getText());
-					Object startVertex = mxGraphStructure.getVertexWithValue(aGraph, value);
+					Object startVertex = GraphStructure.getVertexWithValue(aGraph, value);
 
 					if(startVertex == null)
 					{
@@ -1054,11 +1050,11 @@ public class GraphConfigDialog extends JDialog
 					}
 					else if (graphType2 == GraphType.BFS_DIR)
 					{
-						boolean oldDir = mxGraphProperties.isDirected(aGraph.getProperties(), mxGraphProperties.DEFAULT_DIRECTED);
-						mxGraphProperties.setDirected(aGraph.getProperties(), true);
+						boolean oldDir = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
+						GraphProperties.setDirected(aGraph.getProperties(), true);
 						System.out.println("BFS test");
 
-						mxTraversal.bfs(aGraph, startVertex, new mxICellVisitor()
+						Traversal.bfs(aGraph, startVertex, new mxICellVisitor()
 						{
 							@Override
 							// simple visitor that prints current vertex
@@ -1080,15 +1076,15 @@ public class GraphConfigDialog extends JDialog
 							}
 						});
 						
-						mxGraphProperties.setDirected(aGraph.getProperties(), oldDir);
+						GraphProperties.setDirected(aGraph.getProperties(), oldDir);
 					}
 					else if (graphType2 == GraphType.DFS_DIR)
 					{
-						boolean oldDir = mxGraphProperties.isDirected(aGraph.getProperties(), mxGraphProperties.DEFAULT_DIRECTED);
-						mxGraphProperties.setDirected(aGraph.getProperties(), true);
+						boolean oldDir = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
+						GraphProperties.setDirected(aGraph.getProperties(), true);
 						System.out.println("DFS test");
 
-						mxTraversal.dfs(aGraph, startVertex, new mxICellVisitor()
+						Traversal.dfs(aGraph, startVertex, new mxICellVisitor()
 						{
 							@Override
 							// simple visitor that prints current vertex
@@ -1110,15 +1106,15 @@ public class GraphConfigDialog extends JDialog
 							}
 						});
 
-						mxGraphProperties.setDirected(aGraph.getProperties(), oldDir);
+						GraphProperties.setDirected(aGraph.getProperties(), oldDir);
 					}
 					else if (graphType2 == GraphType.BFS_UNDIR)
 					{
-						boolean oldDir = mxGraphProperties.isDirected(aGraph.getProperties(), mxGraphProperties.DEFAULT_DIRECTED);
-						mxGraphProperties.setDirected(aGraph.getProperties(), false);
+						boolean oldDir = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
+						GraphProperties.setDirected(aGraph.getProperties(), false);
 						System.out.println("BFS test");
 
-						mxTraversal.bfs(aGraph, startVertex, new mxICellVisitor()
+						Traversal.bfs(aGraph, startVertex, new mxICellVisitor()
 						{
 							@Override
 							// simple visitor that prints current vertex
@@ -1140,15 +1136,15 @@ public class GraphConfigDialog extends JDialog
 							}
 						});
 						
-						mxGraphProperties.setDirected(aGraph.getProperties(), oldDir);
+						GraphProperties.setDirected(aGraph.getProperties(), oldDir);
 					}
 					else if (graphType2 == GraphType.DFS_UNDIR)
 					{
-						boolean oldDir = mxGraphProperties.isDirected(aGraph.getProperties(), mxGraphProperties.DEFAULT_DIRECTED);
-						mxGraphProperties.setDirected(aGraph.getProperties(), false);
+						boolean oldDir = GraphProperties.isDirected(aGraph.getProperties(), GraphProperties.DEFAULT_DIRECTED);
+						GraphProperties.setDirected(aGraph.getProperties(), false);
 						System.out.println("DFS test");
 
-						mxTraversal.dfs(aGraph, startVertex, new mxICellVisitor()
+						Traversal.dfs(aGraph, startVertex, new mxICellVisitor()
 						{
 							@Override
 							// simple visitor that prints current vertex
@@ -1170,14 +1166,14 @@ public class GraphConfigDialog extends JDialog
 							}
 						});
 
-						mxGraphProperties.setDirected(aGraph.getProperties(), oldDir);
+						GraphProperties.setDirected(aGraph.getProperties(), oldDir);
 					}
 					else if (graphType2 == GraphType.MAKE_TREE_DIRECTED)
 					{
 						try
 						{
 							graph.getModel().beginUpdate();
-							mxGraphStructure.makeTreeDirected(aGraph, startVertex);
+							GraphStructure.makeTreeDirected(aGraph, startVertex);
 							graph.getModel().endUpdate();
 							graph.getModel().beginUpdate();
 							mxCompactTreeLayout layout = new mxCompactTreeLayout(graph);
@@ -1192,17 +1188,17 @@ public class GraphConfigDialog extends JDialog
 					}
 					else if (graphType2 == GraphType.INDEGREE)
 					{
-						int indegree = mxGraphStructure.indegree(aGraph, startVertex);
+						int indegree = GraphStructure.indegree(aGraph, startVertex);
 						System.out.println("Indegree of " + aGraph.getGraph().getModel().getValue(startVertex) + " is " + indegree);
 					}
 					else if (graphType2 == GraphType.OUTDEGREE)
 					{
-						int outdegree = mxGraphStructure.outdegree(aGraph, startVertex);
+						int outdegree = GraphStructure.outdegree(aGraph, startVertex);
 						System.out.println("Outdegree of " + aGraph.getGraph().getModel().getValue(startVertex) + " is " + outdegree);
 					}
 					else if (graphType2 == GraphType.IS_CUT_VERTEX)
 					{
-						boolean isCutVertex = mxGraphStructure.isCutVertex(aGraph, startVertex);
+						boolean isCutVertex = GraphStructure.isCutVertex(aGraph, startVertex);
 
 						if (isCutVertex)
 						{
@@ -1261,8 +1257,8 @@ public class GraphConfigDialog extends JDialog
 					applyValues();
 					int startValue = Integer.parseInt(startVertexValueField.getText());
 					int endValue = Integer.parseInt(endVertexValueField.getText());
-					Object startVertex = mxGraphStructure.getVertexWithValue(aGraph, startValue);
-					Object endVertex = mxGraphStructure.getVertexWithValue(aGraph, endValue);
+					Object startVertex = GraphStructure.getVertexWithValue(aGraph, startValue);
+					Object endVertex = GraphStructure.getVertexWithValue(aGraph, endValue);
 
 					if (graphType2 == GraphType.DIJKSTRA)
 					{
@@ -1270,7 +1266,7 @@ public class GraphConfigDialog extends JDialog
 
 						try
 						{
-							mxTraversal.dijkstra(aGraph, startVertex, endVertex, new mxICellVisitor()
+							Traversal.dijkstra(aGraph, startVertex, endVertex, new mxICellVisitor()
 							{
 								@Override
 								// simple visitor that prints current vertex
@@ -1315,12 +1311,12 @@ public class GraphConfigDialog extends JDialog
 					{
 						try
 						{
-							List<Map<Object, Object>> bellmanFord = mxTraversal.bellmanFord(aGraph, startVertex);
+							List<Map<Object, Object>> bellmanFord = Traversal.bellmanFord(aGraph, startVertex);
 
 							Map<Object, Object> distanceMap = bellmanFord.get(0);
 							Map<Object, Object> parentMap = bellmanFord.get(1);
-							mxCostFunction costFunction = aGraph.getGenerator().getCostFunction();
-							mxGraphView view = aGraph.getGraph().getView();
+							CostFunction costFunction = aGraph.getGenerator().getCostFunction();
+							GraphView view = aGraph.getGraph().getView();
 
 							System.out.println("Bellman-Ford traversal test");
 							Object[] vertices = aGraph.getChildVertices(aGraph.getGraph().getDefaultParent());
@@ -1381,13 +1377,13 @@ public class GraphConfigDialog extends JDialog
 		}
 	}
 
-	public void configAnalysisGraph(mxGraph graph, mxGraphGenerator generator, Map<String, Object> props)
+	public void configAnalysisGraph(JGraphX graph, GraphGenerator generator, Map<String, Object> props)
 	{
 		this.aGraph.setGraph(graph);
 		
 		if (generator == null)
 		{
-			this.aGraph.setGenerator(new mxGraphGenerator(null, null));
+			this.aGraph.setGenerator(new GraphGenerator(null, null));
 		}
 		else
 		{
@@ -1397,7 +1393,7 @@ public class GraphConfigDialog extends JDialog
 		if(props == null)
 		{
 			Map<String, Object> properties = new HashMap<String, Object>();
-			mxGraphProperties.setDirected(properties, false);
+			GraphProperties.setDirected(properties, false);
 			this.aGraph.setProperties(properties);
 		}
 		else
@@ -1433,7 +1429,7 @@ public class GraphConfigDialog extends JDialog
 		setNumVertexesInBranch(Integer.parseInt(this.numVertexesInBranchField.getText()));
 	}
 
-	public void configureLayout(mxGraph graph, GraphType graphType, mxAnalysisGraph aGraph)
+	public void configureLayout(JGraphX graph, GraphType graphType, AnalysisGraph aGraph)
 	{
 		this.graph = graph;
 		this.graphType = graphType;

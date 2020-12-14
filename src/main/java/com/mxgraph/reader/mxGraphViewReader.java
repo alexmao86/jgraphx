@@ -8,15 +8,15 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
+import com.mxgraph.canvas.IJGraphXCanvas;
+import com.mxgraph.util.JGraphXUtils;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import com.mxgraph.canvas.mxICanvas;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 /**
  * An abstract converter that renders display XML data onto a canvas.
@@ -27,7 +27,7 @@ public abstract class mxGraphViewReader extends DefaultHandler
 	/**
 	 * Holds the canvas to be used for rendering the graph.
 	 */
-	protected mxICanvas canvas;
+	protected IJGraphXCanvas canvas;
 
 	/**
 	 * Holds the global scale of the graph. This is set just before
@@ -62,14 +62,14 @@ public abstract class mxGraphViewReader extends DefaultHandler
 	 * @param attrs Specifies the attributes of the new canvas.
 	 * @return Returns a new canvas.
 	 */
-	public abstract mxICanvas createCanvas(Map<String, Object> attrs);
+	public abstract IJGraphXCanvas createCanvas(Map<String, Object> attrs);
 
 	/**
 	 * Returns the canvas that is used for rendering the graph.
 	 * 
 	 * @return Returns the canvas.
 	 */
-	public mxICanvas getCanvas()
+	public IJGraphXCanvas getCanvas()
 	{
 		return canvas;
 	}
@@ -109,7 +109,7 @@ public abstract class mxGraphViewReader extends DefaultHandler
 	{
 		if (canvas == null && tagName.equalsIgnoreCase("graph"))
 		{
-			scale = mxUtils.getDouble(attrs, "scale", 1);
+			scale = JGraphXUtils.getDouble(attrs, "scale", 1);
 			canvas = createCanvas(attrs);
 
 			if (canvas != null)
@@ -129,7 +129,7 @@ public abstract class mxGraphViewReader extends DefaultHandler
 							&& attrs.containsKey("width") && attrs
 							.containsKey("height")))
 			{
-				mxCellState state = new mxCellState(null, null, attrs);
+				JGraphXCellState state = new JGraphXCellState(null, null, attrs);
 
 				String label = parseState(state, edge);
 				canvas.drawCell(state);
@@ -143,18 +143,18 @@ public abstract class mxGraphViewReader extends DefaultHandler
 	 * of the state into its respective fields and returns the label of the
 	 * cell.
 	 */
-	public String parseState(mxCellState state, boolean edge)
+	public String parseState(JGraphXCellState state, boolean edge)
 	{
 		Map<String, Object> style = state.getStyle();
 
 		// Parses the bounds
-		state.setX(mxUtils.getDouble(style, "x"));
-		state.setY(mxUtils.getDouble(style, "y"));
-		state.setWidth(mxUtils.getDouble(style, "width"));
-		state.setHeight(mxUtils.getDouble(style, "height"));
+		state.setX(JGraphXUtils.getDouble(style, "x"));
+		state.setY(JGraphXUtils.getDouble(style, "y"));
+		state.setWidth(JGraphXUtils.getDouble(style, "width"));
+		state.setHeight(JGraphXUtils.getDouble(style, "height"));
 
 		// Parses the absolute points list
-		List<mxPoint> pts = parsePoints(mxUtils.getString(style, "points"));
+		List<mxPoint> pts = parsePoints(JGraphXUtils.getString(style, "points"));
 
 		if (pts.size() > 0)
 		{
@@ -162,15 +162,15 @@ public abstract class mxGraphViewReader extends DefaultHandler
 		}
 
 		// Parses the label and label bounds
-		String label = mxUtils.getString(style, "label");
+		String label = JGraphXUtils.getString(style, "label");
 
 		if (label != null && label.length() > 0)
 		{
-			mxPoint offset = new mxPoint(mxUtils.getDouble(style, "dx"),
-					mxUtils.getDouble(style, "dy"));
+			mxPoint offset = new mxPoint(JGraphXUtils.getDouble(style, "dx"),
+					JGraphXUtils.getDouble(style, "dy"));
 			mxRectangle vertexBounds = (!edge) ? state : null;
-			state.setLabelBounds(mxUtils.getLabelPaintBounds(label, state
-					.getStyle(), mxUtils.isTrue(style, "html", false), offset,
+			state.setLabelBounds(JGraphXUtils.getLabelPaintBounds(label, state
+					.getStyle(), JGraphXUtils.isTrue(style, "html", false), offset,
 					vertexBounds, scale));
 		}
 

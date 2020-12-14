@@ -1,11 +1,11 @@
 package com.mxgraph.shape;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.canvas.mxGraphicsCanvas2D;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.canvas.GraphicsCanvas2D;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxSwimlaneShape extends mxBasicShape
 {
@@ -13,23 +13,23 @@ public class mxSwimlaneShape extends mxBasicShape
 	/**
 	 * Returns the bounding box for the gradient box for this shape.
 	 */
-	protected double getTitleSize(mxGraphics2DCanvas canvas, mxCellState state)
+	protected double getTitleSize(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		return Math.max(
 				0,
-				mxUtils.getFloat(state.getStyle(), mxConstants.STYLE_STARTSIZE,
+				JGraphXUtils.getFloat(state.getStyle(), mxConstants.STYLE_STARTSIZE,
 						mxConstants.DEFAULT_STARTSIZE) * canvas.getScale());
 	};
 
 	/**
 	 * 
 	 */
-	protected mxRectangle getGradientBounds(mxGraphics2DCanvas canvas,
-			mxCellState state)
+	protected mxRectangle getGradientBounds(Graphics2DCanvas canvas,
+                                            JGraphXCellState state)
 	{
 		double start = getTitleSize(canvas, state);
 
-		if (mxUtils
+		if (JGraphXUtils
 				.isTrue(state.getStyle(), mxConstants.STYLE_HORIZONTAL, true))
 		{
 			start = Math.min(start, state.getHeight());
@@ -49,16 +49,16 @@ public class mxSwimlaneShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		double start = getTitleSize(canvas, state);
-		String fill = mxUtils.getString(state.getStyle(),
+		String fill = JGraphXUtils.getString(state.getStyle(),
 				mxConstants.STYLE_SWIMLANE_FILLCOLOR, mxConstants.NONE);
-		boolean swimlaneLine = mxUtils.isTrue(state.getStyle(),
+		boolean swimlaneLine = JGraphXUtils.isTrue(state.getStyle(),
 				mxConstants.STYLE_SWIMLANE_LINE, true);
 		double r = 0;
 
-		if (mxUtils
+		if (JGraphXUtils
 				.isTrue(state.getStyle(), mxConstants.STYLE_HORIZONTAL, true))
 		{
 			start = Math.min(start, state.getHeight());
@@ -70,7 +70,7 @@ public class mxSwimlaneShape extends mxBasicShape
 
 		canvas.getGraphics().translate(state.getX(), state.getY());
 
-		if (!mxUtils.isTrue(state.getStyle(), mxConstants.STYLE_ROUNDED))
+		if (!JGraphXUtils.isTrue(state.getStyle(), mxConstants.STYLE_ROUNDED))
 		{
 			paintSwimlane(canvas, state, start, fill, swimlaneLine);
 		}
@@ -80,16 +80,16 @@ public class mxSwimlaneShape extends mxBasicShape
 			paintRoundedSwimlane(canvas, state, start, r, fill, swimlaneLine);
 		}
 		
-		String sep = mxUtils.getString(state.getStyle(), mxConstants.STYLE_SEPARATORCOLOR, mxConstants.NONE);
+		String sep = JGraphXUtils.getString(state.getStyle(), mxConstants.STYLE_SEPARATORCOLOR, mxConstants.NONE);
 		paintSeparator(canvas, state, start, sep);
 	}
 
 	/**
 	 * Helper method to configure the given wrapper canvas.
 	 */
-	protected double getArcSize(mxCellState state, double start)
+	protected double getArcSize(JGraphXCellState state, double start)
 	{
-		double f = mxUtils.getDouble(state.getStyle(),
+		double f = JGraphXUtils.getDouble(state.getStyle(),
 				mxConstants.STYLE_ARCSIZE,
 				mxConstants.RECTANGLE_ROUNDING_FACTOR * 100) / 100;
 
@@ -99,20 +99,20 @@ public class mxSwimlaneShape extends mxBasicShape
 	/**
 	 * Helper method to configure the given wrapper canvas.
 	 */
-	protected mxGraphicsCanvas2D configureCanvas(mxGraphics2DCanvas canvas,
-			mxCellState state, mxGraphicsCanvas2D c)
+	protected GraphicsCanvas2D configureCanvas(Graphics2DCanvas canvas,
+											   JGraphXCellState state, GraphicsCanvas2D c)
 	{
 		c.setShadow(hasShadow(canvas, state));
-		c.setStrokeColor(mxUtils.getString(state.getStyle(),
+		c.setStrokeColor(JGraphXUtils.getString(state.getStyle(),
 				mxConstants.STYLE_STROKECOLOR, mxConstants.NONE));
-		c.setStrokeWidth(mxUtils.getInt(state.getStyle(),
+		c.setStrokeWidth(JGraphXUtils.getInt(state.getStyle(),
 				mxConstants.STYLE_STROKEWIDTH, 1));
-		c.setDashed(mxUtils.isTrue(state.getStyle(), mxConstants.STYLE_DASHED,
+		c.setDashed(JGraphXUtils.isTrue(state.getStyle(), mxConstants.STYLE_DASHED,
 				false));
 
-		String fill = mxUtils.getString(state.getStyle(),
+		String fill = JGraphXUtils.getString(state.getStyle(),
 				mxConstants.STYLE_FILLCOLOR, mxConstants.NONE);
-		String gradient = mxUtils.getString(state.getStyle(),
+		String gradient = JGraphXUtils.getString(state.getStyle(),
 				mxConstants.STYLE_GRADIENTCOLOR, mxConstants.NONE);
 
 		if (!mxConstants.NONE.equals(fill)
@@ -120,7 +120,7 @@ public class mxSwimlaneShape extends mxBasicShape
 		{
 			mxRectangle b = getGradientBounds(canvas, state);
 			c.setGradient(fill, gradient, b.getX(), b.getY(), b.getWidth(), b
-					.getHeight(), mxUtils.getString(state.getStyle(),
+					.getHeight(), JGraphXUtils.getString(state.getStyle(),
 					mxConstants.STYLE_GRADIENT_DIRECTION,
 					mxConstants.DIRECTION_NORTH), 1, 1);
 		}
@@ -135,11 +135,11 @@ public class mxSwimlaneShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	protected void paintSwimlane(mxGraphics2DCanvas canvas, mxCellState state,
-			double start, String fill, boolean swimlaneLine)
+	protected void paintSwimlane(Graphics2DCanvas canvas, JGraphXCellState state,
+                                 double start, String fill, boolean swimlaneLine)
 	{
-		mxGraphicsCanvas2D c = configureCanvas(canvas, state,
-				new mxGraphicsCanvas2D(canvas.getGraphics()));
+		GraphicsCanvas2D c = configureCanvas(canvas, state,
+				new GraphicsCanvas2D(canvas.getGraphics()));
 		double w = state.getWidth();
 		double h = state.getHeight();
 
@@ -155,7 +155,7 @@ public class mxSwimlaneShape extends mxBasicShape
 
 		c.begin();
 
-		if (mxUtils
+		if (JGraphXUtils
 				.isTrue(state.getStyle(), mxConstants.STYLE_HORIZONTAL, true))
 		{
 			c.moveTo(0, start);
@@ -213,12 +213,12 @@ public class mxSwimlaneShape extends mxBasicShape
 	 *
 	 * Paints the swimlane vertex shape.
 	 */
-	protected void paintRoundedSwimlane(mxGraphics2DCanvas canvas,
-			mxCellState state, double start, double r, String fill,
-			boolean swimlaneLine)
+	protected void paintRoundedSwimlane(Graphics2DCanvas canvas,
+                                        JGraphXCellState state, double start, double r, String fill,
+                                        boolean swimlaneLine)
 	{
-		mxGraphicsCanvas2D c = configureCanvas(canvas, state,
-				new mxGraphicsCanvas2D(canvas.getGraphics()));
+		GraphicsCanvas2D c = configureCanvas(canvas, state,
+				new GraphicsCanvas2D(canvas.getGraphics()));
 		double w = state.getWidth();
 		double h = state.getHeight();
 
@@ -234,7 +234,7 @@ public class mxSwimlaneShape extends mxBasicShape
 
 		c.begin();
 
-		if (mxUtils
+		if (JGraphXUtils
 				.isTrue(state.getStyle(), mxConstants.STYLE_HORIZONTAL, true))
 		{
 			c.moveTo(w, start);
@@ -300,10 +300,10 @@ public class mxSwimlaneShape extends mxBasicShape
 	 *
 	 * Paints the swimlane vertex shape.
 	 */
-	protected void paintSeparator(mxGraphics2DCanvas canvas, mxCellState state,
-			double start, String color)
+	protected void paintSeparator(Graphics2DCanvas canvas, JGraphXCellState state,
+                                  double start, String color)
 	{
-		mxGraphicsCanvas2D c = new mxGraphicsCanvas2D(canvas.getGraphics());
+		GraphicsCanvas2D c = new GraphicsCanvas2D(canvas.getGraphics());
 		double w = state.getWidth();
 		double h = state.getHeight();
 
@@ -313,7 +313,7 @@ public class mxSwimlaneShape extends mxBasicShape
 			c.setDashed(true);
 			c.begin();
 
-			if (mxUtils.isTrue(state.getStyle(), mxConstants.STYLE_HORIZONTAL,
+			if (JGraphXUtils.isTrue(state.getStyle(), mxConstants.STYLE_HORIZONTAL,
 					true))
 			{
 				c.moveTo(w, start);

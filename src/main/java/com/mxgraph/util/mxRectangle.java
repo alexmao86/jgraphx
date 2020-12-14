@@ -204,23 +204,23 @@ public class mxRectangle extends mxPoint
 	{
 		mxPoint result = null;
 
-		result = mxUtils.intersection(x, y, x + width, y, x0, y0, x1, y1);
+		result = JGraphXUtils.intersection(x, y, x + width, y, x0, y0, x1, y1);
 
 		if (result == null)
 		{
-			result = mxUtils.intersection(x + width, y, x + width, y + height,
+			result = JGraphXUtils.intersection(x + width, y, x + width, y + height,
 					x0, y0, x1, y1);
 		}
 
 		if (result == null)
 		{
-			result = mxUtils.intersection(x + width, y + height, x, y + height,
+			result = JGraphXUtils.intersection(x + width, y + height, x, y + height,
 					x0, y0, x1, y1);
 		}
 
 		if (result == null)
 		{
-			result = mxUtils.intersection(x, y, x, y + height, x0, y0, x1, y1);
+			result = JGraphXUtils.intersection(x, y, x, y + height, x0, y0, x1, y1);
 		}
 
 		return result;

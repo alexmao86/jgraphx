@@ -3,10 +3,10 @@ package com.mxgraph.shape;
 import java.awt.Polygon;
 import java.awt.Shape;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxArrowShape extends mxBasicShape
 {
@@ -14,7 +14,7 @@ public class mxArrowShape extends mxBasicShape
 	/**
 	 *
 	 */
-	public Shape createShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public Shape createShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		double scale = canvas.getScale();
 		mxPoint p0 = state.getAbsolutePoint(0);

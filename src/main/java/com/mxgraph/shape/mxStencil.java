@@ -7,16 +7,16 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.mxgraph.canvas.GraphicsCanvas2D;
+import com.mxgraph.view.JGraphXCellState;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.canvas.mxGraphicsCanvas2D;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.util.JGraphXUtils;
 
 /**
  * Implements a stencil for the given XML definition. This class implements the mxGraph
@@ -100,22 +100,22 @@ public class mxStencil implements mxIShape
 	/**
 	 * Creates the canvas for rendering the stencil.
 	 */
-	protected mxGraphicsCanvas2D createCanvas(mxGraphics2DCanvas gc)
+	protected GraphicsCanvas2D createCanvas(Graphics2DCanvas gc)
 	{
-		return new mxGraphicsCanvas2D(gc.getGraphics());
+		return new GraphicsCanvas2D(gc.getGraphics());
 	}
 	
 	/**
 	 * Paints the stencil for the given state.
 	 */
-	public void paintShape(mxGraphics2DCanvas gc, mxCellState state)
+	public void paintShape(Graphics2DCanvas gc, JGraphXCellState state)
 	{
 		Map<String, Object> style = state.getStyle();
-		mxGraphicsCanvas2D canvas = createCanvas(gc);
+		GraphicsCanvas2D canvas = createCanvas(gc);
 
-		double rotation = mxUtils.getDouble(style, mxConstants.STYLE_ROTATION,
+		double rotation = JGraphXUtils.getDouble(style, mxConstants.STYLE_ROTATION,
 				0);
-		String direction = mxUtils.getString(style,
+		String direction = JGraphXUtils.getString(style,
 				mxConstants.STYLE_DIRECTION, null);
 
 		// Default direction is east (ignored if rotation exists)
@@ -136,9 +136,9 @@ public class mxStencil implements mxIShape
 		}
 
 		// New styles for shape flipping the stencil
-		boolean flipH = mxUtils.isTrue(style, mxConstants.STYLE_STENCIL_FLIPH,
+		boolean flipH = JGraphXUtils.isTrue(style, mxConstants.STYLE_STENCIL_FLIPH,
 				false);
-		boolean flipV = mxUtils.isTrue(style, mxConstants.STYLE_STENCIL_FLIPV,
+		boolean flipV = JGraphXUtils.isTrue(style, mxConstants.STYLE_STENCIL_FLIPV,
 				false);
 
 		if (flipH && flipV)
@@ -163,14 +163,14 @@ public class mxStencil implements mxIShape
 		// Note: Overwritten in mxStencil.paintShape (can depend on aspect)
 		mxRectangle aspect = computeAspect(state, state, direction);
 		double minScale = Math.min(aspect.getWidth(), aspect.getHeight());
-		double sw = strokewidth.equals("inherit") ? mxUtils.getDouble(
+		double sw = strokewidth.equals("inherit") ? JGraphXUtils.getDouble(
 				state.getStyle(), mxConstants.STYLE_STROKEWIDTH, 1)
 				* state.getView().getScale() : Double
 				.parseDouble(strokewidth) * minScale;
 		canvas.setStrokeWidth(sw);
 
-		double alpha = mxUtils.getDouble(style, mxConstants.STYLE_OPACITY, 100) / 100;
-		String gradientColor = mxUtils.getString(style,
+		double alpha = JGraphXUtils.getDouble(style, mxConstants.STYLE_OPACITY, 100) / 100;
+		String gradientColor = JGraphXUtils.getString(style,
 				mxConstants.STYLE_GRADIENTCOLOR, null);
 
 		// Converts colors with special keyword none to null
@@ -179,7 +179,7 @@ public class mxStencil implements mxIShape
 			gradientColor = null;
 		}
 
-		String fillColor = mxUtils.getString(style,
+		String fillColor = JGraphXUtils.getString(style,
 				mxConstants.STYLE_FILLCOLOR, null);
 
 		if (fillColor != null && fillColor.equals(mxConstants.NONE))
@@ -187,7 +187,7 @@ public class mxStencil implements mxIShape
 			fillColor = null;
 		}
 
-		String strokeColor = mxUtils.getString(style,
+		String strokeColor = JGraphXUtils.getString(style,
 				mxConstants.STYLE_STROKECOLOR, null);
 
 		if (strokeColor != null && strokeColor.equals(mxConstants.NONE))
@@ -196,7 +196,7 @@ public class mxStencil implements mxIShape
 		}
 
 		// Draws the shadow if the fillColor is not transparent
-		if (mxUtils.isTrue(style, mxConstants.STYLE_SHADOW, false))
+		if (JGraphXUtils.isTrue(style, mxConstants.STYLE_SHADOW, false))
 		{
 			drawShadow(canvas, state, rotation, flipH, flipV, state, alpha, fillColor != null, aspect);
 		}
@@ -204,7 +204,7 @@ public class mxStencil implements mxIShape
 		canvas.setAlpha(alpha);
 
 		// Sets the dashed state
-		if (mxUtils.isTrue(style, mxConstants.STYLE_DASHED, false))
+		if (JGraphXUtils.isTrue(style, mxConstants.STYLE_DASHED, false))
 		{
 			canvas.setDashed(true);
 		}
@@ -241,8 +241,8 @@ public class mxStencil implements mxIShape
 	/**
 	 * Draws the shadow.
 	 */
-	protected void drawShadow(mxGraphicsCanvas2D canvas, mxCellState state, double rotation, boolean flipH,
-			boolean flipV, mxRectangle bounds, double alpha, boolean filled, mxRectangle aspect)
+	protected void drawShadow(GraphicsCanvas2D canvas, JGraphXCellState state, double rotation, boolean flipH,
+							  boolean flipV, mxRectangle bounds, double alpha, boolean filled, mxRectangle aspect)
 	{
 		// Requires background in generic shape for shadow, looks like only one
 		// fillAndStroke is allowed per current path, try working around that
@@ -250,7 +250,7 @@ public class mxStencil implements mxIShape
 		double rad = rotation * Math.PI / 180;
 		double cos = Math.cos(-rad);
 		double sin = Math.sin(-rad);
-		mxPoint offset = mxUtils.getRotatedPoint(new mxPoint(mxConstants.SHADOW_OFFSETX, mxConstants.SHADOW_OFFSETY), cos, sin);
+		mxPoint offset = JGraphXUtils.getRotatedPoint(new mxPoint(mxConstants.SHADOW_OFFSETX, mxConstants.SHADOW_OFFSETY), cos, sin);
 		
 		if (flipH)
 		{
@@ -279,8 +279,8 @@ public class mxStencil implements mxIShape
 	/**
 	 * Draws this stencil inside the given bounds.
 	 */
-	public boolean drawShape(mxGraphicsCanvas2D canvas, mxCellState state,
-			mxRectangle bounds, mxRectangle aspect, boolean background)
+	public boolean drawShape(GraphicsCanvas2D canvas, JGraphXCellState state,
+							 mxRectangle bounds, mxRectangle aspect, boolean background)
 	{
 		Element elt = (background) ? bgNode : fgNode;
 
@@ -312,8 +312,8 @@ public class mxStencil implements mxIShape
 	 * and vertical scale in width and height used to draw this shape inside the
 	 * given rectangle.
 	 */
-	protected mxRectangle computeAspect(mxCellState state, mxRectangle bounds,
-			String direction)
+	protected mxRectangle computeAspect(JGraphXCellState state, mxRectangle bounds,
+                                        String direction)
 	{
 		double x0 = bounds.getX();
 		double y0 = bounds.getY();
@@ -358,8 +358,8 @@ public class mxStencil implements mxIShape
 	/**
 	 * Drawsthe given element.
 	 */
-	protected void drawElement(mxGraphicsCanvas2D canvas, mxCellState state,
-			Element node, mxRectangle aspect)
+	protected void drawElement(GraphicsCanvas2D canvas, JGraphXCellState state,
+							   Element node, mxRectangle aspect)
 	{
 		String name = node.getNodeName();
 		double x0 = aspect.getX();
@@ -437,7 +437,7 @@ public class mxStencil implements mxIShape
 			double x = x0 + getDouble(node, "x") * sx;
 			double y = y0 + getDouble(node, "y") * sy;
 
-			double[] curves = mxUtils.arcToCurves(this.lastMoveX,
+			double[] curves = JGraphXUtils.arcToCurves(this.lastMoveX,
 					this.lastMoveY, r1, r2, angle, largeArcFlag, sweepFlag, x,
 					y);
 
@@ -703,7 +703,7 @@ public class mxStencil implements mxIShape
 	 * value is used as the attribute value to be returned.
 	 */
 	public String evaluateAttribute(Element elt, String attribute,
-			mxCellState state)
+			JGraphXCellState state)
 	{
 		String result = elt.getAttribute(attribute);
 

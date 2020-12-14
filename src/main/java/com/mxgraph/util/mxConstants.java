@@ -290,7 +290,7 @@ public class mxConstants
 	 * the label so that it does not overlap the vertex bounds. A value of
 	 * "fill" will use the vertex bounds for the label.
 	 * 
-	 * @see com.mxgraph.view.mxGraph#isLabelClipped(Object)
+	 * @see com.mxgraph.view.JGraphX#isLabelClipped(Object)
 	 */
 	public static String STYLE_OVERFLOW = "overflow";
 
@@ -361,7 +361,7 @@ public class mxConstants
 	 * Defines the key for the fill color of the swimlane background.
 	 * The value is a string expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_SWIMLANE_FILLCOLOR = "swimlaneFillColor";
 
@@ -369,7 +369,7 @@ public class mxConstants
 	 * Defines the key for the fillColor style. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_FILLCOLOR = "fillColor";
 
@@ -378,7 +378,7 @@ public class mxConstants
 	 * expression supported by mxUtils.parseColor. This is ignored if no fill
 	 * color is defined.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_GRADIENTCOLOR = "gradientColor";
 
@@ -399,7 +399,7 @@ public class mxConstants
 	 * Defines the key for the strokeColor style. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_STROKECOLOR = "strokeColor";
 
@@ -408,7 +408,7 @@ public class mxConstants
 	 * expression supported by mxUtils.parseColor. This style is only used
 	 * for SHAPE_SWIMLANE shapes.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_SEPARATORCOLOR = "separatorColor";
 
@@ -601,7 +601,7 @@ public class mxConstants
 	 * Defines the key for the label background color. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_LABEL_BACKGROUNDCOLOR = "labelBackgroundColor";
 
@@ -609,7 +609,7 @@ public class mxConstants
 	 * Defines the key for the label border color. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_LABEL_BORDERCOLOR = "labelBorderColor";
 
@@ -631,7 +631,7 @@ public class mxConstants
 	 * Defines the key for the indicatorColor style. The value is a string
 	 * expression supported by mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_INDICATOR_COLOR = "indicatorColor";
 
@@ -640,7 +640,7 @@ public class mxConstants
 	 * string expression supported by mxUtils.parseColor. This style is only
 	 * supported in SHAPE_LABEL shapes.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_INDICATOR_GRADIENTCOLOR = "indicatorGradientColor";
 
@@ -857,7 +857,7 @@ public class mxConstants
 	 * <code>String</code> and of the expression supported by
 	 * mxUtils.parseColor.
 	 * 
-	 * @see com.mxgraph.util.mxUtils#parseColor(String)
+	 * @see JGraphXUtils#parseColor(String)
 	 */
 	public static String STYLE_FONTCOLOR = "fontColor";
 

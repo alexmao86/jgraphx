@@ -31,10 +31,10 @@ import javax.swing.text.html.MinimalHTMLWriter;
 
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 /**
  * To control this editor, use mxGraph.invokesStopCellEditing, mxGraph.
@@ -76,7 +76,7 @@ public class mxCellEditor implements mxICellEditor
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Defines the minimum scale to be used for the editor. Set this to
@@ -189,7 +189,7 @@ public class mxCellEditor implements mxICellEditor
 	/**
 	 * 
 	 */
-	public mxCellEditor(mxGraphComponent graphComponent)
+	public mxCellEditor(JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 
@@ -336,7 +336,7 @@ public class mxCellEditor implements mxICellEditor
 	 * Returns true if the label bounds of the state should be used for the
 	 * editor.
 	 */
-	protected boolean useLabelBounds(mxCellState state)
+	protected boolean useLabelBounds(JGraphXCellState state)
 	{
 		mxIGraphModel model = state.getView().getGraph().getModel();
 		mxGeometry geometry = model.getGeometry(state.getCell());
@@ -349,7 +349,7 @@ public class mxCellEditor implements mxICellEditor
 	/**
 	 * Returns the bounds to be used for the editor.
 	 */
-	public Rectangle getEditorBounds(mxCellState state, double scale)
+	public Rectangle getEditorBounds(JGraphXCellState state, double scale)
 	{
 		mxIGraphModel model = state.getView().getGraph().getModel();
 		Rectangle bounds = null;
@@ -367,7 +367,7 @@ public class mxCellEditor implements mxICellEditor
 		// Applies the horizontal and vertical label positions
 		if (model.isVertex(state.getCell()))
 		{
-			String horizontal = mxUtils.getString(state.getStyle(),
+			String horizontal = JGraphXUtils.getString(state.getStyle(),
 					mxConstants.STYLE_LABEL_POSITION, mxConstants.ALIGN_CENTER);
 
 			if (horizontal.equals(mxConstants.ALIGN_LEFT))
@@ -379,7 +379,7 @@ public class mxCellEditor implements mxICellEditor
 				bounds.x += state.getWidth();
 			}
 
-			String vertical = mxUtils.getString(state.getStyle(),
+			String vertical = JGraphXUtils.getString(state.getStyle(),
 					mxConstants.STYLE_VERTICAL_LABEL_POSITION,
 					mxConstants.ALIGN_MIDDLE);
 
@@ -413,7 +413,7 @@ public class mxCellEditor implements mxICellEditor
 			stopEditing(true);
 		}
 
-		mxCellState state = graphComponent.getGraph().getView().getState(cell);
+		JGraphXCellState state = graphComponent.getGraph().getView().getState(cell);
 
 		if (state != null)
 		{
@@ -433,11 +433,11 @@ public class mxCellEditor implements mxICellEditor
 			{
 				if (isExtractHtmlBody())
 				{
-					value = mxUtils.getBodyMarkup(value,
+					value = JGraphXUtils.getBodyMarkup(value,
 							isReplaceHtmlLinefeeds());
 				}
 
-				editorPane.setDocument(mxUtils.createHtmlDocumentObject(
+				editorPane.setDocument(JGraphXUtils.createHtmlDocumentObject(
 						state.getStyle(), scale));
 				editorPane.setText(value);
 
@@ -452,8 +452,8 @@ public class mxCellEditor implements mxICellEditor
 			}
 			else
 			{
-				textArea.setFont(mxUtils.getFont(state.getStyle(), scale));
-				Color fontColor = mxUtils.getColor(state.getStyle(),
+				textArea.setFont(JGraphXUtils.getFont(state.getStyle(), scale));
+				Color fontColor = JGraphXUtils.getColor(state.getStyle(),
 						mxConstants.STYLE_FONTCOLOR, Color.black);
 				textArea.setForeground(fontColor);
 				textArea.setText(value);
@@ -480,7 +480,7 @@ public class mxCellEditor implements mxICellEditor
 	/**
 	 * 
 	 */
-	protected boolean isHideLabel(mxCellState state)
+	protected boolean isHideLabel(JGraphXCellState state)
 	{
 		return true;
 	}
@@ -505,7 +505,7 @@ public class mxCellEditor implements mxICellEditor
 			}
 			else
 			{
-				mxCellState state = graphComponent.getGraph().getView()
+				JGraphXCellState state = graphComponent.getGraph().getView()
 						.getState(cell);
 				graphComponent.redraw(state);
 			}
@@ -523,7 +523,7 @@ public class mxCellEditor implements mxICellEditor
 	/**
 	 * Gets the initial editing value for the given cell.
 	 */
-	protected String getInitialValue(mxCellState state, EventObject trigger)
+	protected String getInitialValue(JGraphXCellState state, EventObject trigger)
 	{
 		return graphComponent.getEditingValue(state.getCell(), trigger);
 	}
@@ -545,7 +545,7 @@ public class mxCellEditor implements mxICellEditor
 
 			if (isExtractHtmlBody())
 			{
-				result = mxUtils
+				result = JGraphXUtils
 						.getBodyMarkup(result, isReplaceHtmlLinefeeds());
 			}
 		}

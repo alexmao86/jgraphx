@@ -4,8 +4,8 @@ import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 public class mxStackLayout extends mxGraphLayout
 {
@@ -56,7 +56,7 @@ public class mxStackLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxStackLayout(mxGraph graph)
+	public mxStackLayout(JGraphX graph)
 	{
 		this(graph, true);
 	}
@@ -65,7 +65,7 @@ public class mxStackLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxStackLayout(mxGraph graph, boolean horizontal)
+	public mxStackLayout(JGraphX graph, boolean horizontal)
 	{
 		this(graph, horizontal, 0);
 	}
@@ -74,7 +74,7 @@ public class mxStackLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxStackLayout(mxGraph graph, boolean horizontal, int spacing)
+	public mxStackLayout(JGraphX graph, boolean horizontal, int spacing)
 	{
 		this(graph, horizontal, spacing, 0, 0, 0);
 	}
@@ -83,7 +83,7 @@ public class mxStackLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxStackLayout(mxGraph graph, boolean horizontal, int spacing,
+	public mxStackLayout(JGraphX graph, boolean horizontal, int spacing,
 			int x0, int y0, int border)
 	{
 		super(graph);
@@ -118,7 +118,7 @@ public class mxStackLayout extends mxGraphLayout
 			double last = 0;
 			int childCount = model.getChildCount(parent);
 			double value = (horizontal) ? x : y;
-			mxCellState pstate = graph.getView().getState(parent);
+			JGraphXCellState pstate = graph.getView().getState(parent);
 
 			if (pstate != null)
 			{

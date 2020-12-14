@@ -4,8 +4,8 @@ import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.geom.Ellipse2D;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxEllipseShape extends mxBasicShape
 {
@@ -13,7 +13,7 @@ public class mxEllipseShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	public Shape createShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public Shape createShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		Rectangle temp = state.getRectangle();
 

@@ -516,7 +516,7 @@ public class mxCurve
 			// Whether the intersection is one of the horizontal sides of the rect
 			@SuppressWarnings("unused")
 			boolean horizIncident = false;
-			mxPoint hitPoint = mxUtils.intersection(x, y, x + width, y, x0, y0, x1, y1);
+			mxPoint hitPoint = JGraphXUtils.intersection(x, y, x + width, y, x0, y0, x1, y1);
 			
 			if (hitPoint != null)
 			{
@@ -524,13 +524,13 @@ public class mxCurve
 			}
 			else
 			{
-				hitPoint = mxUtils.intersection(x + width, y, x + width, y + height,
+				hitPoint = JGraphXUtils.intersection(x + width, y, x + width, y + height,
 						x0, y0, x1, y1);
 			}
 
 			if (hitPoint == null)
 			{
-				hitPoint = mxUtils.intersection(x + width, y + height, x, y + height,
+				hitPoint = JGraphXUtils.intersection(x + width, y + height, x, y + height,
 						x0, y0, x1, y1);
 				
 				if (hitPoint != null)
@@ -539,7 +539,7 @@ public class mxCurve
 				}
 				else
 				{
-					hitPoint = mxUtils.intersection(x, y, x, y + height, x0, y0, x1, y1);
+					hitPoint = JGraphXUtils.intersection(x, y, x, y + height, x0, y0, x1, y1);
 				}
 			}
 

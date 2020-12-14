@@ -9,18 +9,14 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxEventSource;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.util.*;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Connection handler creates new connections between cells. This control is used to display the connector
@@ -31,17 +27,17 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * 
 	 */
-	protected mxCellState previewState;
+	protected JGraphXCellState previewState;
 
 	/**
 	 * 
 	 */
-	protected mxCellState sourceState;
+	protected JGraphXCellState sourceState;
 
 	/**
 	 * 
@@ -52,7 +48,7 @@ public class mxConnectPreview extends mxEventSource
 	 * 
 	 * @param graphComponent
 	 */
-	public mxConnectPreview(mxGraphComponent graphComponent)
+	public mxConnectPreview(JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 
@@ -70,9 +66,9 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * Creates a new instance of mxShape for previewing the edge.
 	 */
-	protected Object createCell(mxCellState startState, String style)
+	protected Object createCell(JGraphXCellState startState, String style)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxICell cell = ((mxICell) graph
 				.createEdge(null, null, "",
 						(startState != null) ? startState.getCell() : null,
@@ -93,7 +89,7 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * 
 	 */
-	public mxCellState getSourceState()
+	public JGraphXCellState getSourceState()
 	{
 		return sourceState;
 	}
@@ -101,7 +97,7 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * 
 	 */
-	public mxCellState getPreviewState()
+	public JGraphXCellState getPreviewState()
 	{
 		return previewState;
 	}
@@ -117,9 +113,9 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * Updates the style of the edge preview from the incoming edge
 	 */
-	public void start(MouseEvent e, mxCellState startState, String style)
+	public void start(MouseEvent e, JGraphXCellState startState, String style)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		sourceState = startState;
 		startPoint = transformScreenPoint(startState.getCenterX(),
 				startState.getCenterY());
@@ -134,9 +130,9 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * 
 	 */
-	public void update(MouseEvent e, mxCellState targetState, double x, double y)
+	public void update(MouseEvent e, JGraphXCellState targetState, double x, double y)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxICell cell = (mxICell) previewState.getCell();
 
 		mxRectangle dirty = graphComponent.getGraph().getPaintBounds(
@@ -219,7 +215,7 @@ public class mxConnectPreview extends mxEventSource
 	 */
 	protected mxPoint transformScreenPoint(double x, double y)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxPoint tr = graph.getView().getTranslate();
 		double scale = graph.getView().getScale();
 
@@ -230,7 +226,7 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * 
 	 */
-	public void revalidate(mxCellState state)
+	public void revalidate(JGraphXCellState state)
 	{
 		state.getView().invalidate(state.getCell());
 		state.getView().validateCellState(state.getCell());
@@ -243,11 +239,11 @@ public class mxConnectPreview extends mxEventSource
 	{
 		if (previewState != null)
 		{
-			mxGraphics2DCanvas canvas = graphComponent.getCanvas();
+			Graphics2DCanvas canvas = graphComponent.getCanvas();
 
 			if (graphComponent.isAntiAlias())
 			{
-				mxUtils.setAntiAlias((Graphics2D) g, true, false);
+				JGraphXUtils.setAntiAlias((Graphics2D) g, true, false);
 			}
 
 			float alpha = graphComponent.getPreviewAlpha();
@@ -282,7 +278,7 @@ public class mxConnectPreview extends mxEventSource
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void paintPreview(mxGraphics2DCanvas canvas)
+	protected void paintPreview(Graphics2DCanvas canvas)
 	{
 		graphComponent.getGraphControl().drawCell(graphComponent.getCanvas(),
 				previewState.getCell());
@@ -305,7 +301,7 @@ public class mxConnectPreview extends mxEventSource
 
 		if (previewState != null)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 
 			graph.getModel().beginUpdate();
 			try

@@ -7,7 +7,7 @@ import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 public class mxPartitionLayout extends mxGraphLayout
 {
@@ -39,7 +39,7 @@ public class mxPartitionLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxPartitionLayout(mxGraph graph)
+	public mxPartitionLayout(JGraphX graph)
 	{
 		this(graph, true);
 	}
@@ -48,7 +48,7 @@ public class mxPartitionLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxPartitionLayout(mxGraph graph, boolean horizontal)
+	public mxPartitionLayout(JGraphX graph, boolean horizontal)
 	{
 		this(graph, horizontal, 0);
 	}
@@ -57,7 +57,7 @@ public class mxPartitionLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxPartitionLayout(mxGraph graph, boolean horizontal, int spacing)
+	public mxPartitionLayout(JGraphX graph, boolean horizontal, int spacing)
 	{
 		this(graph, horizontal, spacing, 0);
 	}
@@ -66,7 +66,7 @@ public class mxPartitionLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxPartitionLayout(mxGraph graph, boolean horizontal, int spacing,
+	public mxPartitionLayout(JGraphX graph, boolean horizontal, int spacing,
 			int border)
 	{
 		super(graph);

@@ -22,14 +22,14 @@ import javax.swing.JPanel;
 
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxConnectionConstraint;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.ConnectionConstraint;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  *
@@ -76,7 +76,7 @@ public class mxEdgeHandler extends mxCellHandler
 		// the edge that is currently being modified
 		protected Object getCell(MouseEvent e)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			mxIGraphModel model = graph.getModel();
 			Object cell = super.getCell(e);
 
@@ -90,14 +90,14 @@ public class mxEdgeHandler extends mxCellHandler
 		}
 
 		// Sets the highlight color according to isValidConnection
-		protected boolean isValidState(mxCellState state)
+		protected boolean isValidState(JGraphXCellState state)
 		{
-			mxGraphView view = graphComponent.getGraph().getView();
+			GraphView view = graphComponent.getGraph().getView();
 			mxIGraphModel model = graphComponent.getGraph().getModel();
 			Object edge = mxEdgeHandler.this.state.getCell();
 			boolean isSource = isSource(index);
 
-			mxCellState other = view
+			JGraphXCellState other = view
 					.getTerminalPort(state,
 							view.getState(model.getTerminal(edge, !isSource)),
 							!isSource);
@@ -117,7 +117,7 @@ public class mxEdgeHandler extends mxCellHandler
 	 * @param graphComponent
 	 * @param state
 	 */
-	public mxEdgeHandler(mxGraphComponent graphComponent, mxCellState state)
+	public mxEdgeHandler(JGraphXComponent graphComponent, JGraphXCellState state)
 	{
 		super(graphComponent, state);
 	}
@@ -225,7 +225,7 @@ public class mxEdgeHandler extends mxCellHandler
 
 		if (source || isTarget(index))
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			Object terminal = graph.getModel().getTerminal(state.getCell(),
 					source);
 
@@ -286,7 +286,7 @@ public class mxEdgeHandler extends mxCellHandler
 	/**
 	 * 
 	 */
-	protected Point[] createPoints(mxCellState s)
+	protected Point[] createPoints(JGraphXCellState s)
 	{
 		Point[] pts = new Point[s.getAbsolutePointCount()];
 
@@ -368,7 +368,7 @@ public class mxEdgeHandler extends mxCellHandler
 	 */
 	protected mxPoint convertPoint(mxPoint point, boolean gridEnabled)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		double scale = graph.getView().getScale();
 		mxPoint trans = graph.getView().getTranslate();
 		double x = point.getX() / scale - trans.getX();
@@ -425,7 +425,7 @@ public class mxEdgeHandler extends mxCellHandler
 
 		if (source || isTarget(index))
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			mxIGraphModel model = graph.getModel();
 			Object terminal = model.getTerminal(state.getCell(), source);
 
@@ -493,14 +493,14 @@ public class mxEdgeHandler extends mxCellHandler
 				// computing the correct perimeter points and edge style.
 				mxGeometry geometry = graphComponent.getGraph()
 						.getCellGeometry(state.getCell());
-				mxCellState clone = (mxCellState) state.clone();
+				JGraphXCellState clone = (JGraphXCellState) state.clone();
 				List<mxPoint> points = geometry.getPoints();
-				mxGraphView view = clone.getView();
+				GraphView view = clone.getView();
 
 				if (isSource || isTarget)
 				{
 					marker.process(e);
-					mxCellState currentState = marker.getValidState();
+					JGraphXCellState currentState = marker.getValidState();
 					target = state.getVisibleTerminal(!isSource);
 
 					if (currentState != null)
@@ -546,13 +546,13 @@ public class mxEdgeHandler extends mxCellHandler
 				}
 
 				// Computes the points for the edge style and terminals
-				mxCellState sourceState = view.getState(source);
-				mxCellState targetState = view.getState(target);
+				JGraphXCellState sourceState = view.getState(source);
+				JGraphXCellState targetState = view.getState(target);
 
-				mxConnectionConstraint sourceConstraint = graphComponent
+				ConnectionConstraint sourceConstraint = graphComponent
 						.getGraph().getConnectionConstraint(clone, sourceState,
 								true);
-				mxConnectionConstraint targetConstraint = graphComponent
+				ConnectionConstraint targetConstraint = graphComponent
 						.getGraph().getConnectionConstraint(clone, targetState,
 								false);
 
@@ -615,7 +615,7 @@ public class mxEdgeHandler extends mxCellHandler
 	 */
 	public void mouseReleased(MouseEvent e)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 
 		if (!e.isConsumed() && first != null)
 		{
@@ -762,7 +762,7 @@ public class mxEdgeHandler extends mxCellHandler
 	protected void connect(Object edge, Object terminal, boolean isSource,
 			boolean isClone)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxIGraphModel model = graph.getModel();
 
 		model.beginUpdate();
@@ -784,7 +784,7 @@ public class mxEdgeHandler extends mxCellHandler
 
 			// Passes an empty constraint to reset constraint information
 			graph.connectCell(edge, terminal, isSource,
-					new mxConnectionConstraint());
+					new ConnectionConstraint());
 		}
 		finally
 		{
@@ -795,9 +795,9 @@ public class mxEdgeHandler extends mxCellHandler
 	/**
 	 * Moves the label to the given position.
 	 */
-	protected void moveLabelTo(mxCellState edgeState, double x, double y)
+	protected void moveLabelTo(JGraphXCellState edgeState, double x, double y)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxIGraphModel model = graph.getModel();
 		mxGeometry geometry = model.getGeometry(state.getCell());
 

@@ -6,12 +6,12 @@ import javax.swing.JFrame;
 
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxEdgeStyle;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.EdgeStyle;
+import com.mxgraph.view.JGraphX;
 
 public class Port extends JFrame
 {
@@ -28,7 +28,7 @@ public class Port extends JFrame
 	{
 		super("Hello, World!");
 
-		mxGraph graph = new mxGraph() {
+		JGraphX graph = new JGraphX() {
 			
 			// Ports are not used as terminals for edges, they are
 			// only used to compute the graphical connection point
@@ -61,7 +61,7 @@ public class Port extends JFrame
 		
 		// Sets the default edge style
 		Map<String, Object> style = graph.getStylesheet().getDefaultEdgeStyle();
-		style.put(mxConstants.STYLE_EDGE, mxEdgeStyle.ElbowConnector);
+		style.put(mxConstants.STYLE_EDGE, EdgeStyle.ElbowConnector);
 		
 		Object parent = graph.getDefaultParent();
 
@@ -107,7 +107,7 @@ public class Port extends JFrame
 			graph.getModel().endUpdate();
 		}
 
-		mxGraphComponent graphComponent = new mxGraphComponent(graph);
+		JGraphXComponent graphComponent = new JGraphXComponent(graph);
 		getContentPane().add(graphComponent);
 		graphComponent.setToolTips(true);
 	}

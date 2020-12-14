@@ -35,11 +35,11 @@ import com.mxgraph.examples.swing.editor.EditorActions.TogglePropertyItem;
 import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
 import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
 import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxGraphActions;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 public class SchemaEditorMenuBar extends JMenuBar
 {
@@ -52,8 +52,8 @@ public class SchemaEditorMenuBar extends JMenuBar
 	@SuppressWarnings("serial")
 	public SchemaEditorMenuBar(final BasicGraphEditor editor)
 	{
-		final mxGraphComponent graphComponent = editor.getGraphComponent();
-		final mxGraph graph = graphComponent.getGraph();
+		final JGraphXComponent graphComponent = editor.getGraphComponent();
+		final JGraphX graph = graphComponent.getGraph();
 		JMenu menu = null;
 		JMenu submenu = null;
 
@@ -152,7 +152,7 @@ public class SchemaEditorMenuBar extends JMenuBar
 			{
 				if (e.getSource() instanceof TogglePropertyItem)
 				{
-					final mxGraphComponent graphComponent = editor
+					final JGraphXComponent graphComponent = editor
 							.getGraphComponent();
 					TogglePropertyItem toggleItem = (TogglePropertyItem) e
 							.getSource();
@@ -222,9 +222,9 @@ public class SchemaEditorMenuBar extends JMenuBar
 		menu.addSeparator();
 
 		menu.add(editor.bind(mxResources.get("page"), new ZoomPolicyAction(
-				mxGraphComponent.ZOOM_POLICY_PAGE)));
+				JGraphXComponent.ZOOM_POLICY_PAGE)));
 		menu.add(editor.bind(mxResources.get("width"), new ZoomPolicyAction(
-				mxGraphComponent.ZOOM_POLICY_WIDTH)));
+				JGraphXComponent.ZOOM_POLICY_WIDTH)));
 
 		menu.addSeparator();
 
@@ -260,13 +260,13 @@ public class SchemaEditorMenuBar extends JMenuBar
 		submenu.addSeparator();
 
 		submenu.add(editor.bind(mxResources.get("dashed"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_DASHED)));
+				JGraphXComponent.GRID_STYLE_DASHED)));
 		submenu.add(editor.bind(mxResources.get("dot"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_DOT)));
+				JGraphXComponent.GRID_STYLE_DOT)));
 		submenu.add(editor.bind(mxResources.get("line"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_LINE)));
+				JGraphXComponent.GRID_STYLE_LINE)));
 		submenu.add(editor.bind(mxResources.get("cross"), new GridStyleAction(
-				mxGraphComponent.GRID_STYLE_CROSS)));
+				JGraphXComponent.GRID_STYLE_CROSS)));
 
 		menu.addSeparator();
 

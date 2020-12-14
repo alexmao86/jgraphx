@@ -21,12 +21,12 @@ import java.util.LinkedHashMap;
 
 import javax.swing.SwingUtilities;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 public class mxSelectionCellsHandler implements MouseListener,
 		MouseMotionListener
@@ -45,7 +45,7 @@ public class mxSelectionCellsHandler implements MouseListener,
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Specifies if this handler is enabled.
@@ -112,7 +112,7 @@ public class mxSelectionCellsHandler implements MouseListener,
 	 * 
 	 * @param graphComponent
 	 */
-	public mxSelectionCellsHandler(final mxGraphComponent graphComponent)
+	public mxSelectionCellsHandler(final JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 
@@ -129,8 +129,8 @@ public class mxSelectionCellsHandler implements MouseListener,
 			{
 				if (evt.getPropertyName().equals("graph"))
 				{
-					removeGraphListeners((mxGraph) evt.getOldValue());
-					addGraphListeners((mxGraph) evt.getNewValue());
+					removeGraphListeners((JGraphX) evt.getOldValue());
+					addGraphListeners((JGraphX) evt.getNewValue());
 				}
 			}
 		});
@@ -149,7 +149,7 @@ public class mxSelectionCellsHandler implements MouseListener,
 	/**
 	 * Installs the listeners to update the handles after any changes.
 	 */
-	protected void addGraphListeners(mxGraph graph)
+	protected void addGraphListeners(JGraphX graph)
 	{
 		// LATER: Install change listener for graph model, selection model, view
 		if (graph != null)
@@ -172,7 +172,7 @@ public class mxSelectionCellsHandler implements MouseListener,
 	/**
 	 * Removes all installed listeners.
 	 */
-	protected void removeGraphListeners(mxGraph graph)
+	protected void removeGraphListeners(JGraphX graph)
 	{
 		if (graph != null)
 		{
@@ -194,7 +194,7 @@ public class mxSelectionCellsHandler implements MouseListener,
 	/**
 	 * 
 	 */
-	public mxGraphComponent getGraphComponent()
+	public JGraphXComponent getGraphComponent()
 	{
 		return graphComponent;
 	}
@@ -362,7 +362,7 @@ public class mxSelectionCellsHandler implements MouseListener,
 	 */
 	public void refresh()
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 
 		// Creates a new map for the handlers and tries to
 		// to reuse existing handlers from the old map
@@ -376,7 +376,7 @@ public class mxSelectionCellsHandler implements MouseListener,
 
 		for (int i = 0; i < tmp.length; i++)
 		{
-			mxCellState state = graph.getView().getState(tmp[i]);
+			JGraphXCellState state = graph.getView().getState(tmp[i]);
 
 			if (state != null && state.getCell() != graph.getView().getCurrentRoot())
 			{

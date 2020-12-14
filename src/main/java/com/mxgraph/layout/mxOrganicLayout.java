@@ -17,8 +17,8 @@ import java.util.Map;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphX;
 
 /**
  * An implementation of a simulated annealing layout, based on "Drawing Graphs
@@ -350,7 +350,7 @@ public class mxOrganicLayout extends mxGraphLayout
 	/**
 	 * Constructor for mxOrganicLayout.
 	 */
-	public mxOrganicLayout(mxGraph graph)
+	public mxOrganicLayout(JGraphX graph)
 	{
 		super(graph);
 	}
@@ -358,7 +358,7 @@ public class mxOrganicLayout extends mxGraphLayout
 	/**
 	 * Constructor for mxOrganicLayout.
 	 */
-	public mxOrganicLayout(mxGraph graph, Rectangle2D bounds)
+	public mxOrganicLayout(JGraphX graph, Rectangle2D bounds)
 	{
 		super(graph);
 		boundsX = bounds.getX();
@@ -384,7 +384,7 @@ public class mxOrganicLayout extends mxGraphLayout
 	public void execute(Object parent)
 	{
 		mxIGraphModel model = graph.getModel();
-		mxGraphView view = graph.getView();
+		GraphView view = graph.getView();
 		Object[] vertices = graph.getChildVertices(parent);
 		HashSet<Object> vertexSet = new HashSet<Object>(Arrays.asList(vertices));
 

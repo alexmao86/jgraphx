@@ -23,7 +23,7 @@ import javax.swing.JRootPane;
 import javax.swing.KeyStroke;
 
 import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 public class EditorAboutFrame extends JDialog
 {
@@ -94,7 +94,7 @@ public class EditorAboutFrame extends JDialog
 		content.add(new JLabel("JGraph X - The Swing Portion of mxGraph"));
 		content.add(new JLabel(" "));
 
-		content.add(new JLabel("mxGraph Version " + mxGraph.VERSION));
+		content.add(new JLabel("mxGraph Version " + JGraphX.VERSION));
 		content.add(new JLabel("Copyright (C) 2009 by JGraph Ltd."));
 		content.add(new JLabel("All rights reserved."));
 		content.add(new JLabel(" "));

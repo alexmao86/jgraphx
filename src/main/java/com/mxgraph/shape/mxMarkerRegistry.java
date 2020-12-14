@@ -7,11 +7,11 @@ import java.awt.geom.Line2D;
 import java.util.Hashtable;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxMarkerRegistry
 {
@@ -24,9 +24,9 @@ public class mxMarkerRegistry
 	{
 		mxIMarker tmp = new mxIMarker()
 		{
-			public mxPoint paintMarker(mxGraphics2DCanvas canvas,
-					mxCellState state, String type, mxPoint pe, double nx,
-					double ny, double size, boolean source)
+			public mxPoint paintMarker(Graphics2DCanvas canvas,
+                                       JGraphXCellState state, String type, mxPoint pe, double nx,
+                                       double ny, double size, boolean source)
 			{
 				Polygon poly = new Polygon();
 				poly.addPoint((int) Math.round(pe.getX()),
@@ -43,7 +43,7 @@ public class mxMarkerRegistry
 				poly.addPoint((int) Math.round(pe.getX() + ny / 2 - nx),
 						(int) Math.round(pe.getY() - ny - nx / 2));
 
-				if (mxUtils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true))
+				if (JGraphXUtils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true))
 				{
 					canvas.fillShape(poly);
 				}
@@ -59,9 +59,9 @@ public class mxMarkerRegistry
 
 		registerMarker(mxConstants.ARROW_OPEN, new mxIMarker()
 		{
-			public mxPoint paintMarker(mxGraphics2DCanvas canvas,
-					mxCellState state, String type, mxPoint pe, double nx,
-					double ny, double size, boolean source)
+			public mxPoint paintMarker(Graphics2DCanvas canvas,
+                                       JGraphXCellState state, String type, mxPoint pe, double nx,
+                                       double ny, double size, boolean source)
 			{
 				canvas.getGraphics().draw(
 						new Line2D.Float((int) Math.round(pe.getX() - nx - ny
@@ -81,16 +81,16 @@ public class mxMarkerRegistry
 		
 		registerMarker(mxConstants.ARROW_OVAL, new mxIMarker()
 		{
-			public mxPoint paintMarker(mxGraphics2DCanvas canvas,
-					mxCellState state, String type, mxPoint pe, double nx,
-					double ny, double size, boolean source)
+			public mxPoint paintMarker(Graphics2DCanvas canvas,
+                                       JGraphXCellState state, String type, mxPoint pe, double nx,
+                                       double ny, double size, boolean source)
 			{
 				double cx = pe.getX() - nx / 2;
 				double cy = pe.getY() - ny / 2;
 				double a = size / 2;
 				Shape shape = new Ellipse2D.Double(cx - a, cy - a, size, size);
 
-				if (mxUtils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true))
+				if (JGraphXUtils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true))
 				{
 					canvas.fillShape(shape);
 				}
@@ -104,9 +104,9 @@ public class mxMarkerRegistry
 		
 		registerMarker(mxConstants.ARROW_DIAMOND, new mxIMarker()
 		{
-			public mxPoint paintMarker(mxGraphics2DCanvas canvas,
-					mxCellState state, String type, mxPoint pe, double nx,
-					double ny, double size, boolean source)
+			public mxPoint paintMarker(Graphics2DCanvas canvas,
+                                       JGraphXCellState state, String type, mxPoint pe, double nx,
+                                       double ny, double size, boolean source)
 			{
 				Polygon poly = new Polygon();
 				poly.addPoint((int) Math.round(pe.getX()),
@@ -118,7 +118,7 @@ public class mxMarkerRegistry
 				poly.addPoint((int) Math.round(pe.getX() - nx / 2 + ny / 2),
 						(int) Math.round(pe.getY() - ny / 2 - nx / 2));
 
-				if (mxUtils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true))
+				if (JGraphXUtils.isTrue(state.getStyle(), (source) ? "startFill" : "endFill", true))
 				{
 					canvas.fillShape(poly);
 				}

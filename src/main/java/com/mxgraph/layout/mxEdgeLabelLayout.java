@@ -7,9 +7,9 @@ import java.util.List;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.GraphView;
 
 public class mxEdgeLabelLayout extends mxGraphLayout
 {
@@ -18,7 +18,7 @@ public class mxEdgeLabelLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxEdgeLabelLayout(mxGraph graph)
+	public mxEdgeLabelLayout(JGraphX graph)
 	{
 		super(graph);
 	}
@@ -29,7 +29,7 @@ public class mxEdgeLabelLayout extends mxGraphLayout
 	 */
 	public void execute(Object parent)
 	{
-		mxGraphView view = graph.getView();
+		GraphView view = graph.getView();
 		mxIGraphModel model = graph.getModel();
 
 		// Gets all vertices and edges inside the parent
@@ -40,7 +40,7 @@ public class mxEdgeLabelLayout extends mxGraphLayout
 		for (int i = 0; i < childCount; i++)
 		{
 			Object cell = model.getChildAt(parent, i);
-			mxCellState state = view.getState(cell);
+			JGraphXCellState state = view.getState(cell);
 
 			if (state != null)
 			{
@@ -73,13 +73,13 @@ public class mxEdgeLabelLayout extends mxGraphLayout
 		{
 			for (int i = 0; i < e.length; i++)
 			{
-				mxCellState edge = (mxCellState) e[i];
+				JGraphXCellState edge = (JGraphXCellState) e[i];
 
 				if (edge != null && edge.getLabelBounds() != null)
 				{
 					for (int j = 0; j < v.length; j++)
 					{
-						mxCellState vertex = (mxCellState) v[j];
+						JGraphXCellState vertex = (JGraphXCellState) v[j];
 
 						if (vertex != null)
 						{
@@ -98,7 +98,7 @@ public class mxEdgeLabelLayout extends mxGraphLayout
 	/**
 	 * 
 	 */
-	protected void avoid(mxCellState edge, mxCellState vertex)
+	protected void avoid(JGraphXCellState edge, JGraphXCellState vertex)
 	{
 		mxIGraphModel model = graph.getModel();
 		Rectangle labRect = edge.getLabelBounds().getRectangle();

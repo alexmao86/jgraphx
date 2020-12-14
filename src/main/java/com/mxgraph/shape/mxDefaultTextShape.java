@@ -10,10 +10,10 @@ import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxDefaultTextShape implements mxITextShape
 {
@@ -21,15 +21,15 @@ public class mxDefaultTextShape implements mxITextShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, String text,
-			mxCellState state, Map<String, Object> style)
+	public void paintShape(Graphics2DCanvas canvas, String text,
+                           JGraphXCellState state, Map<String, Object> style)
 	{
 		Rectangle rect = state.getLabelBounds().getRectangle();
 		Graphics2D g = canvas.getGraphics();
 
 		if (g.getClipBounds() == null || g.getClipBounds().intersects(rect))
 		{
-			boolean horizontal = mxUtils.isTrue(style,
+			boolean horizontal = JGraphXUtils.isTrue(style,
 					mxConstants.STYLE_HORIZONTAL, true);
 			double scale = canvas.getScale();
 			int x = rect.x;
@@ -43,15 +43,15 @@ public class mxDefaultTextShape implements mxITextShape
 				g.translate(w / 2 - h / 2, h / 2 - w / 2);
 			}
 
-			Color fontColor = mxUtils.getColor(style,
+			Color fontColor = JGraphXUtils.getColor(style,
 					mxConstants.STYLE_FONTCOLOR, Color.black);
 			g.setColor(fontColor);
 
 			// Shifts the y-coordinate down by the ascent plus a workaround
 			// for the line not starting at the exact vertical location
-			Font scaledFont = mxUtils.getFont(style, scale);
+			Font scaledFont = JGraphXUtils.getFont(style, scale);
 			g.setFont(scaledFont);
-			int fontSize = mxUtils.getInt(style, mxConstants.STYLE_FONTSIZE,
+			int fontSize = JGraphXUtils.getInt(style, mxConstants.STYLE_FONTSIZE,
 					mxConstants.DEFAULT_FONTSIZE);
 			FontMetrics fm = g.getFontMetrics();
 			int scaledFontSize = scaledFont.getSize();
@@ -66,7 +66,7 @@ public class mxDefaultTextShape implements mxITextShape
 			y += 2 * fm.getMaxAscent() - fm.getHeight()
 					+ mxConstants.LABEL_INSET * scale;
 
-			Object vertAlign = mxUtils.getString(style,
+			Object vertAlign = JGraphXUtils.getString(style,
 					mxConstants.STYLE_VERTICAL_ALIGN, mxConstants.ALIGN_MIDDLE);
 			double vertAlignProportion = 0.5;
 
@@ -82,7 +82,7 @@ public class mxDefaultTextShape implements mxITextShape
 			y += (1.0 - fontScaleRatio) * h * vertAlignProportion;
 
 			// Gets the alignment settings
-			Object align = mxUtils.getString(style, mxConstants.STYLE_ALIGN,
+			Object align = JGraphXUtils.getString(style, mxConstants.STYLE_ALIGN,
 					mxConstants.ALIGN_CENTER);
 
 			if (align.equals(mxConstants.ALIGN_LEFT))
@@ -136,5 +136,5 @@ public class mxDefaultTextShape implements mxITextShape
 	 * @param x the x co-ord of the baseline of the text line
 	 * @param y the y co-ord of the baseline of the text line
 	 */
-	protected void postProcessLine(String text, String line, FontMetrics fm, mxGraphics2DCanvas canvas, int x, int y){}
+	protected void postProcessLine(String text, String line, FontMetrics fm, Graphics2DCanvas canvas, int x, int y){}
 }

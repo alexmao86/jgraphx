@@ -8,8 +8,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.view.JGraphX;
 
 /**
  *
@@ -361,13 +361,13 @@ public class mxGraphActions
 	 * @param e
 	 * @return Returns the graph for the given action event.
 	 */
-	public static final mxGraph getGraph(ActionEvent e)
+	public static final JGraphX getGraph(ActionEvent e)
 	{
 		Object source = e.getSource();
 
-		if (source instanceof mxGraphComponent)
+		if (source instanceof JGraphXComponent)
 		{
-			return ((mxGraphComponent) source).getGraph();
+			return ((JGraphXComponent) source).getGraph();
 		}
 
 		return null;
@@ -398,9 +398,9 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			if (e.getSource() instanceof mxGraphComponent)
+			if (e.getSource() instanceof JGraphXComponent)
 			{
-				((mxGraphComponent) e.getSource()).startEditing();
+				((JGraphXComponent) e.getSource()).startEditing();
 			}
 		}
 
@@ -431,7 +431,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -464,7 +464,7 @@ public class mxGraphActions
 		/**
 		 * 
 		 */
-		protected int getGroupBorder(mxGraph graph)
+		protected int getGroupBorder(JGraphX graph)
 		{
 			return 2 * graph.getGridSize();
 
@@ -475,7 +475,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -511,7 +511,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -546,7 +546,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -579,7 +579,7 @@ public class mxGraphActions
 		/**
 		 * 
 		 */
-		protected int getGroupBorder(mxGraph graph)
+		protected int getGroupBorder(JGraphX graph)
 		{
 			return 2 * graph.getGridSize();
 		}
@@ -589,7 +589,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -624,7 +624,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -661,7 +661,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -698,7 +698,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{
@@ -748,10 +748,10 @@ public class mxGraphActions
 		{
 			Object source = e.getSource();
 
-			if (source instanceof mxGraphComponent)
+			if (source instanceof JGraphXComponent)
 			{
 				String name = getValue(Action.NAME).toString();
-				mxGraphComponent graphComponent = (mxGraphComponent) source;
+				JGraphXComponent graphComponent = (JGraphXComponent) source;
 
 				if (name.equalsIgnoreCase("zoomIn"))
 				{
@@ -795,7 +795,7 @@ public class mxGraphActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			mxGraph graph = getGraph(e);
+			JGraphX graph = getGraph(e);
 
 			if (graph != null)
 			{

@@ -7,17 +7,13 @@ import java.awt.Color;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
+import com.mxgraph.canvas.*;
+import com.mxgraph.view.TemporaryCellStates;
 import org.w3c.dom.Document;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.canvas.mxHtmlCanvas;
-import com.mxgraph.canvas.mxICanvas;
-import com.mxgraph.canvas.mxImageCanvas;
-import com.mxgraph.canvas.mxSvgCanvas;
-import com.mxgraph.canvas.mxVmlCanvas;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
-import com.mxgraph.view.mxTemporaryCellStates;
+import com.mxgraph.canvas.JGraphXImageCanvas;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.GraphView;
 
 public class mxCellRenderer
 {
@@ -36,10 +32,10 @@ public class mxCellRenderer
 	 * @param graph Graph to be painted onto the canvas.
 	 * @return Returns the image that represents the canvas.
 	 */
-	public static mxICanvas drawCells(mxGraph graph, Object[] cells,
-			double scale, mxRectangle clip, CanvasFactory factory)
+	public static IJGraphXCanvas drawCells(JGraphX graph, Object[] cells,
+										   double scale, mxRectangle clip, CanvasFactory factory)
 	{
-		mxICanvas canvas = null;
+		IJGraphXCanvas canvas = null;
 
 		if (cells == null)
 		{
@@ -47,7 +43,7 @@ public class mxCellRenderer
 		}
 
 		// Gets the current state of the view
-		mxGraphView view = graph.getView();
+		GraphView view = graph.getView();
 
 		// Keeps the existing translation as the cells might
 		// be aligned to the grid in a different way in a graph
@@ -59,7 +55,7 @@ public class mxCellRenderer
 		view.setEventsEnabled(false);
 
 		// Uses the view to create temporary cell states for each cell
-		mxTemporaryCellStates temp = new mxTemporaryCellStates(view, scale,
+		TemporaryCellStates temp = new TemporaryCellStates(view, scale,
 				cells);
 
 		try
@@ -110,28 +106,28 @@ public class mxCellRenderer
 	/**
 	 * 
 	 */
-	public static BufferedImage createBufferedImage(mxGraph graph,
+	public static BufferedImage createBufferedImage(JGraphX graph,
 			Object[] cells, double scale, Color background, boolean antiAlias,
 			mxRectangle clip)
 	{
 		return createBufferedImage(graph, cells, scale, background, antiAlias,
-				clip, new mxGraphics2DCanvas());
+				clip, new Graphics2DCanvas());
 	}
 
 	/**
 	 * 
 	 */
-	public static BufferedImage createBufferedImage(mxGraph graph,
+	public static BufferedImage createBufferedImage(JGraphX graph,
 			Object[] cells, double scale, final Color background,
 			final boolean antiAlias, mxRectangle clip,
-			final mxGraphics2DCanvas graphicsCanvas)
+			final Graphics2DCanvas graphicsCanvas)
 	{
-		mxImageCanvas canvas = (mxImageCanvas) drawCells(graph, cells, scale,
+		JGraphXImageCanvas canvas = (JGraphXImageCanvas) drawCells(graph, cells, scale,
 				clip, new CanvasFactory()
 				{
-					public mxICanvas createCanvas(int width, int height)
+					public IJGraphXCanvas createCanvas(int width, int height)
 					{
-						return new mxImageCanvas(graphicsCanvas, width, height,
+						return new JGraphXImageCanvas(graphicsCanvas, width, height,
 								background, antiAlias);
 					}
 
@@ -143,15 +139,15 @@ public class mxCellRenderer
 	/**
 	 * 
 	 */
-	public static Document createHtmlDocument(mxGraph graph, Object[] cells,
+	public static Document createHtmlDocument(JGraphX graph, Object[] cells,
 			double scale, Color background, mxRectangle clip)
 	{
-		mxHtmlCanvas canvas = (mxHtmlCanvas) drawCells(graph, cells, scale,
+		HtmlCanvas canvas = (HtmlCanvas) drawCells(graph, cells, scale,
 				clip, new CanvasFactory()
 				{
-					public mxICanvas createCanvas(int width, int height)
+					public IJGraphXCanvas createCanvas(int width, int height)
 					{
-						return new mxHtmlCanvas(mxDomUtils.createHtmlDocument());
+						return new HtmlCanvas(mxDomUtils.createHtmlDocument());
 					}
 
 				});
@@ -162,15 +158,15 @@ public class mxCellRenderer
 	/**
 	 * 
 	 */
-	public static Document createSvgDocument(mxGraph graph, Object[] cells,
+	public static Document createSvgDocument(JGraphX graph, Object[] cells,
 			double scale, Color background, mxRectangle clip)
 	{
-		mxSvgCanvas canvas = (mxSvgCanvas) drawCells(graph, cells, scale, clip,
+		SvgCanvas canvas = (SvgCanvas) drawCells(graph, cells, scale, clip,
 				new CanvasFactory()
 				{
-					public mxICanvas createCanvas(int width, int height)
+					public IJGraphXCanvas createCanvas(int width, int height)
 					{
-						return new mxSvgCanvas(mxDomUtils.createSvgDocument(width,
+						return new SvgCanvas(mxDomUtils.createSvgDocument(width,
 								height));
 					}
 
@@ -182,15 +178,15 @@ public class mxCellRenderer
 	/**
 	 * 
 	 */
-	public static Document createVmlDocument(mxGraph graph, Object[] cells,
+	public static Document createVmlDocument(JGraphX graph, Object[] cells,
 			double scale, Color background, mxRectangle clip)
 	{
-		mxVmlCanvas canvas = (mxVmlCanvas) drawCells(graph, cells, scale, clip,
+		VmlCanvas canvas = (VmlCanvas) drawCells(graph, cells, scale, clip,
 				new CanvasFactory()
 				{
-					public mxICanvas createCanvas(int width, int height)
+					public IJGraphXCanvas createCanvas(int width, int height)
 					{
-						return new mxVmlCanvas(mxDomUtils.createVmlDocument());
+						return new VmlCanvas(mxDomUtils.createVmlDocument());
 					}
 
 				});
@@ -208,7 +204,7 @@ public class mxCellRenderer
 		 * Separates the creation of the canvas from its initialization, when the
 		 * size of the required graphics buffer / document / container is known.
 		 */
-		public abstract mxICanvas createCanvas(int width, int height);
+		public abstract IJGraphXCanvas createCanvas(int width, int height);
 
 	}
 

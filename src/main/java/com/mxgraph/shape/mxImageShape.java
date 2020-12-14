@@ -6,10 +6,10 @@ package com.mxgraph.shape;
 import java.awt.Color;
 import java.awt.Rectangle;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
 
 /**
  * A rectangular shape that contains a single image. See mxImageBundle for
@@ -21,24 +21,24 @@ public class mxImageShape extends mxRectangleShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		super.paintShape(canvas, state);
 
-		boolean flipH = mxUtils.isTrue(state.getStyle(),
+		boolean flipH = JGraphXUtils.isTrue(state.getStyle(),
 				mxConstants.STYLE_IMAGE_FLIPH, false);
-		boolean flipV = mxUtils.isTrue(state.getStyle(),
+		boolean flipV = JGraphXUtils.isTrue(state.getStyle(),
 				mxConstants.STYLE_IMAGE_FLIPV, false);
 
 		canvas.drawImage(getImageBounds(canvas, state),
 				getImageForStyle(canvas, state),
-				mxGraphics2DCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV);
+				Graphics2DCanvas.PRESERVE_IMAGE_ASPECT, flipH, flipV);
 	}
 
 	/**
 	 * 
 	 */
-	public Rectangle getImageBounds(mxGraphics2DCanvas canvas, mxCellState state)
+	public Rectangle getImageBounds(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		return state.getRectangle();
 	}
@@ -46,7 +46,7 @@ public class mxImageShape extends mxRectangleShape
 	/**
 	 * 
 	 */
-	public boolean hasGradient(mxGraphics2DCanvas canvas, mxCellState state)
+	public boolean hasGradient(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		return false;
 	}
@@ -54,7 +54,7 @@ public class mxImageShape extends mxRectangleShape
 	/**
 	 * 
 	 */
-	public String getImageForStyle(mxGraphics2DCanvas canvas, mxCellState state)
+	public String getImageForStyle(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		return canvas.getImageForStyle(state.getStyle());
 	}
@@ -62,18 +62,18 @@ public class mxImageShape extends mxRectangleShape
 	/**
 	 * 
 	 */
-	public Color getFillColor(mxGraphics2DCanvas canvas, mxCellState state)
+	public Color getFillColor(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		return mxUtils.getColor(state.getStyle(),
+		return JGraphXUtils.getColor(state.getStyle(),
 				mxConstants.STYLE_IMAGE_BACKGROUND);
 	}
 
 	/**
 	 * 
 	 */
-	public Color getStrokeColor(mxGraphics2DCanvas canvas, mxCellState state)
+	public Color getStrokeColor(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		return mxUtils.getColor(state.getStyle(),
+		return JGraphXUtils.getColor(state.getStyle(),
 				mxConstants.STYLE_IMAGE_BORDER);
 	}
 

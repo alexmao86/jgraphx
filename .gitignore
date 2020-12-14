@@ -5,3 +5,4 @@
 .project
 recentFiles.txt
 /logs/
+.idea/**

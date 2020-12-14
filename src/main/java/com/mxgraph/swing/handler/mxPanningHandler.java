@@ -7,7 +7,7 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.MouseEvent;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxMouseAdapter;
 
 /**
@@ -24,7 +24,7 @@ public class mxPanningHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 	
 	/**
 	 * 
@@ -40,7 +40,7 @@ public class mxPanningHandler extends mxMouseAdapter
 	 * 
 	 * @param graphComponent
 	 */
-	public mxPanningHandler(mxGraphComponent graphComponent)
+	public mxPanningHandler(JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 

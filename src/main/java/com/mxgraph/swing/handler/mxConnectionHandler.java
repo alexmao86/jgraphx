@@ -17,8 +17,8 @@ import javax.swing.JOptionPane;
 
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.mxGraphComponent.mxGraphControl;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.swing.JGraphXComponent.mxGraphControl;
 import com.mxgraph.swing.util.mxMouseAdapter;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
@@ -27,9 +27,9 @@ import com.mxgraph.util.mxEventSource;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Connection handler creates new connections between cells. This control is used to display the connector
@@ -55,7 +55,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Holds the event source.
@@ -126,7 +126,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	protected transient mxCellState source;
+	protected transient JGraphXCellState source;
 
 	/**
 	 * 
@@ -153,7 +153,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 	 * 
 	 * @param graphComponent
 	 */
-	public mxConnectionHandler(mxGraphComponent graphComponent)
+	public mxConnectionHandler(JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 
@@ -182,8 +182,8 @@ public class mxConnectionHandler extends mxMouseAdapter
 			{
 				if (evt.getPropertyName().equals("graph"))
 				{
-					removeGraphListeners((mxGraph) evt.getOldValue());
-					addGraphListeners((mxGraph) evt.getNewValue());
+					removeGraphListeners((JGraphX) evt.getOldValue());
+					addGraphListeners((JGraphX) evt.getNewValue());
 				}
 			}
 		});
@@ -229,7 +229,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 			}
 
 			// Sets the highlight color according to isValidConnection
-			protected boolean isValidState(mxCellState state)
+			protected boolean isValidState(JGraphXCellState state)
 			{
 				if (isConnecting())
 				{
@@ -243,7 +243,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 
 			// Overrides to use marker color only in highlight mode or for
 			// target selection
-			protected Color getMarkerColor(MouseEvent e, mxCellState state,
+			protected Color getMarkerColor(MouseEvent e, JGraphXCellState state,
 					boolean isValid)
 			{
 				return (isHighlighting() || isConnecting()) ? super
@@ -252,7 +252,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 
 			// Overrides to use hotspot only for source selection otherwise
 			// intersects always returns true when over a cell
-			protected boolean intersects(mxCellState state, MouseEvent e)
+			protected boolean intersects(JGraphXCellState state, MouseEvent e)
 			{
 				if (!isHighlighting() || isConnecting())
 				{
@@ -269,12 +269,12 @@ public class mxConnectionHandler extends mxMouseAdapter
 	/**
 	 * Installs the listeners to update the handles after any changes.
 	 */
-	protected void addGraphListeners(mxGraph graph)
+	protected void addGraphListeners(JGraphX graph)
 	{
 		// LATER: Install change listener for graph model, view
 		if (graph != null)
 		{
-			mxGraphView view = graph.getView();
+			GraphView view = graph.getView();
 			view.addListener(mxEvent.SCALE, resetHandler);
 			view.addListener(mxEvent.TRANSLATE, resetHandler);
 			view.addListener(mxEvent.SCALE_AND_TRANSLATE, resetHandler);
@@ -286,11 +286,11 @@ public class mxConnectionHandler extends mxMouseAdapter
 	/**
 	 * Removes all installed listeners.
 	 */
-	protected void removeGraphListeners(mxGraph graph)
+	protected void removeGraphListeners(JGraphX graph)
 	{
 		if (graph != null)
 		{
-			mxGraphView view = graph.getView();
+			GraphView view = graph.getView();
 			view.removeListener(resetHandler, mxEvent.SCALE);
 			view.removeListener(resetHandler, mxEvent.TRANSLATE);
 			view.removeListener(resetHandler, mxEvent.SCALE_AND_TRANSLATE);
@@ -495,7 +495,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 	 */
 	public Object createTargetVertex(MouseEvent e, Object source)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		Object clone = graph.cloneCells(new Object[] { source })[0];
 		mxIGraphModel model = graph.getModel();
 		mxGeometry geo = model.getGeometry(clone);
@@ -570,7 +570,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	public void start(MouseEvent e, mxCellState state)
+	public void start(MouseEvent e, JGraphXCellState state)
 	{
 		first = e.getPoint();
 		connectPreview.start(e, state, "");
@@ -653,7 +653,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 			
 			if (e.getButton() == 0 || (isActive() && connectPreview.isActive()))
 			{
-				mxCellState state = marker.process(e);
+				JGraphXCellState state = marker.process(e);
 	
 				if (connectPreview.isActive())
 				{
@@ -686,7 +686,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 			}
 			else if (first != null)
 			{
-				mxGraph graph = graphComponent.getGraph();
+				JGraphX graph = graphComponent.getGraph();
 				double dx = first.getX() - e.getX();
 				double dy = first.getY() - e.getY();
 	
@@ -713,7 +713,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 								if (dropTarget == null
 										|| !graph.getModel().isEdge(dropTarget))
 								{
-									mxCellState pstate = graph.getView().getState(
+									JGraphXCellState pstate = graph.getView().getState(
 											dropTarget);
 	
 									if (pstate != null)
@@ -738,7 +738,7 @@ public class mxConnectionHandler extends mxMouseAdapter
 							// inserted in order to invoke update in the connectPreview.
 							// This means we have a cell state which should be created
 							// after the model.update, so this should be fixed.
-							mxCellState targetState = graph.getView().getState(
+							JGraphXCellState targetState = graph.getView().getState(
 									vertex, true);
 							connectPreview.update(e, targetState, e.getX(),
 									e.getY());

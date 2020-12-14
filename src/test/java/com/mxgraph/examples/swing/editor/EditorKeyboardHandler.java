@@ -8,7 +8,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.handler.mxKeyboardHandler;
 import com.mxgraph.swing.util.mxGraphActions;
 
@@ -23,7 +23,7 @@ public class EditorKeyboardHandler extends mxKeyboardHandler
 	 * 
 	 * @param graphComponent
 	 */
-	public EditorKeyboardHandler(mxGraphComponent graphComponent)
+	public EditorKeyboardHandler(JGraphXComponent graphComponent)
 	{
 		super(graphComponent);
 	}

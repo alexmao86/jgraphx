@@ -6,11 +6,11 @@ package com.mxgraph.shape;
 import java.awt.Rectangle;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.swing.util.mxSwingConstants;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxRectangleShape extends mxBasicShape
 {
@@ -18,11 +18,11 @@ public class mxRectangleShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 
-		if (mxUtils.isTrue(style, mxConstants.STYLE_ROUNDED, false))
+		if (JGraphXUtils.isTrue(style, mxConstants.STYLE_ROUNDED, false))
 		{
 			Rectangle tmp = state.getRectangle();
 
@@ -86,9 +86,9 @@ public class mxRectangleShape extends mxBasicShape
 	/**
 	 * Helper method to configure the given wrapper canvas.
 	 */
-	protected int getArcSize(mxCellState state, double w, double h)
+	protected int getArcSize(JGraphXCellState state, double w, double h)
 	{
-		double f = mxUtils.getDouble(state.getStyle(),
+		double f = JGraphXUtils.getDouble(state.getStyle(),
 				mxConstants.STYLE_ARCSIZE,
 				mxConstants.RECTANGLE_ROUNDING_FACTOR * 100) / 100;
 

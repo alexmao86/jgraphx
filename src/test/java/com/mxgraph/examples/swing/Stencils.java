@@ -4,19 +4,19 @@ import java.awt.Image;
 
 import javax.swing.JFrame;
 
+import com.mxgraph.swing.view.JGraphXInteractiveCanvas;
+import com.mxgraph.util.JGraphXUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.canvas.mxGraphicsCanvas2D;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.canvas.GraphicsCanvas2D;
 import com.mxgraph.shape.mxStencil;
 import com.mxgraph.shape.mxStencilRegistry;
-import com.mxgraph.swing.mxGraphComponent;
-import com.mxgraph.swing.view.mxInteractiveCanvas;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.util.mxXmlUtils;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.util.XmlUtils;
+import com.mxgraph.view.JGraphX;
 
 public class Stencils extends JFrame
 {
@@ -34,7 +34,7 @@ public class Stencils extends JFrame
 		{
 			String filename = Stencils.class.getResource(
 					"/com/mxgraph/examples/swing/shapes.xml").getPath();
-			Document doc = mxXmlUtils.parseXml(mxUtils.readFile(filename));
+			Document doc = XmlUtils.parseXml(JGraphXUtils.readFile(filename));
 
 			Element shapes = (Element) doc.getDocumentElement();
 			NodeList list = shapes.getElementsByTagName("shape");
@@ -45,11 +45,11 @@ public class Stencils extends JFrame
 				mxStencilRegistry.addStencil(shape.getAttribute("name"),
 						new mxStencil(shape)
 						{
-							protected mxGraphicsCanvas2D createCanvas(
-									final mxGraphics2DCanvas gc)
+							protected GraphicsCanvas2D createCanvas(
+									final Graphics2DCanvas gc)
 							{
 								// Redirects image loading to graphics canvas
-								return new mxGraphicsCanvas2D(gc.getGraphics())
+								return new GraphicsCanvas2D(gc.getGraphics())
 								{
 									protected Image loadImage(String src)
 									{
@@ -70,7 +70,7 @@ public class Stencils extends JFrame
 						});
 			}
 
-			mxGraph graph = new mxGraph();
+			JGraphX graph = new JGraphX();
 			Object parent = graph.getDefaultParent();
 
 			graph.getModel().beginUpdate();
@@ -88,12 +88,12 @@ public class Stencils extends JFrame
 				graph.getModel().endUpdate();
 			}
 
-			mxGraphComponent graphComponent = new mxGraphComponent(graph)
+			JGraphXComponent graphComponent = new JGraphXComponent(graph)
 			{
 				// Sets global image base path
-				public mxInteractiveCanvas createCanvas()
+				public JGraphXInteractiveCanvas createCanvas()
 				{
-					mxInteractiveCanvas canvas = super.createCanvas();
+					JGraphXInteractiveCanvas canvas = super.createCanvas();
 					canvas.setImageBasePath("/com/mxgraph/examples/swing/");
 
 					return canvas;

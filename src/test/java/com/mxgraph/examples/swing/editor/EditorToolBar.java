@@ -22,15 +22,15 @@ import com.mxgraph.examples.swing.editor.EditorActions.NewAction;
 import com.mxgraph.examples.swing.editor.EditorActions.OpenAction;
 import com.mxgraph.examples.swing.editor.EditorActions.PrintAction;
 import com.mxgraph.examples.swing.editor.EditorActions.SaveAction;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxGraphActions;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.GraphView;
 
 public class EditorToolBar extends JToolBar
 {
@@ -119,7 +119,7 @@ public class EditorToolBar extends JToolBar
 
 				if (font != null && !font.equals("-"))
 				{
-					mxGraph graph = editor.getGraphComponent().getGraph();
+					JGraphX graph = editor.getGraphComponent().getGraph();
 					graph.setCellStyles(mxConstants.STYLE_FONTFAMILY, font);
 				}
 			}
@@ -141,7 +141,7 @@ public class EditorToolBar extends JToolBar
 			 */
 			public void actionPerformed(ActionEvent e)
 			{
-				mxGraph graph = editor.getGraphComponent().getGraph();
+				JGraphX graph = editor.getGraphComponent().getGraph();
 				graph.setCellStyles(mxConstants.STYLE_FONTSIZE, sizeCombo
 						.getSelectedItem().toString().replace("pt", ""));
 			}
@@ -180,7 +180,7 @@ public class EditorToolBar extends JToolBar
 
 		addSeparator();
 
-		final mxGraphView view = editor.getGraphComponent().getGraph()
+		final GraphView view = editor.getGraphComponent().getGraph()
 				.getView();
 		final JComboBox zoomCombo = new JComboBox(new Object[] { "400%",
 				"200%", "150%", "100%", "75%", "50%", mxResources.get("page"),
@@ -231,7 +231,7 @@ public class EditorToolBar extends JToolBar
 			 */
 			public void actionPerformed(ActionEvent e)
 			{
-				mxGraphComponent graphComponent = editor.getGraphComponent();
+				JGraphXComponent graphComponent = editor.getGraphComponent();
 
 				// Zoomcombo is changed when the scale is changed in the diagram
 				// but the change is ignored here
@@ -243,13 +243,13 @@ public class EditorToolBar extends JToolBar
 					{
 						graphComponent.setPageVisible(true);
 						graphComponent
-								.setZoomPolicy(mxGraphComponent.ZOOM_POLICY_PAGE);
+								.setZoomPolicy(JGraphXComponent.ZOOM_POLICY_PAGE);
 					}
 					else if (zoom.equals(mxResources.get("width")))
 					{
 						graphComponent.setPageVisible(true);
 						graphComponent
-								.setZoomPolicy(mxGraphComponent.ZOOM_POLICY_WIDTH);
+								.setZoomPolicy(JGraphXComponent.ZOOM_POLICY_WIDTH);
 					}
 					else if (zoom.equals(mxResources.get("actualSize")))
 					{

@@ -12,15 +12,12 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.SwingUtilities;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxMouseAdapter;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
+import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
 
 /**
  * Basic example of implementing a handler for rotation. This can be used as follows:
@@ -55,7 +52,7 @@ public class mxRotationHandler extends mxMouseAdapter
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Specifies if this handler is enabled. Default is true.
@@ -70,7 +67,7 @@ public class mxRotationHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	protected mxCellState currentState;
+	protected JGraphXCellState currentState;
 
 	/**
 	 * 
@@ -90,7 +87,7 @@ public class mxRotationHandler extends mxMouseAdapter
 	/**
 	 * Constructs a new rotation handler.
 	 */
-	public mxRotationHandler(mxGraphComponent graphComponent)
+	public mxRotationHandler(JGraphXComponent graphComponent)
 	{
 		this.graphComponent = graphComponent;
 		graphComponent.addMouseListener(this);
@@ -118,7 +115,7 @@ public class mxRotationHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	public mxGraphComponent getGraphComponent()
+	public JGraphXComponent getGraphComponent()
 	{
 		return graphComponent;
 	}
@@ -154,7 +151,7 @@ public class mxRotationHandler extends mxMouseAdapter
 	/**
 	 * 
 	 */
-	public boolean isStateHandled(mxCellState state)
+	public boolean isStateHandled(JGraphXCellState state)
 	{
 		return graphComponent.getGraph().getModel().isVertex(state.getCell());
 	}
@@ -177,7 +174,7 @@ public class mxRotationHandler extends mxMouseAdapter
 	 */
 	public void start(MouseEvent e)
 	{
-		initialAngle = mxUtils.getDouble(currentState.getStyle(),
+		initialAngle = JGraphXUtils.getDouble(currentState.getStyle(),
 				mxConstants.STYLE_ROTATION) * mxConstants.RAD_PER_DEG;
 		currentAngle = initialAngle;
 		first = SwingUtilities.convertPoint(e.getComponent(), e.getPoint(),
@@ -205,14 +202,14 @@ public class mxRotationHandler extends mxMouseAdapter
 			else if (currentState == null
 					|| !currentState.getRectangle().contains(e.getPoint()))
 			{
-				mxCellState eventState = graphComponent
+				JGraphXCellState eventState = graphComponent
 						.getGraph()
 						.getView()
 						.getState(
 								graphComponent.getCellAt(e.getX(), e.getY(),
 										false));
 
-				mxCellState state = null;
+				JGraphXCellState state = null;
 
 				if (eventState != null && isStateHandled(eventState))
 				{
@@ -258,7 +255,7 @@ public class mxRotationHandler extends mxMouseAdapter
 		if (graphComponent.isEnabled() && isEnabled() && !e.isConsumed()
 				&& first != null)
 		{
-			mxRectangle dirty = mxUtils.getBoundingBox(currentState,
+			mxRectangle dirty = JGraphXUtils.getBoundingBox(currentState,
 					currentAngle * mxConstants.DEG_PER_RAD);
 			Point pt = SwingUtilities.convertPoint(e.getComponent(),
 					e.getPoint(), graphComponent.getGraphControl());
@@ -272,7 +269,7 @@ public class mxRotationHandler extends mxMouseAdapter
 			currentAngle = ((pt.getX() > cx) ? -1 : 1) * Math.acos(dy / c)
 					+ PI4 + initialAngle;
 
-			dirty.add(mxUtils.getBoundingBox(currentState, currentAngle
+			dirty.add(JGraphXUtils.getBoundingBox(currentState, currentAngle
 					* mxConstants.DEG_PER_RAD));
 			dirty.grow(1);
 
@@ -341,7 +338,7 @@ public class mxRotationHandler extends mxMouseAdapter
 
 		if (currentState != null && first != null)
 		{
-			dirty = mxUtils.getBoundingBox(currentState, currentAngle
+			dirty = JGraphXUtils.getBoundingBox(currentState, currentAngle
 					* mxConstants.DEG_PER_RAD);
 			dirty.grow(1);
 		}
@@ -372,7 +369,7 @@ public class mxRotationHandler extends mxMouseAdapter
 						currentState.getCenterX(), currentState.getCenterY());
 			}
 
-			mxUtils.setAntiAlias((Graphics2D) g, true, false);
+			JGraphXUtils.setAntiAlias((Graphics2D) g, true, false);
 			g.drawRect(rect.x, rect.y, rect.width, rect.height);
 		}
 	}

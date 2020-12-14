@@ -8,12 +8,12 @@ import java.util.Set;
 
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 public class mxCompactTreeLayout extends mxGraphLayout
 {
@@ -97,7 +97,7 @@ public class mxCompactTreeLayout extends mxGraphLayout
 	 * 
 	 * @param graph
 	 */
-	public mxCompactTreeLayout(mxGraph graph)
+	public mxCompactTreeLayout(JGraphX graph)
 	{
 		this(graph, true);
 	}
@@ -107,7 +107,7 @@ public class mxCompactTreeLayout extends mxGraphLayout
 	 * @param graph
 	 * @param horizontal
 	 */
-	public mxCompactTreeLayout(mxGraph graph, boolean horizontal)
+	public mxCompactTreeLayout(JGraphX graph, boolean horizontal)
 	{
 		this(graph, horizontal, false);
 	}
@@ -118,7 +118,7 @@ public class mxCompactTreeLayout extends mxGraphLayout
 	 * @param horizontal
 	 * @param invert
 	 */
-	public mxCompactTreeLayout(mxGraph graph, boolean horizontal, boolean invert)
+	public mxCompactTreeLayout(JGraphX graph, boolean horizontal, boolean invert)
 	{
 		super(graph);
 		this.horizontal = horizontal;
@@ -522,7 +522,7 @@ public class mxCompactTreeLayout extends mxGraphLayout
 			TreeNode prev = null;
 			Object[] out = graph.getEdges(cell, parent, invert, !invert, false,
 					true);
-			mxGraphView view = graph.getView();
+			GraphView view = graph.getView();
 
 			for (int i = 0; i < out.length; i++)
 			{
@@ -543,7 +543,7 @@ public class mxCompactTreeLayout extends mxGraphLayout
 					}
 
 					// Checks if terminal in same swimlane
-					mxCellState state = view.getState(edge);
+					JGraphXCellState state = view.getState(edge);
 					Object target = (state != null) ? state
 							.getVisibleTerminal(invert) : view
 							.getVisibleTerminal(edge, invert);
@@ -930,7 +930,7 @@ public class mxCompactTreeLayout extends mxGraphLayout
 	 */
 	protected void adjustParents()
 	{
-		arrangeGroups(mxUtils.sortCells(this.parentsChanged, true).toArray(), groupPadding);
+		arrangeGroups(JGraphXUtils.sortCells(this.parentsChanged, true).toArray(), groupPadding);
 	}
 
 	/**

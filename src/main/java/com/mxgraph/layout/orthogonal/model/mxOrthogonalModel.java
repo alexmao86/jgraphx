@@ -3,14 +3,14 @@
  */
 package com.mxgraph.layout.orthogonal.model;
 
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * A custom graph model 
  */
 public class mxOrthogonalModel
 {
-   public mxOrthogonalModel(mxGraph graph)
+   public mxOrthogonalModel(JGraphX graph)
    {
       // 
    }

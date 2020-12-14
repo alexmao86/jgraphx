@@ -26,10 +26,10 @@ import com.mxgraph.layout.hierarchical.model.mxGraphHierarchyEdge;
 import com.mxgraph.layout.hierarchical.model.mxGraphHierarchyModel;
 import com.mxgraph.layout.hierarchical.model.mxGraphHierarchyNode;
 import com.mxgraph.layout.hierarchical.model.mxGraphHierarchyRank;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Sets the horizontal locations of node and edge dummy nodes on each layer.
@@ -801,7 +801,7 @@ public class mxCoordinateAssignment implements mxHierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	private void initialCoords(mxGraph facade, mxGraphHierarchyModel model)
+	private void initialCoords(JGraphX facade, mxGraphHierarchyModel model)
 	{
 		calculateWidestRank(facade, model);
 
@@ -836,7 +836,7 @@ public class mxCoordinateAssignment implements mxHierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void rankCoordinates(int rankValue, mxGraph graph,
+	protected void rankCoordinates(int rankValue, JGraphX graph,
 			mxGraphHierarchyModel model)
 	{
 		mxGraphHierarchyRank rank = model.ranks.get(new Integer(rankValue));
@@ -918,7 +918,7 @@ public class mxCoordinateAssignment implements mxHierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void calculateWidestRank(mxGraph graph,
+	protected void calculateWidestRank(JGraphX graph,
 			mxGraphHierarchyModel model)
 	{
 		// Starting y co-ordinate
@@ -1268,7 +1268,7 @@ public class mxCoordinateAssignment implements mxHierarchicalLayoutStage
 	 * @param model
 	 *            an internal model of the hierarchical layout
 	 */
-	protected void setCellLocations(mxGraph graph, mxGraphHierarchyModel model)
+	protected void setCellLocations(JGraphX graph, mxGraphHierarchyModel model)
 	{
 		rankTopY = new double[model.ranks.size()];
 		rankBottomY = new double[model.ranks.size()];
@@ -1329,7 +1329,7 @@ public class mxCoordinateAssignment implements mxHierarchicalLayoutStage
 	 */
 	protected void adjustParents(Set<Object> parentsChanged)
 	{
-		layout.arrangeGroups(mxUtils.sortCells(parentsChanged, true).toArray(), groupPadding);
+		layout.arrangeGroups(JGraphXUtils.sortCells(parentsChanged, true).toArray(), groupPadding);
 	}
 
 	/**

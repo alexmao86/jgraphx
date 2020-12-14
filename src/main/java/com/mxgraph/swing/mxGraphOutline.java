@@ -28,13 +28,10 @@ import java.util.logging.Logger;
 import javax.swing.JComponent;
 import javax.swing.JScrollBar;
 
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
+import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.GraphView;
 
 /**
  * An outline view for a specific graph component.
@@ -57,7 +54,7 @@ public class mxGraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * TODO: Not yet implemented.
@@ -241,7 +238,7 @@ public class mxGraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public mxGraphOutline(mxGraphComponent graphComponent)
+	public mxGraphOutline(JGraphXComponent graphComponent)
 	{
 		addComponentListener(componentHandler);
 		addMouseMotionListener(tracker);
@@ -381,7 +378,7 @@ public class mxGraphOutline extends JComponent
 	/**
 	 * 
 	 */
-	public mxGraphComponent getGraphComponent()
+	public JGraphXComponent getGraphComponent()
 	{
 		return graphComponent;
 	}
@@ -391,9 +388,9 @@ public class mxGraphOutline extends JComponent
 	 * 
 	 * @param graphComponent the graphComponent to set
 	 */
-	public void setGraphComponent(mxGraphComponent graphComponent)
+	public void setGraphComponent(JGraphXComponent graphComponent)
 	{
-		mxGraphComponent oldValue = this.graphComponent;
+		JGraphXComponent oldValue = this.graphComponent;
 
 		if (this.graphComponent != null)
 		{
@@ -464,7 +461,7 @@ public class mxGraphOutline extends JComponent
 	{
 		try
 		{
-			tripleBuffer = mxUtils.createBufferedImage(width, height, null);
+			tripleBuffer = JGraphXUtils.createBufferedImage(width, height, null);
 			tripleBufferGraphics = tripleBuffer.createGraphics();
 
 			// Repaints the complete buffer
@@ -507,7 +504,7 @@ public class mxGraphOutline extends JComponent
 
 			// Clears and repaints the dirty rectangle using the
 			// graphics canvas of the graph component as a renderer
-			mxUtils.clearRect(tripleBufferGraphics, clip, null);
+			JGraphXUtils.clearRect(tripleBufferGraphics, clip, null);
 			tripleBufferGraphics.setClip(clip);
 			paintGraph(tripleBufferGraphics);
 			tripleBufferGraphics.setClip(null);
@@ -592,7 +589,7 @@ public class mxGraphOutline extends JComponent
 					repaintTripleBuffer(repaintClip.getRectangle());
 				}
 
-				mxUtils.drawImageClip(g, tripleBuffer, this);
+				JGraphXUtils.drawImageClip(g, tripleBuffer, this);
 			}
 
 			// Paints the graph directly onto the graphics
@@ -619,7 +616,7 @@ public class mxGraphOutline extends JComponent
 			{
 				// Draws the background of the outline if a graph exists 
 				g.setColor(graphComponent.getPageBackgroundColor());
-				mxUtils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
+				JGraphXUtils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
 
 				g2.translate(translate.x, translate.y);
 				g2.scale(scale, scale);
@@ -638,7 +635,7 @@ public class mxGraphOutline extends JComponent
 					Dimension size = graphComponent.getGraphControl().getSize();
 
 					// Paints the background of the drawing surface
-					mxUtils.fillClippedRect(g, 0, 0, size.width, size.height);
+					JGraphXUtils.fillClippedRect(g, 0, 0, size.width, size.height);
 					g.setColor(g.getColor().darker().darker());
 					g.drawRect(0, 0, size.width, size.height);
 				}
@@ -657,7 +654,7 @@ public class mxGraphOutline extends JComponent
 		{
 			// Draws the background of the outline if no graph exists 
 			g.setColor(getBackground());
-			mxUtils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
+			JGraphXUtils.fillClippedRect(g, 0, 0, getWidth(), getHeight());
 		}
 	}
 
@@ -892,7 +889,7 @@ public class mxGraphOutline extends JComponent
 						sy = 0;
 					}
 
-					mxGraphView view = graphComponent.getGraph().getView();
+					GraphView view = graphComponent.getGraph().getView();
 					double scale = view.getScale();
 					double newScale = scale - (dx * scale) / w;
 					double factor = newScale / scale;

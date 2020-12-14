@@ -3,11 +3,10 @@ package com.mxgraph.reader;
 import java.util.Hashtable;
 import java.util.Map;
 
+import com.mxgraph.canvas.ICanvas2D;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
-
-import com.mxgraph.canvas.mxICanvas2D;
 
 /**
 	XMLReader reader = SAXParserFactory.newInstance().newSAXParser()
@@ -21,7 +20,7 @@ public class mxSaxOutputHandler extends DefaultHandler
 	/**
 	 * 
 	 */
-	protected mxICanvas2D canvas;
+	protected ICanvas2D canvas;
 
 	/**
 	 * 
@@ -31,7 +30,7 @@ public class mxSaxOutputHandler extends DefaultHandler
 	/**
 	 * 
 	 */
-	public mxSaxOutputHandler(mxICanvas2D canvas)
+	public mxSaxOutputHandler(ICanvas2D canvas)
 	{
 		setCanvas(canvas);
 		initHandlers();
@@ -40,7 +39,7 @@ public class mxSaxOutputHandler extends DefaultHandler
 	/**
 	 * Sets the canvas for rendering.
 	 */
-	public void setCanvas(mxICanvas2D value)
+	public void setCanvas(ICanvas2D value)
 	{
 		canvas = value;
 	}
@@ -48,7 +47,7 @@ public class mxSaxOutputHandler extends DefaultHandler
 	/**
 	 * Returns the canvas for rendering.
 	 */
-	public mxICanvas2D getCanvas()
+	public ICanvas2D getCanvas()
 	{
 		return canvas;
 	}

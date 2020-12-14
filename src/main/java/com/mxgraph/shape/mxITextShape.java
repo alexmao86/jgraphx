@@ -5,15 +5,15 @@ package com.mxgraph.shape;
 
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.view.JGraphXCellState;
 
 public interface mxITextShape
 {
 	/**
 	 * 
 	 */
-	void paintShape(mxGraphics2DCanvas canvas, String text, mxCellState state,
-			Map<String, Object> style);
+	void paintShape(Graphics2DCanvas canvas, String text, JGraphXCellState state,
+                    Map<String, Object> style);
 
 }

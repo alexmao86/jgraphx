@@ -12,9 +12,9 @@ import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 public class mxParallelEdgeLayout extends mxGraphLayout
 {
@@ -28,7 +28,7 @@ public class mxParallelEdgeLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxParallelEdgeLayout(mxGraph graph)
+	public mxParallelEdgeLayout(JGraphX graph)
 	{
 		this(graph, 20);
 	}
@@ -37,7 +37,7 @@ public class mxParallelEdgeLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxParallelEdgeLayout(mxGraph graph, int spacing)
+	public mxParallelEdgeLayout(JGraphX graph, int spacing)
 	{
 		super(graph);
 		this.spacing = spacing;
@@ -109,8 +109,8 @@ public class mxParallelEdgeLayout extends mxGraphLayout
 	 */
 	protected String getEdgeId(Object edge)
 	{
-		mxGraphView view = graph.getView();
-		mxCellState state = view.getState(edge);
+		GraphView view = graph.getView();
+		JGraphXCellState state = view.getState(edge);
 		Object src = (state != null) ? state.getVisibleTerminal(true) : view
 				.getVisibleTerminal(edge, true);
 		Object trg = (state != null) ? state.getVisibleTerminal(false) : view

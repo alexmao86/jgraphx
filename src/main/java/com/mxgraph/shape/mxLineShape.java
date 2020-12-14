@@ -1,10 +1,10 @@
 package com.mxgraph.shape;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxLineShape extends mxBasicShape
 {
@@ -12,11 +12,11 @@ public class mxLineShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		if (configureGraphics(canvas, state, false))
 		{
-			boolean rounded = mxUtils.isTrue(state.getStyle(),
+			boolean rounded = JGraphXUtils.isTrue(state.getStyle(),
 					mxConstants.STYLE_ROUNDED, false)
 					&& canvas.getScale() > mxConstants.MIN_SCALE_FOR_ROUNDED_LINES;
 
@@ -27,9 +27,9 @@ public class mxLineShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	public mxPoint[] createPoints(mxGraphics2DCanvas canvas, mxCellState state)
+	public mxPoint[] createPoints(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		String direction = mxUtils.getString(state.getStyle(),
+		String direction = JGraphXUtils.getString(state.getStyle(),
 				mxConstants.STYLE_DIRECTION, mxConstants.DIRECTION_EAST);
 
 		mxPoint p0, pe;

@@ -19,7 +19,7 @@ import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
 import com.mxgraph.layout.hierarchical.model.mxGraphHierarchyEdge;
 import com.mxgraph.layout.hierarchical.model.mxGraphHierarchyModel;
 import com.mxgraph.layout.hierarchical.model.mxGraphHierarchyNode;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * An implementation of the first stage of the Sugiyama layout. Straightforward
@@ -132,7 +132,7 @@ public class mxMinimumCycleRemover implements mxHierarchicalLayoutStage
 			}
 		}, unseenNodesArray, true, seenNodesCopy);
 
-		mxGraph graph = layout.getGraph();
+		JGraphX graph = layout.getGraph();
 
 		if (possibleNewRoots != null && possibleNewRoots.size() > 0)
 		{

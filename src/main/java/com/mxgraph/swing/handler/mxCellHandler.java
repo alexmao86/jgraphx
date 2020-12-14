@@ -13,11 +13,11 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * @author Administrator
@@ -28,12 +28,12 @@ public class mxCellHandler
 	/**
 	 * Reference to the enclosing graph component.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Holds the cell state associated with this handler.
 	 */
-	protected mxCellState state;
+	protected JGraphXCellState state;
 
 	/**
 	 * Holds the rectangles that define the handles.
@@ -71,7 +71,7 @@ public class mxCellHandler
 	 * @param graphComponent Enclosing graph component.
 	 * @param state Cell state for which the handler is created.
 	 */
-	public mxCellHandler(mxGraphComponent graphComponent, mxCellState state)
+	public mxCellHandler(JGraphXComponent graphComponent, JGraphXCellState state)
 	{
 		this.graphComponent = graphComponent;
 		refresh(state);
@@ -88,11 +88,11 @@ public class mxCellHandler
 	/**
 	 * Refreshes the cell handler.
 	 */
-	public void refresh(mxCellState state)
+	public void refresh(JGraphXCellState state)
 	{
 		this.state = state;
 		handles = createHandles();
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxRectangle tmp = graph.getBoundingBox(state.getCell());
 
 		if (tmp != null)
@@ -115,7 +115,7 @@ public class mxCellHandler
 	/**
 	 * 
 	 */
-	public mxGraphComponent getGraphComponent()
+	public JGraphXComponent getGraphComponent()
 	{
 		return graphComponent;
 	}
@@ -123,7 +123,7 @@ public class mxCellHandler
 	/**
 	 * Returns the cell state that is associated with this handler.
 	 */
-	public mxCellState getState()
+	public JGraphXCellState getState()
 	{
 		return state;
 	}
@@ -149,7 +149,7 @@ public class mxCellHandler
 	 */
 	public boolean isLabelMovable()
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		String label = graph.getLabel(state.getCell());
 
 		return graph.isLabelMovable(state.getCell()) && label != null

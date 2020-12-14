@@ -8,20 +8,21 @@ import java.net.URL;
 import java.text.NumberFormat;
 import java.util.Iterator;
 import java.util.List;
+
 import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 
+import com.mxgraph.io.Codec;
 import org.w3c.dom.Document;
 
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.editor.EditorMenuBar;
 import com.mxgraph.examples.swing.editor.EditorPalette;
-import com.mxgraph.io.mxCodec;
 import com.mxgraph.model.mxCell;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxICell;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxGraphTransferable;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxConstants;
@@ -30,9 +31,9 @@ import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.JGraphXCellState;
 
 public class GraphEditor extends BasicGraphEditor
 {
@@ -64,10 +65,10 @@ public class GraphEditor extends BasicGraphEditor
 	/**
 	 * 
 	 */
-	public GraphEditor(String appTitle, mxGraphComponent component)
+	public GraphEditor(String appTitle, JGraphXComponent component)
 	{
 		super(appTitle, component);
-		final mxGraph graph = graphComponent.getGraph();
+		final JGraphX graph = graphComponent.getGraph();
 
 		// Creates the shapes palette
 		EditorPalette shapesPalette = insertPalette(mxResources.get("shapes"));
@@ -439,7 +440,7 @@ public class GraphEditor extends BasicGraphEditor
 	/**
 	 * 
 	 */
-	public static class CustomGraphComponent extends mxGraphComponent
+	public static class CustomGraphComponent extends JGraphXComponent
 	{
 
 		/**
@@ -451,7 +452,7 @@ public class GraphEditor extends BasicGraphEditor
 		 * 
 		 * @param graph
 		 */
-		public CustomGraphComponent(mxGraph graph)
+		public CustomGraphComponent(JGraphX graph)
 		{
 			super(graph);
 
@@ -462,8 +463,8 @@ public class GraphEditor extends BasicGraphEditor
 			getConnectionHandler().setCreateTarget(true);
 
 			// Loads the defalt stylesheet from an external file
-			mxCodec codec = new mxCodec();
-			Document doc = mxUtils.loadDocument(GraphEditor.class.getResource(
+			Codec codec = new Codec();
+			Document doc = JGraphXUtils.loadDocument(GraphEditor.class.getResource(
 					"/com/mxgraph/examples/swing/resources/default-style.xml")
 					.toString());
 			codec.decode(doc.getDocumentElement(), graph.getStylesheet());
@@ -510,7 +511,7 @@ public class GraphEditor extends BasicGraphEditor
 	/**
 	 * A graph that creates new edges from a given template edge.
 	 */
-	public static class CustomGraph extends mxGraph
+	public static class CustomGraph extends JGraphX
 	{
 		/**
 		 * Holds the edge to be used as a template for inserting new edges.
@@ -541,7 +542,7 @@ public class GraphEditor extends BasicGraphEditor
 		{
 			String tip = "<html>";
 			mxGeometry geo = getModel().getGeometry(cell);
-			mxCellState state = getView().getState(cell);
+			JGraphXCellState state = getView().getState(cell);
 
 			if (getModel().isEdge(cell))
 			{

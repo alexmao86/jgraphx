@@ -20,9 +20,9 @@ import com.mxgraph.layout.hierarchical.stage.mxMedianHybridCrossingReduction;
 import com.mxgraph.layout.hierarchical.stage.mxMinimumCycleRemover;
 import com.mxgraph.model.mxGraphModel;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * The top level compound layout of the hierarchical layout. The individual
@@ -111,7 +111,7 @@ JGraphLayout.Stoppable*/
 	 * @param graph the graph to lay out
 	 * 
 	 */
-	public mxHierarchicalLayout(mxGraph graph)
+	public mxHierarchicalLayout(JGraphX graph)
 	{
 		this(graph, SwingConstants.NORTH);
 	}
@@ -122,7 +122,7 @@ JGraphLayout.Stoppable*/
 	 * @param orientation <code>SwingConstants.NORTH, SwingConstants.EAST, SwingConstants.SOUTH</code> or <code> SwingConstants.WEST</code>
 	 * 
 	 */
-	public mxHierarchicalLayout(mxGraph graph, int orientation)
+	public mxHierarchicalLayout(JGraphX graph, int orientation)
 	{
 		super(graph);
 		this.orientation = orientation;
@@ -295,7 +295,7 @@ JGraphLayout.Stoppable*/
 		while (it.hasNext())
 		{
 			Object edge = it.next();
-			mxCellState state = graph.getView().getState(edge);
+			JGraphXCellState state = graph.getView().getState(edge);
 			Object source = (state != null) ? state.getVisibleTerminal(true)
 					: graph.getView().getVisibleTerminal(edge, true);
 			Object target = (state != null) ? state.getVisibleTerminal(false)
@@ -429,7 +429,7 @@ JGraphLayout.Stoppable*/
 			Set<Object> allVertices, Set<Object> currentComp,
 			List<Set<Object>> hierarchyVertices, Set<Object> filledVertexSet)
 	{
-		mxGraphView view = graph.getView();
+		GraphView view = graph.getView();
 		mxIGraphModel model = graph.getModel();
 
 		if (vertex != null && allVertices != null)

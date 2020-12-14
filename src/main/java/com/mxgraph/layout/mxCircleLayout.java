@@ -5,7 +5,7 @@ import java.util.List;
 
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 public class mxCircleLayout extends mxGraphLayout
 {
@@ -49,7 +49,7 @@ public class mxCircleLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxCircleLayout(mxGraph graph)
+	public mxCircleLayout(JGraphX graph)
 	{
 		this(graph, 100);
 	}
@@ -58,7 +58,7 @@ public class mxCircleLayout extends mxGraphLayout
 	 * Constructs a new stack layout layout for the specified graph,
 	 * spacing, orientation and offset.
 	 */
-	public mxCircleLayout(mxGraph graph, double radius)
+	public mxCircleLayout(JGraphX graph, double radius)
 	{
 		super(graph);
 		this.radius = radius;

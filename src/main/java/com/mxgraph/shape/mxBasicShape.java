@@ -8,11 +8,11 @@ import java.awt.Paint;
 import java.awt.Shape;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxBasicShape implements mxIShape
 {
@@ -20,7 +20,7 @@ public class mxBasicShape implements mxIShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		Shape shape = createShape(canvas, state);
 
@@ -43,7 +43,7 @@ public class mxBasicShape implements mxIShape
 	/**
 	 * 
 	 */
-	public Shape createShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public Shape createShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		return null;
 	}
@@ -56,8 +56,8 @@ public class mxBasicShape implements mxIShape
 	 * 			the shape paint
 	 * @return whether or not the shape is ready to be drawn
 	 */
-	protected boolean configureGraphics(mxGraphics2DCanvas canvas,
-			mxCellState state, boolean background)
+	protected boolean configureGraphics(Graphics2DCanvas canvas,
+                                        JGraphXCellState state, boolean background)
 	{
 		Map<String, Object> style = state.getStyle();
 
@@ -96,8 +96,8 @@ public class mxBasicShape implements mxIShape
 	/**
 	 * 
 	 */
-	protected mxRectangle getGradientBounds(mxGraphics2DCanvas canvas,
-			mxCellState state)
+	protected mxRectangle getGradientBounds(Graphics2DCanvas canvas,
+                                            JGraphXCellState state)
 	{
 		return state;
 	}
@@ -105,7 +105,7 @@ public class mxBasicShape implements mxIShape
 	/**
 	 * 
 	 */
-	public boolean hasGradient(mxGraphics2DCanvas canvas, mxCellState state)
+	public boolean hasGradient(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		return true;
 	}
@@ -113,26 +113,26 @@ public class mxBasicShape implements mxIShape
 	/**
 	 * 
 	 */
-	public boolean hasShadow(mxGraphics2DCanvas canvas, mxCellState state)
+	public boolean hasShadow(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		return mxUtils
+		return JGraphXUtils
 				.isTrue(state.getStyle(), mxConstants.STYLE_SHADOW, false);
 	}
 
 	/**
 	 * 
 	 */
-	public Color getFillColor(mxGraphics2DCanvas canvas, mxCellState state)
+	public Color getFillColor(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		return mxUtils.getColor(state.getStyle(), mxConstants.STYLE_FILLCOLOR);
+		return JGraphXUtils.getColor(state.getStyle(), mxConstants.STYLE_FILLCOLOR);
 	}
 
 	/**
 	 * 
 	 */
-	public Color getStrokeColor(mxGraphics2DCanvas canvas, mxCellState state)
+	public Color getStrokeColor(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		return mxUtils
+		return JGraphXUtils
 				.getColor(state.getStyle(), mxConstants.STYLE_STROKECOLOR);
 	}
 

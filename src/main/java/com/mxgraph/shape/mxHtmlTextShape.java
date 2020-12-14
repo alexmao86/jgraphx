@@ -9,11 +9,11 @@ import java.util.Map;
 
 import javax.swing.CellRendererPane;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxLightweightLabel;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 /**
  * To set global CSS for all HTML labels, use the following code:
@@ -63,27 +63,27 @@ public class mxHtmlTextShape implements mxITextShape
 	protected String createHtmlDocument(Map<String, Object> style, String text,
 			int w, int h)
 	{
-		String overflow = mxUtils.getString(style, mxConstants.STYLE_OVERFLOW, "");
+		String overflow = JGraphXUtils.getString(style, mxConstants.STYLE_OVERFLOW, "");
 		
 		if (overflow.equals("fill"))
 		{
-			return mxUtils.createHtmlDocument(style, text, 1, w, null, "height:" + h + "pt;");
+			return JGraphXUtils.createHtmlDocument(style, text, 1, w, null, "height:" + h + "pt;");
 		}
 		else if (overflow.equals("width"))
 		{
-			return mxUtils.createHtmlDocument(style, text, 1, w);
+			return JGraphXUtils.createHtmlDocument(style, text, 1, w);
 		}
 		else
 		{
-			return mxUtils.createHtmlDocument(style, text);
+			return JGraphXUtils.createHtmlDocument(style, text);
 		}
 	}
 
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, String text,
-			mxCellState state, Map<String, Object> style)
+	public void paintShape(Graphics2DCanvas canvas, String text,
+                           JGraphXCellState state, Map<String, Object> style)
 	{
 		mxLightweightLabel textRenderer = mxLightweightLabel
 				.getSharedInstance();
@@ -102,7 +102,7 @@ public class mxHtmlTextShape implements mxITextShape
 			int w = rect.width;
 			int h = rect.height;
 
-			if (!mxUtils.isTrue(style, mxConstants.STYLE_HORIZONTAL, true))
+			if (!JGraphXUtils.isTrue(style, mxConstants.STYLE_HORIZONTAL, true))
 			{
 				g.rotate(-Math.PI / 2, x + w / 2, y + h / 2);
 				g.translate(w / 2 - h / 2, h / 2 - w / 2);
@@ -122,7 +122,7 @@ public class mxHtmlTextShape implements mxITextShape
 			textRenderer.setText(createHtmlDocument(style, text,
 					(int) Math.round(w / state.getView().getScale()),
 					(int) Math.round(h / state.getView().getScale())));
-			textRenderer.setFont(mxUtils.getFont(style, canvas.getScale()));
+			textRenderer.setFont(JGraphXUtils.getFont(style, canvas.getScale()));
 			g.scale(scale, scale);
 			rendererPane.paintComponent(g, textRenderer, rendererPane,
 					(int) (x / scale) + mxConstants.LABEL_INSET,

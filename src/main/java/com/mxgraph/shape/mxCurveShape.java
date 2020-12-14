@@ -7,12 +7,12 @@ import java.awt.RenderingHints;
 import java.util.List;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxCurve;
 import com.mxgraph.util.mxLine;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxCurveShape extends mxConnectorShape
 {
@@ -49,7 +49,7 @@ public class mxCurveShape extends mxConnectorShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		Object keyStrokeHint = canvas.getGraphics().getRenderingHint(
 				RenderingHints.KEY_STROKE_CONTROL);
@@ -66,8 +66,8 @@ public class mxCurveShape extends mxConnectorShape
 	/**
 	 * 
 	 */
-	protected void paintPolyline(mxGraphics2DCanvas canvas,
-			List<mxPoint> points, Map<String, Object> style)
+	protected void paintPolyline(Graphics2DCanvas canvas,
+                                 List<mxPoint> points, Map<String, Object> style)
 	{
 		double scale = canvas.getScale();
 		validateCurve(points, scale, style);

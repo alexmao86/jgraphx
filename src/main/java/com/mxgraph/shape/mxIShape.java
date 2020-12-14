@@ -1,13 +1,13 @@
 package com.mxgraph.shape;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.view.JGraphXCellState;
 
 public interface mxIShape
 {
 	/**
 	 * 
 	 */
-	void paintShape(mxGraphics2DCanvas canvas, mxCellState state);
+	void paintShape(Graphics2DCanvas canvas, JGraphXCellState state);
 
 }

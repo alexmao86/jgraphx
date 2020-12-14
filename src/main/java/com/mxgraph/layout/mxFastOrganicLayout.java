@@ -10,7 +10,7 @@ import java.util.List;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Fast organic layout algorithm.
@@ -138,7 +138,7 @@ public class mxFastOrganicLayout extends mxGraphLayout
 	/**
 	 * Constructs a new fast organic layout for the specified graph.
 	 */
-	public mxFastOrganicLayout(mxGraph graph)
+	public mxFastOrganicLayout(JGraphX graph)
 	{
 		super(graph);
 	}

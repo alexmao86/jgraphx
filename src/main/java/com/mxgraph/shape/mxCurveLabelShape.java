@@ -21,14 +21,10 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxCurve;
-import com.mxgraph.util.mxLine;
-import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.util.*;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
 
 /**
  * Draws the edge label along a curve derived from the curve describing
@@ -60,7 +56,7 @@ public class mxCurveLabelShape implements mxITextShape
 	/**
 	 * Cache the state associated with this shape
 	 */
-	protected mxCellState state;
+	protected JGraphXCellState state;
 
 	/**
 	 * Cache of information describing characteristics relating to drawing 
@@ -125,7 +121,7 @@ public class mxCurveLabelShape implements mxITextShape
 	 */
 	protected boolean rotationEnabled = true;
 
-	public mxCurveLabelShape(mxCellState state, mxCurve value)
+	public mxCurveLabelShape(JGraphXCellState state, mxCurve value)
 	{
 		this.state = state;
 		this.curve = value;
@@ -150,8 +146,8 @@ public class mxCurveLabelShape implements mxITextShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, String text,
-			mxCellState state, Map<String, Object> style)
+	public void paintShape(Graphics2DCanvas canvas, String text,
+                           JGraphXCellState state, Map<String, Object> style)
 	{
 		Rectangle rect = state.getLabelBounds().getRectangle();
 		Graphics2D g = canvas.getGraphics();
@@ -166,15 +162,15 @@ public class mxCurveLabelShape implements mxITextShape
 						rect)))
 		{
 			// Creates a temporary graphics instance for drawing this shape
-			float opacity = mxUtils.getFloat(style, mxConstants.STYLE_OPACITY,
+			float opacity = JGraphXUtils.getFloat(style, mxConstants.STYLE_OPACITY,
 					100);
 			Graphics2D previousGraphics = g;
 			g = canvas.createTemporaryGraphics(style, opacity, state);
 
-			Font font = mxUtils.getFont(style, canvas.getScale());
+			Font font = JGraphXUtils.getFont(style, canvas.getScale());
 			g.setFont(font);
 
-			Color fontColor = mxUtils.getColor(style,
+			Color fontColor = JGraphXUtils.getColor(style,
 					mxConstants.STYLE_FONTCOLOR, Color.black);
 			g.setColor(fontColor);
 
@@ -224,8 +220,8 @@ public class mxCurveLabelShape implements mxITextShape
 	public mxRectangle updateLabelBounds(String label, Map<String, Object> style)
 	{
 		double scale = state.getView().getScale();
-		Font font = mxUtils.getFont(style, scale);
-		FontMetrics fm = mxUtils.getFontMetrics(font);
+		Font font = JGraphXUtils.getFont(style, scale);
+		FontMetrics fm = JGraphXUtils.getFontMetrics(font);
 		int descent = 0;
 		int ascent = 0;
 

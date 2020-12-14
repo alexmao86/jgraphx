@@ -8,14 +8,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.mxgraph.model.mxGeometry;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.view.mxCellStatePreview;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Provides animation effects.
@@ -26,7 +26,7 @@ public class mxMorphing extends mxAnimation
 	/**
 	 * Reference to the enclosing graph instance.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Specifies the maximum number of steps for the morphing. Default is
@@ -68,7 +68,7 @@ public class mxMorphing extends mxAnimation
 	/**
 	 * Constructs a new morphing instance for the given graph.
 	 */
-	public mxMorphing(mxGraphComponent graphComponent)
+	public mxMorphing(JGraphXComponent graphComponent)
 	{
 		this(graphComponent, 6, 1.5, DEFAULT_DELAY);
 
@@ -86,7 +86,7 @@ public class mxMorphing extends mxAnimation
 	/**
 	 * Constructs a new morphing instance for the given graph.
 	 */
-	public mxMorphing(mxGraphComponent graphComponent, int steps, double ease,
+	public mxMorphing(JGraphXComponent graphComponent, int steps, double ease,
 			int delay)
 	{
 		super(delay);
@@ -213,8 +213,8 @@ public class mxMorphing extends mxAnimation
 	protected void animateCell(Object cell, mxCellStatePreview move,
 			boolean recurse)
 	{
-		mxGraph graph = graphComponent.getGraph();
-		mxCellState state = graph.getView().getState(cell);
+		JGraphX graph = graphComponent.getGraph();
+		JGraphXCellState state = graph.getView().getState(cell);
 		mxPoint delta = null;
 
 		if (state != null)
@@ -253,7 +253,7 @@ public class mxMorphing extends mxAnimation
 	 * Returns true if the animation should not recursively find more
 	 * deltas for children if the given parent state has been animated.
 	 */
-	protected boolean stopRecursion(mxCellState state, mxPoint delta)
+	protected boolean stopRecursion(JGraphXCellState state, mxPoint delta)
 	{
 		return delta != null && (delta.getX() != 0 || delta.getY() != 0);
 	}
@@ -262,9 +262,9 @@ public class mxMorphing extends mxAnimation
 	 * Returns the vector between the current rendered state and the future
 	 * location of the state after the display will be updated.
 	 */
-	protected mxPoint getDelta(mxCellState state)
+	protected mxPoint getDelta(JGraphXCellState state)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxPoint origin = getOriginForCell(state.getCell());
 		mxPoint translate = graph.getView().getTranslate();
 		double scale = graph.getView().getScale();
@@ -285,7 +285,7 @@ public class mxMorphing extends mxAnimation
 
 		if (result == null)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 
 			if (cell != null)
 			{

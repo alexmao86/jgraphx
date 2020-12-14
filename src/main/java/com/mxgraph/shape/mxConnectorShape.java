@@ -8,12 +8,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxLine;
 import com.mxgraph.util.mxPoint;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxConnectorShape extends mxBasicShape
 {
@@ -21,7 +21,7 @@ public class mxConnectorShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		if (state.getAbsolutePointCount() > 1
 				&& configureGraphics(canvas, state, false))
@@ -32,7 +32,7 @@ public class mxConnectorShape extends mxBasicShape
 
 			// Paints the markers and updates the points
 			// Switch off any dash pattern for markers
-			boolean dashed = mxUtils.isTrue(style, mxConstants.STYLE_DASHED);
+			boolean dashed = JGraphXUtils.isTrue(style, mxConstants.STYLE_DASHED);
 			Object dashedValue = style.get(mxConstants.STYLE_DASHED);
 
 			if (dashed)
@@ -62,8 +62,8 @@ public class mxConnectorShape extends mxBasicShape
 	/**
 	 * 
 	 */
-	protected void paintPolyline(mxGraphics2DCanvas canvas,
-			List<mxPoint> points, Map<String, Object> style)
+	protected void paintPolyline(Graphics2DCanvas canvas,
+                                 List<mxPoint> points, Map<String, Object> style)
 	{
 		boolean rounded = isRounded(style)
 				&& canvas.getScale() > mxConstants.MIN_SCALE_FOR_ROUNDED_LINES;
@@ -77,7 +77,7 @@ public class mxConnectorShape extends mxBasicShape
 	 */
 	public boolean isRounded(Map<String, Object> style)
 	{
-		return mxUtils.isTrue(style, mxConstants.STYLE_ROUNDED, false);
+		return JGraphXUtils.isTrue(style, mxConstants.STYLE_ROUNDED, false);
 	}
 
 	/**
@@ -99,19 +99,19 @@ public class mxConnectorShape extends mxBasicShape
 	 * 
 	 * @return the offset of the marker from the end of the line
 	 */
-	public mxPoint paintMarker(mxGraphics2DCanvas canvas, mxCellState state, boolean source)
+	public mxPoint paintMarker(Graphics2DCanvas canvas, JGraphXCellState state, boolean source)
 	{
 		Map<String, Object> style = state.getStyle();
-		float strokeWidth = (float) (mxUtils.getFloat(style,
+		float strokeWidth = (float) (JGraphXUtils.getFloat(style,
 				mxConstants.STYLE_STROKEWIDTH, 1) * canvas.getScale());
-		String type = mxUtils.getString(style,
+		String type = JGraphXUtils.getString(style,
 				(source) ? mxConstants.STYLE_STARTARROW
 						: mxConstants.STYLE_ENDARROW, "");
-		float size = (mxUtils.getFloat(style,
+		float size = (JGraphXUtils.getFloat(style,
 				(source) ? mxConstants.STYLE_STARTSIZE
 						: mxConstants.STYLE_ENDSIZE,
 				mxConstants.DEFAULT_MARKERSIZE));
-		Color color = mxUtils.getColor(style, mxConstants.STYLE_STROKECOLOR);
+		Color color = JGraphXUtils.getColor(style, mxConstants.STYLE_STROKECOLOR);
 		canvas.getGraphics().setColor(color);
 
 		double absSize = size * canvas.getScale();

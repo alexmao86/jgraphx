@@ -31,12 +31,12 @@ import java.util.TooManyListenersException;
 import javax.swing.BorderFactory;
 import javax.swing.JComponent;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Component that displays a ruler for a JGraph component.
@@ -135,7 +135,7 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	/**
 	 * Reference to the attached graph.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Holds the current and first mouse point.
@@ -166,7 +166,7 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	 * @param orientation
 	 *            The orientation to use for the ruler.
 	 */
-	public EditorRuler(mxGraphComponent graphComponent, int orientation)
+	public EditorRuler(JGraphXComponent graphComponent, int orientation)
 	{
 		this.orientation = orientation;
 		this.graphComponent = graphComponent;
@@ -425,7 +425,7 @@ public class EditorRuler extends JComponent implements MouseMotionListener,
 	 */
 	public void paintComponent(Graphics g)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		Rectangle clip = g.getClipBounds();
 		updateIncrementAndUnits();
 

@@ -41,20 +41,16 @@ import com.mxgraph.layout.mxParallelEdgeLayout;
 import com.mxgraph.layout.mxPartitionLayout;
 import com.mxgraph.layout.mxStackLayout;
 import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.swing.handler.JGraphXRubberband;
 import com.mxgraph.swing.mxGraphOutline;
 import com.mxgraph.swing.handler.mxKeyboardHandler;
-import com.mxgraph.swing.handler.mxRubberband;
 import com.mxgraph.swing.util.mxMorphing;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxResources;
-import com.mxgraph.util.mxUndoManager;
-import com.mxgraph.util.mxUndoableEdit;
+import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
+import com.mxgraph.util.UndoManager;
 import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 public class BasicGraphEditor extends JPanel
 {
@@ -82,7 +78,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * 
@@ -97,7 +93,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	protected mxUndoManager undoManager;
+	protected UndoManager undoManager;
 
 	/**
 	 * 
@@ -122,7 +118,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	protected mxRubberband rubberband;
+	protected JGraphXRubberband rubberband;
 
 	/**
 	 * 
@@ -155,14 +151,14 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	public BasicGraphEditor(String appTitle, mxGraphComponent component)
+	public BasicGraphEditor(String appTitle, JGraphXComponent component)
 	{
 		// Stores and updates the frame title
 		this.appTitle = appTitle;
 
 		// Stores a reference to the graph and creates the command history
 		graphComponent = component;
-		final mxGraph graph = graphComponent.getGraph();
+		final JGraphX graph = graphComponent.getGraph();
 		undoManager = createUndoManager();
 
 		// Do not change the scale and translation after files have been loaded
@@ -236,9 +232,9 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	protected mxUndoManager createUndoManager()
+	protected UndoManager createUndoManager()
 	{
-		return new mxUndoManager();
+		return new UndoManager();
 	}
 
 	/**
@@ -246,7 +242,7 @@ public class BasicGraphEditor extends JPanel
 	 */
 	protected void installHandlers()
 	{
-		rubberband = new mxRubberband(graphComponent);
+		rubberband = new JGraphXRubberband(graphComponent);
 		keyboardHandler = new EditorKeyboardHandler(graphComponent);
 	}
 
@@ -591,7 +587,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	public mxGraphComponent getGraphComponent()
+	public JGraphXComponent getGraphComponent()
 	{
 		return graphComponent;
 	}
@@ -615,7 +611,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	public mxUndoManager getUndoManager()
+	public UndoManager getUndoManager()
 	{
 		return undoManager;
 	}
@@ -779,7 +775,7 @@ public class BasicGraphEditor extends JPanel
 			{
 				public void actionPerformed(ActionEvent e)
 				{
-					final mxGraph graph = graphComponent.getGraph();
+					final JGraphX graph = graphComponent.getGraph();
 					Object cell = graph.getSelectionCell();
 
 					if (cell == null
@@ -842,7 +838,7 @@ public class BasicGraphEditor extends JPanel
 
 		if (ident != null)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 
 			if (ident.equals("verticalHierarchical"))
 			{

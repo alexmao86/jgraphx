@@ -11,7 +11,7 @@ import javax.swing.SwingUtilities;
 import javax.swing.TransferHandler;
 import javax.swing.UIManager;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxGraphActions;
 
 /**
@@ -25,7 +25,7 @@ public class mxKeyboardHandler
 	 * 
 	 * @param graphComponent
 	 */
-	public mxKeyboardHandler(mxGraphComponent graphComponent)
+	public mxKeyboardHandler(JGraphXComponent graphComponent)
 	{
 		installKeyboardActions(graphComponent);
 	}
@@ -33,7 +33,7 @@ public class mxKeyboardHandler
 	/**
 	 * Invoked as part from the boilerplate install block.
 	 */
-	protected void installKeyboardActions(mxGraphComponent graphComponent)
+	protected void installKeyboardActions(JGraphXComponent graphComponent)
 	{
 		InputMap inputMap = getInputMap(JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 		SwingUtilities.replaceUIInputMap(graphComponent,

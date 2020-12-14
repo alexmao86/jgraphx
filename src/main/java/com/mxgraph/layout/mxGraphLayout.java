@@ -11,9 +11,9 @@ import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
+import com.mxgraph.view.GraphView;
 
 /**
  * Abstract bass class for layouts
@@ -24,7 +24,7 @@ public abstract class mxGraphLayout implements mxIGraphLayout
 	/**
 	 * Holds the enclosing graph.
 	 */
-	protected mxGraph graph;
+	protected JGraphX graph;
 
 	/**
 	 * The parent cell of the layout, if any
@@ -40,7 +40,7 @@ public abstract class mxGraphLayout implements mxIGraphLayout
 	/**
 	 * Constructs a new fast organic layout for the specified graph.
 	 */
-	public mxGraphLayout(mxGraph graph)
+	public mxGraphLayout(JGraphX graph)
 	{
 		this.graph = graph;
 	}
@@ -62,7 +62,7 @@ public abstract class mxGraphLayout implements mxIGraphLayout
 	/**
 	 * Returns the associated graph.
 	 */
-	public mxGraph getGraph()
+	public JGraphX getGraph()
 	{
 		return graph;
 	}
@@ -96,7 +96,7 @@ public abstract class mxGraphLayout implements mxIGraphLayout
 	public Object getConstraint(Object key, Object cell, Object edge,
 			boolean source)
 	{
-		mxCellState state = graph.getView().getState(cell);
+		JGraphXCellState state = graph.getView().getState(cell);
 		Map<String, Object> style = (state != null) ? state.getStyle() : graph
 				.getCellStyle(cell);
 
@@ -251,7 +251,7 @@ public abstract class mxGraphLayout implements mxIGraphLayout
 		// the return value accordingly
 		if (useBoundingBox)
 		{
-			mxCellState state = graph.getView().getState(vertex);
+			JGraphXCellState state = graph.getView().getState(vertex);
 
 			if (state != null)
 			{
@@ -311,12 +311,12 @@ public abstract class mxGraphLayout implements mxIGraphLayout
 			result = new mxRectangle(x, y, geometry.getWidth(),
 					geometry.getHeight());
 
-			mxGraphView graphView = graph.getView();
+			GraphView graphView = graph.getView();
 
 			// Checks for oversize labels and offset the result
 			if (useBoundingBox)
 			{
-				mxCellState state = graphView.getState(vertex);
+				JGraphXCellState state = graphView.getState(vertex);
 
 				if (state != null)
 				{

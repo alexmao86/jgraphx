@@ -9,7 +9,7 @@ import javax.swing.JComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxCellOverlay extends JComponent implements mxICellOverlay
 {
@@ -99,7 +99,7 @@ public class mxCellOverlay extends JComponent implements mxICellOverlay
 	 * (non-Javadoc)
 	 * @see com.mxgraph.swing.util.mxIOverlay#getBounds(com.mxgraph.view.mxCellState)
 	 */
-	public mxRectangle getBounds(mxCellState state)
+	public mxRectangle getBounds(JGraphXCellState state)
 	{
 		boolean isEdge = state.getView().getGraph().getModel()
 				.isEdge(state.getCell());

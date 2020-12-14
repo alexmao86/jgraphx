@@ -9,12 +9,12 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 
 import com.mxgraph.model.mxGeometry;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.GraphView;
 
 /**
  * @author Administrator
@@ -28,7 +28,7 @@ public class mxElbowEdgeHandler extends mxEdgeHandler
 	 * @param graphComponent
 	 * @param state
 	 */
-	public mxElbowEdgeHandler(mxGraphComponent graphComponent, mxCellState state)
+	public mxElbowEdgeHandler(JGraphXComponent graphComponent, JGraphXCellState state)
 	{
 		super(graphComponent, state);
 	}
@@ -93,7 +93,7 @@ public class mxElbowEdgeHandler extends mxEdgeHandler
 		}
 		else
 		{
-			mxGraphView view = graphComponent.getGraph().getView();
+			GraphView view = graphComponent.getGraph().getView();
 			pt = view.transformControlPoint(state, points.get(0))
 					.getPoint();
 		}

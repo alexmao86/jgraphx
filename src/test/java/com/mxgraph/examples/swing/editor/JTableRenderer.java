@@ -46,11 +46,11 @@ import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.handler.mxCellHandler;
 import com.mxgraph.swing.handler.mxGraphTransferHandler;
 import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 /**
  * @author Administrator
@@ -87,12 +87,12 @@ public class JTableRenderer extends JComponent
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphContainer;
+	protected JGraphXComponent graphContainer;
 
 	/**
 	 * 
 	 */
-	protected mxGraph graph;
+	protected JGraphX graph;
 
 	/**
 	 * 
@@ -104,7 +104,7 @@ public class JTableRenderer extends JComponent
 	 */
 	@SuppressWarnings("serial")
 	public JTableRenderer(final Object cell,
-			final mxGraphComponent graphContainer)
+			final JGraphXComponent graphContainer)
 	{
 		this.cell = cell;
 		this.graphContainer = graphContainer;

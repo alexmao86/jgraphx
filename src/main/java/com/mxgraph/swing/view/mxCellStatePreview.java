@@ -13,15 +13,15 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.model.mxGeometry;
 import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
+import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * Represents the current state of a cell in a given graph view.
@@ -31,7 +31,7 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	protected Map<mxCellState, mxPoint> deltas = new LinkedHashMap<mxCellState, mxPoint>();
+	protected Map<JGraphXCellState, mxPoint> deltas = new LinkedHashMap<JGraphXCellState, mxPoint>();
 
 	/**
 	 * 
@@ -41,7 +41,7 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Specifies if cell states should be cloned or changed in-place.
@@ -56,13 +56,13 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	protected List<mxCellState> cellStates;
+	protected List<JGraphXCellState> cellStates;
 
 	/**
 	 * Constructs a new state preview. The paint handler to invoke the paint
 	 * method must be installed elsewhere.
 	 */
-	public mxCellStatePreview(mxGraphComponent graphComponent, boolean cloned)
+	public mxCellStatePreview(JGraphXComponent graphComponent, boolean cloned)
 	{
 		this.graphComponent = graphComponent;
 		this.cloned = cloned;
@@ -103,7 +103,7 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	public Map<mxCellState, mxPoint> getDeltas()
+	public Map<JGraphXCellState, mxPoint> getDeltas()
 	{
 		return deltas;
 	}
@@ -127,7 +127,7 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	public mxPoint moveState(mxCellState state, double dx, double dy)
+	public mxPoint moveState(JGraphXCellState state, double dx, double dy)
 	{
 		return moveState(state, dx, dy, true, true);
 	}
@@ -135,8 +135,8 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	public mxPoint moveState(mxCellState state, double dx, double dy,
-			boolean add, boolean includeEdges)
+	public mxPoint moveState(JGraphXCellState state, double dx, double dy,
+                             boolean add, boolean includeEdges)
 	{
 		mxPoint delta = deltas.get(state);
 
@@ -173,32 +173,32 @@ public class mxCellStatePreview
 	 */
 	public mxRectangle show()
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxIGraphModel model = graph.getModel();
 
 		// Stores a copy of the cell states
-		List<mxCellState> previousStates = null;
+		List<JGraphXCellState> previousStates = null;
 
 		if (isCloned())
 		{
-			previousStates = new LinkedList<mxCellState>();
-			Iterator<mxCellState> it = deltas.keySet().iterator();
+			previousStates = new LinkedList<JGraphXCellState>();
+			Iterator<JGraphXCellState> it = deltas.keySet().iterator();
 
 			while (it.hasNext())
 			{
-				mxCellState state = it.next();
+				JGraphXCellState state = it.next();
 				previousStates.addAll(snapshot(state));
 			}
 		}
 
 		// Translates the states in step
-		Iterator<mxCellState> it = deltas.keySet().iterator();
+		Iterator<JGraphXCellState> it = deltas.keySet().iterator();
 
 		while (it.hasNext())
 		{
-			mxCellState state = it.next();
+			JGraphXCellState state = it.next();
 			mxPoint delta = deltas.get(state);
-			mxCellState parentState = graph.getView().getState(
+			JGraphXCellState parentState = graph.getView().getState(
 					model.getParent(state.getCell()));
 			translateState(parentState, state, delta.getX(), delta.getY());
 		}
@@ -209,9 +209,9 @@ public class mxCellStatePreview
 
 		while (it.hasNext())
 		{
-			mxCellState state = it.next();
+			JGraphXCellState state = it.next();
 			mxPoint delta = deltas.get(state);
-			mxCellState parentState = graph.getView().getState(
+			JGraphXCellState parentState = graph.getView().getState(
 					model.getParent(state.getCell()));
 			mxRectangle tmp = revalidateState(parentState, state, delta.getX(),
 					delta.getY());
@@ -231,12 +231,12 @@ public class mxCellStatePreview
 		// of the dirty rectangle.
 		if (previousStates != null)
 		{
-			cellStates = new LinkedList<mxCellState>();
+			cellStates = new LinkedList<JGraphXCellState>();
 			it = deltas.keySet().iterator();
 
 			while (it.hasNext())
 			{
-				mxCellState state = it.next();
+				JGraphXCellState state = it.next();
 				cellStates.addAll(snapshot(state));
 			}
 
@@ -255,15 +255,15 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	public void restore(List<mxCellState> snapshot)
+	public void restore(List<JGraphXCellState> snapshot)
 	{
-		mxGraph graph = graphComponent.getGraph();
-		Iterator<mxCellState> it = snapshot.iterator();
+		JGraphX graph = graphComponent.getGraph();
+		Iterator<JGraphXCellState> it = snapshot.iterator();
 
 		while (it.hasNext())
 		{
-			mxCellState state = it.next();
-			mxCellState orig = graph.getView().getState(state.getCell());
+			JGraphXCellState state = it.next();
+			JGraphXCellState orig = graph.getView().getState(state.getCell());
 
 			if (orig != null && orig != state)
 			{
@@ -275,7 +275,7 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	public void restoreState(mxCellState state, mxCellState from)
+	public void restoreState(JGraphXCellState state, JGraphXCellState from)
 	{
 		state.setLabelBounds(from.getLabelBounds());
 		state.setAbsolutePoints(from.getAbsolutePoints());
@@ -294,15 +294,15 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	public List<mxCellState> snapshot(mxCellState state)
+	public List<JGraphXCellState> snapshot(JGraphXCellState state)
 	{
-		List<mxCellState> result = new LinkedList<mxCellState>();
+		List<JGraphXCellState> result = new LinkedList<JGraphXCellState>();
 
 		if (state != null)
 		{
-			result.add((mxCellState) state.clone());
+			result.add((JGraphXCellState) state.clone());
 
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			mxIGraphModel model = graph.getModel();
 			Object cell = state.getCell();
 			int childCount = model.getChildCount(cell);
@@ -320,12 +320,12 @@ public class mxCellStatePreview
 	/**
 	 *
 	 */
-	protected void translateState(mxCellState parentState, mxCellState state,
-			double dx, double dy)
+	protected void translateState(JGraphXCellState parentState, JGraphXCellState state,
+                                  double dx, double dy)
 	{
 		if (state != null)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			mxIGraphModel model = graph.getModel();
 			Object cell = state.getCell();
 
@@ -359,14 +359,14 @@ public class mxCellStatePreview
 	/**
 	 *
 	 */
-	protected mxRectangle revalidateState(mxCellState parentState,
-			mxCellState state, double dx, double dy)
+	protected mxRectangle revalidateState(JGraphXCellState parentState,
+                                          JGraphXCellState state, double dx, double dy)
 	{
 		mxRectangle dirty = null;
 
 		if (state != null)
 		{
-			mxGraph graph = graphComponent.getGraph();
+			JGraphX graph = graphComponent.getGraph();
 			mxIGraphModel model = graph.getModel();
 			Object cell = state.getCell();
 			
@@ -424,16 +424,16 @@ public class mxCellStatePreview
 	/**
 	 * 
 	 */
-	public void addEdges(mxCellState state)
+	public void addEdges(JGraphXCellState state)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxIGraphModel model = graph.getModel();
 		Object cell = state.getCell();
 		int edgeCount = model.getEdgeCount(cell);
 
 		for (int i = 0; i < edgeCount; i++)
 		{
-			mxCellState state2 = graph.getView().getState(
+			JGraphXCellState state2 = graph.getView().getState(
 					model.getEdgeAt(cell, i));
 
 			if (state2 != null)
@@ -450,12 +450,12 @@ public class mxCellStatePreview
 	{
 		if (cellStates != null && cellStates.size() > 0)
 		{
-			mxGraphics2DCanvas canvas = graphComponent.getCanvas();
+			Graphics2DCanvas canvas = graphComponent.getCanvas();
 
 			// Sets antialiasing
 			if (graphComponent.isAntiAlias())
 			{
-				mxUtils.setAntiAlias((Graphics2D) g, true, true);
+				JGraphXUtils.setAntiAlias((Graphics2D) g, true, true);
 			}
 
 			Graphics2D previousGraphics = canvas.getGraphics();
@@ -490,16 +490,16 @@ public class mxCellStatePreview
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void paintPreview(mxGraphics2DCanvas canvas)
+	protected void paintPreview(Graphics2DCanvas canvas)
 	{
 		Composite previousComposite = canvas.getGraphics().getComposite();
 
 		// Paints the preview states
-		Iterator<mxCellState> it = cellStates.iterator();
+		Iterator<JGraphXCellState> it = cellStates.iterator();
 
 		while (it.hasNext())
 		{
-			mxCellState state = it.next();
+			JGraphXCellState state = it.next();
 			canvas.getGraphics().setComposite(
 					AlphaComposite.getInstance(AlphaComposite.SRC_OVER,
 							getOpacityForCell(state.getCell())));
@@ -512,8 +512,8 @@ public class mxCellStatePreview
 	/**
 	 * Draws the preview using the graphics canvas.
 	 */
-	protected void paintPreviewState(mxGraphics2DCanvas canvas,
-			mxCellState state)
+	protected void paintPreviewState(Graphics2DCanvas canvas,
+                                     JGraphXCellState state)
 	{
 		graphComponent.getGraph().drawState(
 				canvas,

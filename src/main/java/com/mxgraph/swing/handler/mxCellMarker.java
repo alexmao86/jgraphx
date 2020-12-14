@@ -14,16 +14,13 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JComponent;
 
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
-import com.mxgraph.util.mxConstants;
-import com.mxgraph.util.mxEvent;
-import com.mxgraph.util.mxEventObject;
-import com.mxgraph.util.mxEventSource;
+import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraphView;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.GraphView;
+import com.mxgraph.view.JGraphXCellState;
 
 /**
  * Implements a mouse tracker that marks cells under the mouse.
@@ -142,7 +139,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Holds the enclosing graph component.
 	 */
-	protected mxGraphComponent graphComponent;
+	protected JGraphXComponent graphComponent;
 
 	/**
 	 * Specifies if the marker is enabled. Default is true.
@@ -181,19 +178,19 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Holds the marked state if it is valid.
 	 */
-	protected transient mxCellState validState;
+	protected transient JGraphXCellState validState;
 
 	/**
 	 * Holds the marked state.
 	 */
-	protected transient mxCellState markedState;
+	protected transient JGraphXCellState markedState;
 
 	/**
 	 * Constructs a new marker for the given graph component.
 	 * 
 	 * @param graphComponent
 	 */
-	public mxCellMarker(mxGraphComponent graphComponent)
+	public mxCellMarker(JGraphXComponent graphComponent)
 	{
 		this(graphComponent, mxSwingConstants.DEFAULT_VALID_COLOR);
 	}
@@ -201,7 +198,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Constructs a new marker for the given graph component.
 	 */
-	public mxCellMarker(mxGraphComponent graphComponent, Color validColor)
+	public mxCellMarker(JGraphXComponent graphComponent, Color validColor)
 	{
 		this(graphComponent, validColor, mxSwingConstants.DEFAULT_INVALID_COLOR);
 	}
@@ -209,7 +206,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Constructs a new marker for the given graph component.
 	 */
-	public mxCellMarker(mxGraphComponent graphComponent, Color validColor,
+	public mxCellMarker(JGraphXComponent graphComponent, Color validColor,
 			Color invalidColor)
 	{
 		this(graphComponent, validColor, invalidColor,
@@ -219,7 +216,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Constructs a new marker for the given graph component.
 	 */
-	public mxCellMarker(mxGraphComponent graphComponent, Color validColor,
+	public mxCellMarker(JGraphXComponent graphComponent, Color validColor,
 			Color invalidColor, double hotspot)
 	{
 		this.graphComponent = graphComponent;
@@ -338,7 +335,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Returns the valid state.
 	 */
-	public mxCellState getValidState()
+	public JGraphXCellState getValidState()
 	{
 		return validState;
 	}
@@ -362,7 +359,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Sets the marked state. 
 	 */
-	public void setMarkedState(mxCellState value)
+	public void setMarkedState(JGraphXCellState value)
 	{
 		markedState = value;
 	}
@@ -370,7 +367,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * Returns the marked state.
 	 */
-	public mxCellState getMarkedState()
+	public JGraphXCellState getMarkedState()
 	{
 		return markedState;
 	}
@@ -397,9 +394,9 @@ public class mxCellMarker extends JComponent
 	 * color. The state is returned regardless of the marker color and
 	 * valid state. 
 	 */
-	public mxCellState process(MouseEvent e)
+	public JGraphXCellState process(MouseEvent e)
 	{
-		mxCellState state = null;
+		JGraphXCellState state = null;
 
 		if (isEnabled())
 		{
@@ -416,7 +413,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * 
 	 */
-	public void highlight(mxCellState state, Color color)
+	public void highlight(JGraphXCellState state, Color color)
 	{
 		highlight(state, color, true);
 	}
@@ -424,7 +421,7 @@ public class mxCellMarker extends JComponent
 	/**
 	 * 
 	 */
-	public void highlight(mxCellState state, Color color, boolean valid)
+	public void highlight(JGraphXCellState state, Color color, boolean valid)
 	{
 		if (valid)
 		{
@@ -503,7 +500,7 @@ public class mxCellMarker extends JComponent
 	 * then the state is stored in validState. The return value of this method
 	 * is used as the argument for getMarkerColor.
 	 */
-	protected boolean isValidState(mxCellState state)
+	protected boolean isValidState(JGraphXCellState state)
 	{
 		return true;
 	}
@@ -512,7 +509,7 @@ public class mxCellMarker extends JComponent
 	 * Returns the valid- or invalidColor depending on the value of isValid.
 	 * The given state is ignored by this implementation.
 	 */
-	protected Color getMarkerColor(MouseEvent e, mxCellState state,
+	protected Color getMarkerColor(MouseEvent e, JGraphXCellState state,
 			boolean isValid)
 	{
 		return (isValid) ? validColor : invalidColor;
@@ -522,11 +519,11 @@ public class mxCellMarker extends JComponent
 	 * Uses getCell, getMarkedState and intersects to return the state for
 	 * the given event.
 	 */
-	protected mxCellState getState(MouseEvent e)
+	protected JGraphXCellState getState(MouseEvent e)
 	{
 		Object cell = getCell(e);
-		mxGraphView view = graphComponent.getGraph().getView();
-		mxCellState state = getStateToMark(view.getState(cell));
+		GraphView view = graphComponent.getGraph().getView();
+		JGraphXCellState state = getStateToMark(view.getState(cell));
 
 		return (state != null && intersects(state, e)) ? state : null;
 	}
@@ -544,7 +541,7 @@ public class mxCellMarker extends JComponent
 	 * Returns the state to be marked for the given state under the mouse. This
 	 * returns the given state.
 	 */
-	protected mxCellState getStateToMark(mxCellState state)
+	protected JGraphXCellState getStateToMark(JGraphXCellState state)
 	{
 		return state;
 	}
@@ -554,11 +551,11 @@ public class mxCellMarker extends JComponent
 	 * returns true if the hotspot is 0 or the event is inside the hotspot for
 	 * the given cell state.
 	 */
-	protected boolean intersects(mxCellState state, MouseEvent e)
+	protected boolean intersects(JGraphXCellState state, MouseEvent e)
 	{
 		if (isHotspotEnabled())
 		{
-			return mxUtils.intersectsHotspot(state, e.getX(), e.getY(),
+			return JGraphXUtils.intersectsHotspot(state, e.getX(), e.getY(),
 					hotspot, mxConstants.MIN_HOTSPOT_SIZE,
 					mxConstants.MAX_HOTSPOT_SIZE);
 		}

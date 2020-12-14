@@ -19,7 +19,7 @@ public class mxDomUtils
 	 */
 	public static Document createDocument()
 	{
-		return mxXmlUtils.getDocumentBuilder().newDocument();
+		return XmlUtils.getDocumentBuilder().newDocument();
 	}
 
 	/**

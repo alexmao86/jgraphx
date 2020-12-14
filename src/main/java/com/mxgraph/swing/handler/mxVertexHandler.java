@@ -15,13 +15,13 @@ import javax.swing.JComponent;
 import javax.swing.JPanel;
 
 import com.mxgraph.model.mxGeometry;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.util.mxSwingConstants;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.view.mxCellState;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphXCellState;
+import com.mxgraph.view.JGraphX;
 
 /**
  * 
@@ -57,7 +57,7 @@ public class mxVertexHandler extends mxCellHandler
 	 * @param graphComponent
 	 * @param state
 	 */
-	public mxVertexHandler(mxGraphComponent graphComponent, mxCellState state)
+	public mxVertexHandler(JGraphXComponent graphComponent, JGraphXCellState state)
 	{
 		super(graphComponent, state);
 	}
@@ -165,7 +165,7 @@ public class mxVertexHandler extends mxCellHandler
 			}
 			else
 			{
-				mxGraph graph = graphComponent.getGraph();
+				JGraphX graph = graphComponent.getGraph();
 				double scale = graph.getView().getScale();
 
 				if (gridEnabledEvent)
@@ -219,7 +219,7 @@ public class mxVertexHandler extends mxCellHandler
 	 */
 	protected void moveLabel(MouseEvent e)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		mxGeometry geometry = graph.getModel().getGeometry(state.getCell());
 
 		if (geometry != null)
@@ -269,7 +269,7 @@ public class mxVertexHandler extends mxCellHandler
 	 */
 	protected void resizeCell(MouseEvent e)
 	{
-		mxGraph graph = graphComponent.getGraph();
+		JGraphX graph = graphComponent.getGraph();
 		double scale = graph.getView().getScale();
 
 		Object cell = state.getCell();

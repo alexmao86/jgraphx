@@ -6,11 +6,11 @@ import java.awt.Rectangle;
 import java.awt.geom.GeneralPath;
 import java.util.Map;
 
-import com.mxgraph.canvas.mxGraphics2DCanvas;
+import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxRectangle;
-import com.mxgraph.util.mxUtils;
-import com.mxgraph.view.mxCellState;
+import com.mxgraph.util.JGraphXUtils;
+import com.mxgraph.view.JGraphXCellState;
 
 public class mxLabelShape extends mxImageShape
 {
@@ -18,11 +18,11 @@ public class mxLabelShape extends mxImageShape
 	/**
 	 * 
 	 */
-	public void paintShape(mxGraphics2DCanvas canvas, mxCellState state)
+	public void paintShape(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		super.paintShape(canvas, state);
 
-		if (mxUtils.isTrue(state.getStyle(), mxConstants.STYLE_GLASS, false))
+		if (JGraphXUtils.isTrue(state.getStyle(), mxConstants.STYLE_GLASS, false))
 		{
 			drawGlassEffect(canvas, state);
 		}
@@ -31,8 +31,8 @@ public class mxLabelShape extends mxImageShape
 	/**
 	 * Draws the glass effect
 	 */
-	public static void drawGlassEffect(mxGraphics2DCanvas canvas,
-			mxCellState state)
+	public static void drawGlassEffect(Graphics2DCanvas canvas,
+                                       JGraphXCellState state)
 	{
 		double size = 0.4;
 		canvas.getGraphics().setPaint(
@@ -41,7 +41,7 @@ public class mxLabelShape extends mxImageShape
 						(float) (state.getY() + state.getHeight() * size),
 						new Color(1, 1, 1, 0.3f)));
 
-		float sw = (float) (mxUtils.getFloat(state.getStyle(),
+		float sw = (float) (JGraphXUtils.getFloat(state.getStyle(),
 				mxConstants.STYLE_STROKEWIDTH, 1) * canvas.getScale() / 2);
 
 		GeneralPath path = new GeneralPath();
@@ -62,20 +62,20 @@ public class mxLabelShape extends mxImageShape
 	/**
 	 * 
 	 */
-	public Rectangle getImageBounds(mxGraphics2DCanvas canvas, mxCellState state)
+	public Rectangle getImageBounds(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		Map<String, Object> style = state.getStyle();
 		double scale = canvas.getScale();
-		String imgAlign = mxUtils.getString(style,
+		String imgAlign = JGraphXUtils.getString(style,
 				mxConstants.STYLE_IMAGE_ALIGN, mxConstants.ALIGN_LEFT);
-		String imgValign = mxUtils.getString(style,
+		String imgValign = JGraphXUtils.getString(style,
 				mxConstants.STYLE_IMAGE_VERTICAL_ALIGN,
 				mxConstants.ALIGN_MIDDLE);
-		int imgWidth = (int) (mxUtils.getInt(style,
+		int imgWidth = (int) (JGraphXUtils.getInt(style,
 				mxConstants.STYLE_IMAGE_WIDTH, mxConstants.DEFAULT_IMAGESIZE) * scale);
-		int imgHeight = (int) (mxUtils.getInt(style,
+		int imgHeight = (int) (JGraphXUtils.getInt(style,
 				mxConstants.STYLE_IMAGE_HEIGHT, mxConstants.DEFAULT_IMAGESIZE) * scale);
-		int spacing = (int) (mxUtils
+		int spacing = (int) (JGraphXUtils
 				.getInt(style, mxConstants.STYLE_SPACING, 2) * scale);
 
 		mxRectangle imageBounds = new mxRectangle(state);
@@ -121,24 +121,24 @@ public class mxLabelShape extends mxImageShape
 	/**
 	 * 
 	 */
-	public Color getFillColor(mxGraphics2DCanvas canvas, mxCellState state)
+	public Color getFillColor(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		return mxUtils.getColor(state.getStyle(), mxConstants.STYLE_FILLCOLOR);
+		return JGraphXUtils.getColor(state.getStyle(), mxConstants.STYLE_FILLCOLOR);
 	}
 
 	/**
 	 * 
 	 */
-	public Color getStrokeColor(mxGraphics2DCanvas canvas, mxCellState state)
+	public Color getStrokeColor(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
-		return mxUtils
+		return JGraphXUtils
 				.getColor(state.getStyle(), mxConstants.STYLE_STROKECOLOR);
 	}
 
 	/**
 	 * 
 	 */
-	public boolean hasGradient(mxGraphics2DCanvas canvas, mxCellState state)
+	public boolean hasGradient(Graphics2DCanvas canvas, JGraphXCellState state)
 	{
 		return true;
 	}

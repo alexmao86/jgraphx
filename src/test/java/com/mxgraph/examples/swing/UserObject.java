@@ -12,9 +12,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
 import com.mxgraph.model.mxCell;
-import com.mxgraph.swing.mxGraphComponent;
+import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.mxDomUtils;
-import com.mxgraph.view.mxGraph;
+import com.mxgraph.view.JGraphX;
 
 public class UserObject extends JFrame
 {
@@ -57,7 +57,7 @@ public class UserObject extends JFrame
 		Element relation = doc.createElement("Knows");
 		relation.setAttribute("since", "1985");
 
-		mxGraph graph = new mxGraph()
+		JGraphX graph = new JGraphX()
 		{
 			// Overrides method to disallow edge label editing
 			public boolean isCellEditable(Object cell)
@@ -154,7 +154,7 @@ public class UserObject extends JFrame
 		}
 
 		// Overrides method to create the editing value
-		mxGraphComponent graphComponent = new mxGraphComponent(graph)
+		JGraphXComponent graphComponent = new JGraphXComponent(graph)
 		{
 			/**
 			 * 
