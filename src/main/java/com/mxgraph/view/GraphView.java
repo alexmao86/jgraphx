@@ -9,9 +9,9 @@ import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxGraphModel;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.Geometry;
+import com.mxgraph.model.GraphModel;
+import com.mxgraph.model.IGraphModel;
 import com.mxgraph.util.*;
 import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
 import com.mxgraph.util.JGraphXUtils;
@@ -318,7 +318,7 @@ public class GraphView extends mxEventSource
 
 		if (cells != null && cells.length > 0)
 		{
-			mxIGraphModel model = graph.getModel();
+			IGraphModel model = graph.getModel();
 
 			for (int i = 0; i < cells.length; i++)
 			{
@@ -390,7 +390,7 @@ public class GraphView extends mxEventSource
 
 		if (recurse && (force || cell != currentRoot))
 		{
-			mxIGraphModel model = graph.getModel();
+			IGraphModel model = graph.getModel();
 			int childCount = model.getChildCount(cell);
 
 			for (int i = 0; i < childCount; i++)
@@ -410,7 +410,7 @@ public class GraphView extends mxEventSource
 	 */
 	public void invalidate(Object cell)
 	{
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 		cell = (cell != null) ? cell : model.getRoot();
 		JGraphXCellState state = getState(cell);
 
@@ -481,7 +481,7 @@ public class GraphView extends mxEventSource
 
 			if (recurse)
 			{
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 				int childCount = model.getChildCount(state.getCell());
 
 				for (int i = 0; i < childCount; i++)
@@ -538,7 +538,7 @@ public class GraphView extends mxEventSource
 			}
 			else
 			{
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 				int childCount = model.getChildCount(cell);
 
 				for (int i = 0; i < childCount; i++)
@@ -581,7 +581,7 @@ public class GraphView extends mxEventSource
 
 			if (state != null)
 			{
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 
 				if (state.isInvalid())
 				{
@@ -639,7 +639,7 @@ public class GraphView extends mxEventSource
 
 		if (state.getCell() != currentRoot)
 		{
-			mxIGraphModel model = graph.getModel();
+			IGraphModel model = graph.getModel();
 			JGraphXCellState pState = getState(model.getParent(state.getCell()));
 
 			if (pState != null && pState.getCell() != currentRoot)
@@ -660,7 +660,7 @@ public class GraphView extends mxEventSource
 						.setY(state.getOrigin().getY() + offset.getY());
 			}
 
-			mxGeometry geo = graph.getCellGeometry(state.getCell());
+			Geometry geo = graph.getCellGeometry(state.getCell());
 
 			if (geo != null)
 			{
@@ -734,7 +734,7 @@ public class GraphView extends mxEventSource
 	/**
 	 * Validates the given cell state.
 	 */
-	public void updateVertexState(JGraphXCellState state, mxGeometry geo)
+	public void updateVertexState(JGraphXCellState state, Geometry geo)
 	{
 		// LATER: Add support for rotation
 		updateVertexLabelOffset(state);
@@ -743,7 +743,7 @@ public class GraphView extends mxEventSource
 	/**
 	 * Validates the given cell state.
 	 */
-	public void updateEdgeState(JGraphXCellState state, mxGeometry geo)
+	public void updateEdgeState(JGraphXCellState state, Geometry geo)
 	{
 		JGraphXCellState source = state.getVisibleTerminalState(true);
 		JGraphXCellState target = state.getVisibleTerminalState(false);
@@ -928,7 +928,7 @@ public class GraphView extends mxEventSource
 
 			if (graph.getModel().isEdge(cell))
 			{
-				mxGeometry geo = graph.getCellGeometry(cell);
+				Geometry geo = graph.getCellGeometry(cell);
 
 				if (geo != null && geo.getWidth() > 0)
 				{
@@ -1112,7 +1112,7 @@ public class GraphView extends mxEventSource
 		if (pt == null && terminal == null)
 		{
 			mxPoint orig = edge.getOrigin();
-			mxGeometry geo = graph.getCellGeometry(edge.getCell());
+			Geometry geo = graph.getCellGeometry(edge.getCell());
 			pt = geo.getTerminalPoint(source);
 
 			if (pt != null)
@@ -1294,9 +1294,9 @@ public class GraphView extends mxEventSource
 				: mxConstants.STYLE_TARGET_PORT;
 		String id = JGraphXUtils.getString(state.style, key);
 
-		if (id != null && graph.getModel() instanceof mxGraphModel)
+		if (id != null && graph.getModel() instanceof GraphModel)
 		{
-			JGraphXCellState tmp = getState(((mxGraphModel) graph.getModel())
+			JGraphXCellState tmp = getState(((GraphModel) graph.getModel())
 					.getCell(id));
 
 			// Only uses ports where a cell state exists
@@ -1482,7 +1482,7 @@ public class GraphView extends mxEventSource
 	 */
 	public Object getVisibleTerminal(Object edge, boolean source)
 	{
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 		Object result = model.getTerminal(edge, source);
 		Object best = result;
 
@@ -1588,7 +1588,7 @@ public class GraphView extends mxEventSource
 	 * @return Returns the mxpoint that represents the absolute location of the
 	 *         given relative geometry.
 	 */
-	public mxPoint getPoint(JGraphXCellState state, mxGeometry geometry)
+	public mxPoint getPoint(JGraphXCellState state, Geometry geometry)
 	{
 		double x = state.getCenterX();
 		double y = state.getCenterY();
@@ -1661,8 +1661,8 @@ public class GraphView extends mxEventSource
 	 */
 	public mxPoint getRelativePoint(JGraphXCellState edgeState, double x, double y)
 	{
-		mxIGraphModel model = graph.getModel();
-		mxGeometry geometry = model.getGeometry(edgeState.getCell());
+		IGraphModel model = graph.getModel();
+		Geometry geometry = model.getGeometry(edgeState.getCell());
 
 		if (geometry != null)
 		{
@@ -1904,7 +1904,7 @@ public class GraphView extends mxEventSource
 			if (!up)
 			{
 				Object tmp = view.getCurrentRoot();
-				mxIGraphModel model = view.graph.getModel();
+				IGraphModel model = view.graph.getModel();
 
 				while (tmp != null)
 				{

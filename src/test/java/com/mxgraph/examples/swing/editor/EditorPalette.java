@@ -26,10 +26,10 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.TransferHandler;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.swing.util.mxSwingConstants;
+import com.mxgraph.model.Cell;
+import com.mxgraph.model.Geometry;
+import com.mxgraph.swing.util.GraphTransferable;
+import com.mxgraph.swing.util.SwingConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
 import com.mxgraph.util.mxEventSource;
@@ -179,7 +179,7 @@ public class EditorPalette extends JPanel
 	/**
 	 * 
 	 */
-	public void setSelectionEntry(JLabel entry, mxGraphTransferable t)
+	public void setSelectionEntry(JLabel entry, GraphTransferable t)
 	{
 		JLabel previous = selectedEntry;
 		selectedEntry = entry;
@@ -223,12 +223,12 @@ public class EditorPalette extends JPanel
 	public void addEdgeTemplate(final String name, ImageIcon icon,
 			String style, int width, int height, Object value)
 	{
-		mxGeometry geometry = new mxGeometry(0, 0, width, height);
+		Geometry geometry = new Geometry(0, 0, width, height);
 		geometry.setTerminalPoint(new mxPoint(0, height), true);
 		geometry.setTerminalPoint(new mxPoint(width, 0), false);
 		geometry.setRelative(true);
 
-		mxCell cell = new mxCell(value, geometry, style);
+		Cell cell = new Cell(value, geometry, style);
 		cell.setEdge(true);
 
 		addTemplate(name, icon, cell);
@@ -246,7 +246,7 @@ public class EditorPalette extends JPanel
 	public void addTemplate(final String name, ImageIcon icon, String style,
 			int width, int height, Object value)
 	{
-		mxCell cell = new mxCell(value, new mxGeometry(0, 0, width, height),
+		Cell cell = new Cell(value, new Geometry(0, 0, width, height),
 				style);
 		cell.setVertex(true);
 
@@ -259,10 +259,10 @@ public class EditorPalette extends JPanel
 	 * @param icon
 	 * @param cell
 	 */
-	public void addTemplate(final String name, ImageIcon icon, mxCell cell)
+	public void addTemplate(final String name, ImageIcon icon, Cell cell)
 	{
-		mxRectangle bounds = (mxGeometry) cell.getGeometry().clone();
-		final mxGraphTransferable t = new mxGraphTransferable(
+		mxRectangle bounds = (Geometry) cell.getGeometry().clone();
+		final GraphTransferable t = new GraphTransferable(
 				new Object[] { cell }, bounds);
 
 		// Scales the image if it's too large for the library
@@ -342,7 +342,7 @@ public class EditorPalette extends JPanel
 			public void dragGestureRecognized(DragGestureEvent e)
 			{
 				e
-						.startDrag(null, mxSwingConstants.EMPTY_IMAGE, new Point(),
+						.startDrag(null, SwingConstants.EMPTY_IMAGE, new Point(),
 								t, null);
 			}
 

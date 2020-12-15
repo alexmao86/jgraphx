@@ -5,8 +5,8 @@ package com.mxgraph.view;
 
 import java.util.Map;
 
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.Geometry;
+import com.mxgraph.model.IGraphModel;
 import com.mxgraph.util.*;
 import com.mxgraph.util.JGraphXUtils;
 
@@ -210,7 +210,7 @@ public class SwimlaneManager extends mxEventSource
 	{
 		if (cells != null)
 		{
-			mxIGraphModel model = getGraph().getModel();
+			IGraphModel model = getGraph().getModel();
 
 			model.beginUpdate();
 			try
@@ -238,10 +238,10 @@ public class SwimlaneManager extends mxEventSource
 	 */
 	protected void swimlaneAdded(Object swimlane)
 	{
-		mxIGraphModel model = getGraph().getModel();
+		IGraphModel model = getGraph().getModel();
 		Object parent = model.getParent(swimlane);
 		int childCount = model.getChildCount(parent);
-		mxGeometry geo = null;
+		Geometry geo = null;
 
 		// Finds the first valid sibling swimlane as reference
 		for (int i = 0; i < childCount; i++)
@@ -275,7 +275,7 @@ public class SwimlaneManager extends mxEventSource
 	{
 		if (cells != null)
 		{
-			mxIGraphModel model = this.getGraph().getModel();
+			IGraphModel model = this.getGraph().getModel();
 			
 			model.beginUpdate();
 			try
@@ -285,7 +285,7 @@ public class SwimlaneManager extends mxEventSource
 				{
 					if (!this.isSwimlaneIgnored(cells[i]))
 					{
-						mxGeometry geo = model.getGeometry(cells[i]);
+						Geometry geo = model.getGeometry(cells[i]);
 						
 						if (geo != null)
 						{
@@ -324,7 +324,7 @@ public class SwimlaneManager extends mxEventSource
 	 */
 	protected void resizeSwimlane(Object swimlane, double w, double h, boolean parentHorizontal)
 	{
-		mxIGraphModel model = getGraph().getModel();
+		IGraphModel model = getGraph().getModel();
 
 		model.beginUpdate();
 		try
@@ -333,7 +333,7 @@ public class SwimlaneManager extends mxEventSource
 			
 			if (!this.isSwimlaneIgnored(swimlane))
 			{
-				mxGeometry geo = model.getGeometry(swimlane);
+				Geometry geo = model.getGeometry(swimlane);
 
 				if (geo != null)
 				{
@@ -341,7 +341,7 @@ public class SwimlaneManager extends mxEventSource
 					if ((parentHorizontal && geo.getHeight() != h)
 							|| (!parentHorizontal && geo.getWidth() != w))
 					{
-						geo = (mxGeometry) geo.clone();
+						geo = (Geometry) geo.clone();
 
 						if (parentHorizontal)
 						{

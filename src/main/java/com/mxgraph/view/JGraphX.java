@@ -29,20 +29,20 @@ import org.w3c.dom.Element;
 
 import com.mxgraph.canvas.IJGraphXCanvas;
 import com.mxgraph.canvas.JGraphXImageCanvas;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxGraphModel;
-import com.mxgraph.model.mxGraphModel.Filter;
-import com.mxgraph.model.mxGraphModel.mxChildChange;
-import com.mxgraph.model.mxGraphModel.mxCollapseChange;
-import com.mxgraph.model.mxGraphModel.mxGeometryChange;
-import com.mxgraph.model.mxGraphModel.mxRootChange;
-import com.mxgraph.model.mxGraphModel.mxStyleChange;
-import com.mxgraph.model.mxGraphModel.mxTerminalChange;
-import com.mxgraph.model.mxGraphModel.mxValueChange;
-import com.mxgraph.model.mxGraphModel.mxVisibleChange;
-import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.Cell;
+import com.mxgraph.model.Geometry;
+import com.mxgraph.model.GraphModel;
+import com.mxgraph.model.GraphModel.Filter;
+import com.mxgraph.model.GraphModel.mxChildChange;
+import com.mxgraph.model.GraphModel.mxCollapseChange;
+import com.mxgraph.model.GraphModel.mxGeometryChange;
+import com.mxgraph.model.GraphModel.mxRootChange;
+import com.mxgraph.model.GraphModel.mxStyleChange;
+import com.mxgraph.model.GraphModel.mxTerminalChange;
+import com.mxgraph.model.GraphModel.mxValueChange;
+import com.mxgraph.model.GraphModel.mxVisibleChange;
+import com.mxgraph.model.ICell;
+import com.mxgraph.model.IGraphModel;
 import com.mxgraph.util.mxUndoableEdit.mxUndoableChange;
 import com.mxgraph.util.JGraphXUtils;
 
@@ -217,7 +217,7 @@ public class JGraphX extends mxEventSource
 	/**
 	 * Holds the model that contains the cells to be displayed.
 	 */
-	protected mxIGraphModel model;
+	protected IGraphModel model;
 
 	/**
 	 * Holds the view that caches the cell states.
@@ -553,7 +553,7 @@ public class JGraphX extends mxEventSource
 	{
 		public void invoke(Object sender, mxEventObject evt)
 		{
-			mxRectangle dirty = graphModelChanged((mxIGraphModel) sender,
+			mxRectangle dirty = graphModelChanged((IGraphModel) sender,
 					(List<mxUndoableChange>) ((mxUndoableEdit) evt
 							.getProperty("edit")).getChanges());
 			repaint(dirty);
@@ -562,7 +562,7 @@ public class JGraphX extends mxEventSource
 
 	/**
 	 * Constructs a new graph with an empty
-	 * {@link com.mxgraph.model.mxGraphModel}.
+	 * {@link GraphModel}.
 	 */
 	public JGraphX()
 	{
@@ -571,19 +571,19 @@ public class JGraphX extends mxEventSource
 
 	/**
 	 * Constructs a new graph for the specified model. If no model is
-	 * specified, then a new, empty {@link com.mxgraph.model.mxGraphModel} is
+	 * specified, then a new, empty {@link GraphModel} is
 	 * used.
 	 * 
 	 * @param model Model that contains the graph data
 	 */
-	public JGraphX(mxIGraphModel model)
+	public JGraphX(IGraphModel model)
 	{
 		this(model, null);
 	}
 
 	/**
 	 * Constructs a new graph for the specified model. If no model is
-	 * specified, then a new, empty {@link com.mxgraph.model.mxGraphModel} is
+	 * specified, then a new, empty {@link GraphModel} is
 	 * used.
 	 * 
 	 * @param stylesheet The stylesheet to use for the graph.
@@ -595,15 +595,15 @@ public class JGraphX extends mxEventSource
 
 	/**
 	 * Constructs a new graph for the specified model. If no model is
-	 * specified, then a new, empty {@link com.mxgraph.model.mxGraphModel} is
+	 * specified, then a new, empty {@link GraphModel} is
 	 * used.
 	 * 
 	 * @param model Model that contains the graph data
 	 */
-	public JGraphX(mxIGraphModel model, Stylesheet stylesheet)
+	public JGraphX(IGraphModel model, Stylesheet stylesheet)
 	{
 		selectionModel = createSelectionModel();
-		setModel((model != null) ? model : new mxGraphModel());
+		setModel((model != null) ? model : new GraphModel());
 		setStylesheet((stylesheet != null) ? stylesheet : createStylesheet());
 		setView(createGraphView());
 	}
@@ -637,7 +637,7 @@ public class JGraphX extends mxEventSource
 	 * 
 	 * @return Returns the model that contains the graph data
 	 */
-	public mxIGraphModel getModel()
+	public IGraphModel getModel()
 	{
 		return model;
 	}
@@ -648,7 +648,7 @@ public class JGraphX extends mxEventSource
 	 * 
 	 * @param value Model that contains the graph data
 	 */
-	public void setModel(mxIGraphModel value)
+	public void setModel(IGraphModel value)
 	{
 		if (model != null)
 		{
@@ -811,8 +811,8 @@ public class JGraphX extends mxEventSource
 	 * Called when the graph model changes. Invokes processChange on each
 	 * item of the given array to update the view accordingly.
 	 */
-	public mxRectangle graphModelChanged(mxIGraphModel sender,
-			List<mxUndoableChange> changes)
+	public mxRectangle graphModelChanged(IGraphModel sender,
+										 List<mxUndoableChange> changes)
 	{
 		int thresh = getChangesRepaintThreshold();
 		boolean ignoreDirty = thresh > 0 && changes.size() > thresh;
@@ -1561,7 +1561,7 @@ public class JGraphX extends mxEventSource
 			{
 				for (int i = 0; i < cells.length; i++)
 				{
-					mxGeometry geo = getCellGeometry(cells[i]);
+					Geometry geo = getCellGeometry(cells[i]);
 
 					if (geo != null && !model.isEdge(cells[i]))
 					{
@@ -1632,11 +1632,11 @@ public class JGraphX extends mxEventSource
 
 				for (int i = 0; i < cells.length; i++)
 				{
-					mxGeometry geo = getCellGeometry(cells[i]);
+					Geometry geo = getCellGeometry(cells[i]);
 
 					if (geo != null && !model.isEdge(cells[i]))
 					{
-						geo = (mxGeometry) geo.clone();
+						geo = (Geometry) geo.clone();
 
 						if (align == null
 								|| align.equals(mxConstants.ALIGN_LEFT))
@@ -1892,7 +1892,7 @@ public class JGraphX extends mxEventSource
 				// creates one if one does not exist
 				if (getCellGeometry(group) == null)
 				{
-					model.setGeometry(group, new mxGeometry());
+					model.setGeometry(group, new Geometry());
 				}
 
 				// Adds the children into the group and moves
@@ -1990,7 +1990,7 @@ public class JGraphX extends mxEventSource
 	 */
 	public Object createGroupCell(Object[] cells)
 	{
-		mxCell group = new mxCell("", new mxGeometry(), null);
+		Cell group = new Cell("", new Geometry(), null);
 		group.setVertex(true);
 		group.setConnectable(false);
 
@@ -2042,7 +2042,7 @@ public class JGraphX extends mxEventSource
 			{
 				for (int i = 0; i < cells.length; i++)
 				{
-					Object[] children = mxGraphModel.getChildren(model,
+					Object[] children = GraphModel.getChildren(model,
 							cells[i]);
 
 					if (children != null && children.length > 0)
@@ -2162,7 +2162,7 @@ public class JGraphX extends mxEventSource
 		{
 			for (int i = 0; i < cells.length; i++)
 			{
-				mxGeometry geo = getCellGeometry(cells[i]);
+				Geometry geo = getCellGeometry(cells[i]);
 
 				if (geo != null)
 				{
@@ -2180,7 +2180,7 @@ public class JGraphX extends mxEventSource
 									? getStartSize(cells[i])
 									: new mxRectangle();
 
-							geo = (mxGeometry) geo.clone();
+							geo = (Geometry) geo.clone();
 
 							if (moveParent)
 							{
@@ -2279,7 +2279,7 @@ public class JGraphX extends mxEventSource
 					}
 					else
 					{
-						mxGeometry g = model.getGeometry(clones[i]);
+						Geometry g = model.getGeometry(clones[i]);
 
 						if (g != null)
 						{
@@ -2470,10 +2470,10 @@ public class JGraphX extends mxEventSource
 			double y, double width, double height, String style,
 			boolean relative)
 	{
-		mxGeometry geometry = new mxGeometry(x, y, width, height);
+		Geometry geometry = new Geometry(x, y, width, height);
 		geometry.setRelative(relative);
 
-		mxCell vertex = new mxCell(value, geometry, style);
+		Cell vertex = new Cell(value, geometry, style);
 		vertex.setId(id);
 		vertex.setVertex(true);
 		vertex.setConnectable(true);
@@ -2528,7 +2528,7 @@ public class JGraphX extends mxEventSource
 	public Object createEdge(Object parent, String id, Object value,
 			Object source, Object target, String style)
 	{
-		mxCell edge = new mxCell(value, new mxGeometry(), style);
+		Cell edge = new Cell(value, new Geometry(), style);
 
 		edge.setId(id);
 		edge.setEdge(true);
@@ -2725,14 +2725,14 @@ public class JGraphX extends mxEventSource
 							mxPoint o2 = (oldState != null)
 									? oldState.getOrigin()
 									: zero;
-							mxGeometry geo = model.getGeometry(cells[i]);
+							Geometry geo = model.getGeometry(cells[i]);
 
 							if (geo != null)
 							{
 								double dx = o2.getX() - o1.getX();
 								double dy = o2.getY() - o1.getY();
 
-								geo = (mxGeometry) geo.clone();
+								geo = (Geometry) geo.clone();
 								geo.translate(dx, dy);
 
 								if (!geo.isRelative()
@@ -2880,7 +2880,7 @@ public class JGraphX extends mxEventSource
 					{
 						if (!cellSet.contains(edges[j]))
 						{
-							mxGeometry geo = model.getGeometry(edges[j]);
+							Geometry geo = model.getGeometry(edges[j]);
 
 							if (geo != null)
 							{
@@ -2903,7 +2903,7 @@ public class JGraphX extends mxEventSource
 										tmp = model.getParent(tmp);
 									}
 
-									geo = (mxGeometry) geo.clone();
+									geo = (Geometry) geo.clone();
 									int n = (source) ? 0
 											: state.getAbsolutePointCount() - 1;
 									mxPoint pt = state.getAbsolutePoint(n);
@@ -3204,7 +3204,7 @@ public class JGraphX extends mxEventSource
 
 						if (recurse)
 						{
-							Object[] children = mxGraphModel.getChildren(model,
+							Object[] children = GraphModel.getChildren(model,
 									cells[i]);
 							cellsFolded(children, collapse, recurse);
 						}
@@ -3232,11 +3232,11 @@ public class JGraphX extends mxEventSource
 	{
 		if (cell != null)
 		{
-			mxGeometry geo = model.getGeometry(cell);
+			Geometry geo = model.getGeometry(cell);
 
 			if (geo != null)
 			{
-				geo = (mxGeometry) geo.clone();
+				geo = (Geometry) geo.clone();
 
 				updateAlternateBounds(cell, geo, willCollapse);
 				geo.swap();
@@ -3258,7 +3258,7 @@ public class JGraphX extends mxEventSource
 	 * @param geo Geometry for which the alternate bounds should be updated.
 	 * @param willCollapse Boolean indicating if the cell is going to be collapsed.
 	 */
-	public void updateAlternateBounds(Object cell, mxGeometry geo,
+	public void updateAlternateBounds(Object cell, Geometry geo,
 			boolean willCollapse)
 	{
 		if (cell != null && geo != null)
@@ -3330,7 +3330,7 @@ public class JGraphX extends mxEventSource
 				}
 
 				// Recurses
-				Object[] children = mxGraphModel.getChildren(model, cells[i]);
+				Object[] children = GraphModel.getChildren(model, cells[i]);
 				edges.addAll(Arrays.asList(getAllEdges(children)));
 			}
 		}
@@ -3392,12 +3392,12 @@ public class JGraphX extends mxEventSource
 			try
 			{
 				mxRectangle size = getPreferredSizeForCell(cell);
-				mxGeometry geo = model.getGeometry(cell);
+				Geometry geo = model.getGeometry(cell);
 
 				if (size != null && geo != null)
 				{
 					boolean collapsed = isCellCollapsed(cell);
-					geo = (mxGeometry) geo.clone();
+					geo = (Geometry) geo.clone();
 
 					if (isSwimlane(cell))
 					{
@@ -3451,7 +3451,7 @@ public class JGraphX extends mxEventSource
 					if (!ignoreChildren && !collapsed)
 					{
 						mxRectangle bounds = view.getBounds(
-								mxGraphModel.getChildren(model, cell));
+								GraphModel.getChildren(model, cell));
 
 						if (bounds != null)
 						{
@@ -3636,14 +3636,14 @@ public class JGraphX extends mxEventSource
 				for (int i = 0; i < cells.length; i++)
 				{
 					mxRectangle tmp = bounds[i];
-					mxGeometry geo = model.getGeometry(cells[i]);
+					Geometry geo = model.getGeometry(cells[i]);
 
 					if (geo != null && (geo.getX() != tmp.getX()
 							|| geo.getY() != tmp.getY()
 							|| geo.getWidth() != tmp.getWidth()
 							|| geo.getHeight() != tmp.getHeight()))
 					{
-						geo = (mxGeometry) geo.clone();
+						geo = (Geometry) geo.clone();
 
 						if (geo.isRelative())
 						{
@@ -3707,16 +3707,16 @@ public class JGraphX extends mxEventSource
 		if (cell != null)
 		{
 			Object parent = model.getParent(cell);
-			mxGeometry p = model.getGeometry(parent);
+			Geometry p = model.getGeometry(parent);
 
 			if (parent != null && p != null && !isCellCollapsed(parent))
 			{
-				mxGeometry geo = model.getGeometry(cell);
+				Geometry geo = model.getGeometry(cell);
 
 				if (geo != null && (p.getWidth() < geo.getX() + geo.getWidth()
 						|| p.getHeight() < geo.getY() + geo.getHeight()))
 				{
-					p = (mxGeometry) p.clone();
+					p = (Geometry) p.clone();
 
 					p.setWidth(Math.max(p.getWidth(),
 							geo.getX() + geo.getWidth()));
@@ -3867,11 +3867,11 @@ public class JGraphX extends mxEventSource
 	 */
 	public void translateCell(Object cell, double dx, double dy)
 	{
-		mxGeometry geo = model.getGeometry(cell);
+		Geometry geo = model.getGeometry(cell);
 
 		if (geo != null)
 		{
-			geo = (mxGeometry) geo.clone();
+			geo = (Geometry) geo.clone();
 			geo.translate(dx, dy);
 
 			if (!geo.isRelative() && model.isVertex(cell)
@@ -3915,7 +3915,7 @@ public class JGraphX extends mxEventSource
 			}
 			else if (parent != null && parent != getDefaultParent())
 			{
-				mxGeometry g = model.getGeometry(parent);
+				Geometry g = model.getGeometry(parent);
 
 				if (g != null)
 				{
@@ -3974,7 +3974,7 @@ public class JGraphX extends mxEventSource
 	{
 		if (cell != null)
 		{
-			mxGeometry geo = model.getGeometry(cell);
+			Geometry geo = model.getGeometry(cell);
 			mxRectangle area = (isConstrainChild(cell))
 					? getCellContainmentArea(cell)
 					: getMaximumGraphBounds();
@@ -4031,7 +4031,7 @@ public class JGraphX extends mxEventSource
 			{
 				for (int i = 0; i < cells.length; i++)
 				{
-					Object[] edges = mxGraphModel.getEdges(model, cells[i]);
+					Object[] edges = GraphModel.getEdges(model, cells[i]);
 
 					if (edges != null)
 					{
@@ -4053,7 +4053,7 @@ public class JGraphX extends mxEventSource
 						}
 					}
 
-					resetEdges(mxGraphModel.getChildren(model, cells[i]));
+					resetEdges(GraphModel.getChildren(model, cells[i]));
 				}
 			}
 			finally
@@ -4068,7 +4068,7 @@ public class JGraphX extends mxEventSource
 	 */
 	public Object resetEdge(Object edge)
 	{
-		mxGeometry geo = model.getGeometry(edge);
+		Geometry geo = model.getGeometry(edge);
 
 		if (geo != null)
 		{
@@ -4077,7 +4077,7 @@ public class JGraphX extends mxEventSource
 
 			if (points != null && !points.isEmpty())
 			{
-				geo = (mxGeometry) geo.clone();
+				geo = (Geometry) geo.clone();
 				geo.setPoints(null);
 				model.setGeometry(edge, geo);
 			}
@@ -4405,9 +4405,9 @@ public class JGraphX extends mxEventSource
 					// Checks if the new terminal is a port
 					String id = null;
 
-					if (isPort(terminal) && terminal instanceof mxICell)
+					if (isPort(terminal) && terminal instanceof ICell)
 					{
-						id = ((mxICell) terminal).getId();
+						id = ((ICell) terminal).getId();
 						terminal = getTerminalForPort(terminal, source);
 					}
 
@@ -4463,7 +4463,7 @@ public class JGraphX extends mxEventSource
 				{
 					if (model.isEdge(cells[i]))
 					{
-						mxGeometry geo = model.getGeometry(cells[i]);
+						Geometry geo = model.getGeometry(cells[i]);
 
 						if (geo != null)
 						{
@@ -4473,7 +4473,7 @@ public class JGraphX extends mxEventSource
 
 							if (state != null && pstate != null)
 							{
-								geo = (mxGeometry) geo.clone();
+								geo = (Geometry) geo.clone();
 
 								double dx = -pstate.getOrigin().getX();
 								double dy = -pstate.getOrigin().getY();
@@ -4775,7 +4775,7 @@ public class JGraphX extends mxEventSource
 			{
 				if (getModel().isVertex(cells[i]))
 				{
-					mxGeometry geo = getCellGeometry(cells[i]);
+					Geometry geo = getCellGeometry(cells[i]);
 
 					if (result == null)
 					{
@@ -4979,7 +4979,7 @@ public class JGraphX extends mxEventSource
 	 * @param cell Cell whose geometry should be returned.
 	 * @return Returns the geometry of the cell.
 	 */
-	public mxGeometry getCellGeometry(Object cell)
+	public Geometry getCellGeometry(Object cell)
 	{
 		return model.getGeometry(cell);
 	}
@@ -5157,7 +5157,7 @@ public class JGraphX extends mxEventSource
 			// and adds an error message if required			
 			if (!multigraph)
 			{
-				Object[] tmp = mxGraphModel.getEdgesBetween(model, source,
+				Object[] tmp = GraphModel.getEdgesBetween(model, source,
 						target, true);
 
 				// Checks if the source and target are not connected by another edge
@@ -5171,9 +5171,9 @@ public class JGraphX extends mxEventSource
 			// Gets the number of outgoing edges from the source
 			// and the number of incoming edges from the target
 			// without counting the edge being currently changed.
-			int sourceOut = mxGraphModel.getDirectedEdgeCount(model, source,
+			int sourceOut = GraphModel.getDirectedEdgeCount(model, source,
 					true, edge);
-			int targetIn = mxGraphModel.getDirectedEdgeCount(model, target,
+			int targetIn = GraphModel.getDirectedEdgeCount(model, target,
 					false, edge);
 
 			// Checks the change against each multiplicity rule
@@ -5227,8 +5227,8 @@ public class JGraphX extends mxEventSource
 	 */
 	public String getCellValidationError(Object cell)
 	{
-		int outCount = mxGraphModel.getDirectedEdgeCount(model, cell, true);
-		int inCount = mxGraphModel.getDirectedEdgeCount(model, cell, false);
+		int outCount = GraphModel.getDirectedEdgeCount(model, cell, true);
+		int inCount = GraphModel.getDirectedEdgeCount(model, cell, false);
 		StringBuffer error = new StringBuffer();
 		Object value = model.getValue(cell);
 
@@ -5540,7 +5540,7 @@ public class JGraphX extends mxEventSource
 	 */
 	public boolean isCellLocked(Object cell)
 	{
-		mxGeometry geometry = model.getGeometry(cell);
+		Geometry geometry = model.getGeometry(cell);
 
 		return isCellsLocked() || (geometry != null && model.isVertex(cell)
 				&& geometry.isRelative());
@@ -5646,7 +5646,7 @@ public class JGraphX extends mxEventSource
 	 */
 	public Object[] getMovableCells(Object[] cells)
 	{
-		return mxGraphModel.filterCells(cells, new Filter()
+		return GraphModel.filterCells(cells, new Filter()
 		{
 			public boolean filter(Object cell)
 			{
@@ -5784,7 +5784,7 @@ public class JGraphX extends mxEventSource
 	 */
 	public Object[] getDeletableCells(Object[] cells)
 	{
-		return mxGraphModel.filterCells(cells, new Filter()
+		return GraphModel.filterCells(cells, new Filter()
 		{
 			public boolean filter(Object cell)
 			{
@@ -5835,7 +5835,7 @@ public class JGraphX extends mxEventSource
 	 */
 	public Object[] getCloneableCells(Object[] cells)
 	{
-		return mxGraphModel.filterCells(cells, new Filter()
+		return GraphModel.filterCells(cells, new Filter()
 		{
 			public boolean filter(Object cell)
 			{
@@ -6702,7 +6702,7 @@ public class JGraphX extends mxEventSource
 	 */
 	public Object[] getFoldableCells(Object[] cells, final boolean collapse)
 	{
-		return mxGraphModel.filterCells(cells, new Filter()
+		return GraphModel.filterCells(cells, new Filter()
 		{
 			public boolean filter(Object cell)
 			{
@@ -7000,7 +7000,7 @@ public class JGraphX extends mxEventSource
 	public Object[] getChildCells(Object parent, boolean vertices,
 			boolean edges)
 	{
-		Object[] cells = mxGraphModel.getChildCells(model, parent, vertices,
+		Object[] cells = GraphModel.getChildCells(model, parent, vertices,
 				edges);
 		List<Object> result = new ArrayList<Object>(cells.length);
 
@@ -7188,12 +7188,12 @@ public class JGraphX extends mxEventSource
 
 			if (isCollapsed || !isCellVisible(child))
 			{
-				edges.addAll(Arrays.asList(mxGraphModel.getEdges(model, child,
+				edges.addAll(Arrays.asList(GraphModel.getEdges(model, child,
 						incoming, outgoing, includeLoops)));
 			}
 		}
 
-		edges.addAll(Arrays.asList(mxGraphModel.getEdges(model, cell, incoming,
+		edges.addAll(Arrays.asList(GraphModel.getEdges(model, cell, incoming,
 				outgoing, includeLoops)));
 		List<Object> result = new ArrayList<Object>(edges.size());
 		Iterator<Object> it = edges.iterator();
@@ -7795,7 +7795,7 @@ public class JGraphX extends mxEventSource
 		}
 		else if (childCount > 0)
 		{
-			int i = ((mxICell) parent).getIndex((mxICell) cell);
+			int i = ((ICell) parent).getIndex((ICell) cell);
 
 			if (isNext)
 			{
@@ -7877,8 +7877,8 @@ public class JGraphX extends mxEventSource
 			parent = getDefaultParent();
 		}
 
-		Collection<Object> cells = mxGraphModel.filterDescendants(getModel(),
-				new mxGraphModel.Filter()
+		Collection<Object> cells = GraphModel.filterDescendants(getModel(),
+				new GraphModel.Filter()
 				{
 
 					/**
@@ -7919,7 +7919,7 @@ public class JGraphX extends mxEventSource
 			parent = getDefaultParent();
 		}
 
-		Object[] children = mxGraphModel.getChildren(model, parent);
+		Object[] children = GraphModel.getChildren(model, parent);
 
 		if (children != null)
 		{

@@ -15,7 +15,7 @@ import java.awt.event.MouseMotionListener;
 
 import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.JGraphXComponent.mxGraphControl;
-import com.mxgraph.swing.util.mxSwingConstants;
+import com.mxgraph.swing.util.SwingConstants;
 import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
@@ -31,13 +31,13 @@ public class JGraphXRubberband implements MouseListener, MouseMotionListener
 	 * Defines the border color for drawing the rubberband selection.
 	 * Default is mxConstants.RUBBERBAND_BORDERCOLOR.
 	 */
-	protected Color borderColor = mxSwingConstants.RUBBERBAND_BORDERCOLOR;
+	protected Color borderColor = SwingConstants.RUBBERBAND_BORDERCOLOR;
 
 	/**
 	 * Defines the color to be used for filling the rubberband selection.
 	 * Default is mxConstants.RUBBERBAND_FILLCOLOR.
 	 */
-	protected Color fillColor = mxSwingConstants.RUBBERBAND_FILLCOLOR;
+	protected Color fillColor = SwingConstants.RUBBERBAND_FILLCOLOR;
 
 	/**
 	 * Reference to the enclosing graph container.

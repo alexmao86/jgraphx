@@ -5,7 +5,7 @@ import javax.swing.JPopupMenu;
 import javax.swing.TransferHandler;
 
 import com.mxgraph.examples.swing.editor.EditorActions.HistoryAction;
-import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.swing.util.GraphActions;
 import com.mxgraph.util.mxResources;
 
 public class EditorPopupMenu extends JPopupMenu
@@ -43,7 +43,7 @@ public class EditorPopupMenu extends JPopupMenu
 		addSeparator();
 
 		add(
-				editor.bind(mxResources.get("delete"), mxGraphActions
+				editor.bind(mxResources.get("delete"), GraphActions
 						.getDeleteAction(),
 						"/com/mxgraph/examples/swing/images/delete.gif"))
 				.setEnabled(selected);
@@ -63,19 +63,19 @@ public class EditorPopupMenu extends JPopupMenu
 		addSeparator();
 
 		add(
-				editor.bind(mxResources.get("edit"), mxGraphActions
+				editor.bind(mxResources.get("edit"), GraphActions
 						.getEditAction())).setEnabled(selected);
 
 		addSeparator();
 
-		add(editor.bind(mxResources.get("selectVertices"), mxGraphActions
+		add(editor.bind(mxResources.get("selectVertices"), GraphActions
 				.getSelectVerticesAction()));
-		add(editor.bind(mxResources.get("selectEdges"), mxGraphActions
+		add(editor.bind(mxResources.get("selectEdges"), GraphActions
 				.getSelectEdgesAction()));
 
 		addSeparator();
 
-		add(editor.bind(mxResources.get("selectAll"), mxGraphActions
+		add(editor.bind(mxResources.get("selectAll"), GraphActions
 				.getSelectAllAction()));
 	}
 

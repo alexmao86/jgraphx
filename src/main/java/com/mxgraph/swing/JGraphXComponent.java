@@ -52,22 +52,22 @@ import javax.swing.TransferHandler;
 
 import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.canvas.IJGraphXCanvas;
-import com.mxgraph.model.mxGraphModel;
-import com.mxgraph.model.mxGraphModel.Filter;
-import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.swing.handler.mxCellHandler;
-import com.mxgraph.swing.handler.mxConnectionHandler;
-import com.mxgraph.swing.handler.mxEdgeHandler;
-import com.mxgraph.swing.handler.mxElbowEdgeHandler;
-import com.mxgraph.swing.handler.mxGraphHandler;
-import com.mxgraph.swing.handler.mxGraphTransferHandler;
-import com.mxgraph.swing.handler.mxPanningHandler;
-import com.mxgraph.swing.handler.mxSelectionCellsHandler;
-import com.mxgraph.swing.handler.mxVertexHandler;
-import com.mxgraph.swing.util.mxCellOverlay;
-import com.mxgraph.swing.util.mxICellOverlay;
-import com.mxgraph.swing.view.mxCellEditor;
-import com.mxgraph.swing.view.mxICellEditor;
+import com.mxgraph.model.GraphModel;
+import com.mxgraph.model.GraphModel.Filter;
+import com.mxgraph.model.IGraphModel;
+import com.mxgraph.swing.handler.CellHandler;
+import com.mxgraph.swing.handler.ConnectionHandler;
+import com.mxgraph.swing.handler.EdgeHandler;
+import com.mxgraph.swing.handler.ElbowEdgeHandler;
+import com.mxgraph.swing.handler.GraphHandler;
+import com.mxgraph.swing.handler.GraphTransferHandler;
+import com.mxgraph.swing.handler.PanningHandler;
+import com.mxgraph.swing.handler.SelectionCellsHandler;
+import com.mxgraph.swing.handler.VertexHandler;
+import com.mxgraph.swing.util.CellOverlay;
+import com.mxgraph.swing.util.ICellOverlay;
+import com.mxgraph.swing.view.CellEditor;
+import com.mxgraph.swing.view.ICellEditor;
 import com.mxgraph.swing.view.JGraphXInteractiveCanvas;
 import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
@@ -209,27 +209,27 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected mxICellEditor cellEditor;
+	protected ICellEditor cellEditor;
 
 	/**
 	 * 
 	 */
-	protected mxConnectionHandler connectionHandler;
+	protected ConnectionHandler connectionHandler;
 
 	/**
 	 * 
 	 */
-	protected mxPanningHandler panningHandler;
+	protected PanningHandler panningHandler;
 
 	/**
 	 * 
 	 */
-	protected mxSelectionCellsHandler selectionCellsHandler;
+	protected SelectionCellsHandler selectionCellsHandler;
 
 	/**
 	 * 
 	 */
-	protected mxGraphHandler graphHandler;
+	protected GraphHandler graphHandler;
 
 	/**
 	 * The transparency of previewed cells from 0.0. to 0.1. 0.0 indicates
@@ -482,7 +482,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 * Maps from cells to lists of overlays.
 	 */
-	protected Hashtable<Object, mxICellOverlay[]> overlays = new Hashtable<Object, mxICellOverlay[]>();
+	protected Hashtable<Object, ICellOverlay[]> overlays = new Hashtable<Object, ICellOverlay[]>();
 
 	/**
 	 * Boolean flag to disable centering after the first time.
@@ -588,8 +588,8 @@ public class JGraphXComponent extends JScrollPane implements Printable
 			}
 			else if (evt.getPropertyName().equals("model"))
 			{
-				mxGraphModel oldModel = (mxGraphModel) evt.getOldValue();
-				mxGraphModel newModel = (mxGraphModel) evt.getNewValue();
+				GraphModel oldModel = (GraphModel) evt.getOldValue();
+				GraphModel newModel = (GraphModel) evt.getNewValue();
 
 				if (oldModel != null)
 				{
@@ -728,9 +728,9 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	protected mxICellEditor createCellEditor()
+	protected ICellEditor createCellEditor()
 	{
-		return new mxCellEditor(this);
+		return new CellEditor(this);
 	}
 
 	/**
@@ -825,29 +825,29 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 */
 	protected TransferHandler createTransferHandler()
 	{
-		return new mxGraphTransferHandler();
+		return new GraphTransferHandler();
 	}
 
 	/**
 	 *
 	 */
-	protected mxSelectionCellsHandler createSelectionCellsHandler()
+	protected SelectionCellsHandler createSelectionCellsHandler()
 	{
-		return new mxSelectionCellsHandler(this);
+		return new SelectionCellsHandler(this);
 	}
 
 	/**
 	 *
 	 */
-	protected mxGraphHandler createGraphHandler()
+	protected GraphHandler createGraphHandler()
 	{
-		return new mxGraphHandler(this);
+		return new GraphHandler(this);
 	}
 
 	/**
 	 * 
 	 */
-	public mxSelectionCellsHandler getSelectionCellsHandler()
+	public SelectionCellsHandler getSelectionCellsHandler()
 	{
 		return selectionCellsHandler;
 	}
@@ -855,7 +855,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public mxGraphHandler getGraphHandler()
+	public GraphHandler getGraphHandler()
 	{
 		return graphHandler;
 	}
@@ -863,15 +863,15 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	protected mxConnectionHandler createConnectionHandler()
+	protected ConnectionHandler createConnectionHandler()
 	{
-		return new mxConnectionHandler(this);
+		return new ConnectionHandler(this);
 	}
 
 	/**
 	 * 
 	 */
-	public mxConnectionHandler getConnectionHandler()
+	public ConnectionHandler getConnectionHandler()
 	{
 		return connectionHandler;
 	}
@@ -879,15 +879,15 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 *
 	 */
-	protected mxPanningHandler createPanningHandler()
+	protected PanningHandler createPanningHandler()
 	{
-		return new mxPanningHandler(this);
+		return new PanningHandler(this);
 	}
 
 	/**
 	 * 
 	 */
-	public mxPanningHandler getPanningHandler()
+	public PanningHandler getPanningHandler()
 	{
 		return panningHandler;
 	}
@@ -903,7 +903,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public mxICellEditor getCellEditor()
+	public ICellEditor getCellEditor()
 	{
 		return cellEditor;
 	}
@@ -911,9 +911,9 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void setCellEditor(mxICellEditor value)
+	public void setCellEditor(ICellEditor value)
 	{
-		mxICellEditor oldValue = cellEditor;
+		ICellEditor oldValue = cellEditor;
 		cellEditor = value;
 
 		firePropertyChange("cellEditor", oldValue, cellEditor);
@@ -1445,7 +1445,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 */
 	public Object labelChanged(Object cell, Object value, EventObject evt)
 	{
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 
 		model.beginUpdate();
 		try
@@ -1884,7 +1884,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 				canvas.setScale(graph.getView().getScale());
 				canvas.setTranslate(0, 0);
 
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 				GraphView view = graph.getView();
 
 				Rectangle hit = new Rectangle(x, y, 1, 1);
@@ -2002,7 +2002,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 					canvas.setScale(graph.getView().getScale());
 					canvas.setTranslate(0, 0);
 
-					mxIGraphModel model = graph.getModel();
+					IGraphModel model = graph.getModel();
 					GraphView view = graph.getView();
 
 					int childCount = model.getChildCount(parent);
@@ -2112,7 +2112,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 */
 	public Rectangle getFoldingIconBounds(JGraphXCellState state, ImageIcon icon)
 	{
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 		boolean isEdge = model.isEdge(state.getCell());
 		double scale = getGraph().getView().getScale();
 
@@ -2139,7 +2139,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	{
 		if (cell != null)
 		{
-			mxIGraphModel model = graph.getModel();
+			IGraphModel model = graph.getModel();
 
 			// Draws the collapse/expand icons
 			boolean isEdge = model.isEdge(cell);
@@ -2510,7 +2510,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 */
 	public Object[] getImportableCells(Object[] cells)
 	{
-		return mxGraphModel.filterCells(cells, new Filter()
+		return GraphModel.filterCells(cells, new Filter()
 		{
 			public boolean filter(Object cell)
 			{
@@ -2553,7 +2553,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 */
 	public Object[] getExportableCells(Object[] cells)
 	{
-		return mxGraphModel.filterCells(cells, new Filter()
+		return GraphModel.filterCells(cells, new Filter()
 		{
 			public boolean filter(Object cell)
 			{
@@ -2826,11 +2826,11 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 *            Cell state for which a handler should be created.
 	 * @return Returns the handler to be used for the given cell state.
 	 */
-	public mxCellHandler createHandler(JGraphXCellState state)
+	public CellHandler createHandler(JGraphXCellState state)
 	{
 		if (graph.getModel().isVertex(state.getCell()))
 		{
-			return new mxVertexHandler(this, state);
+			return new VertexHandler(this, state);
 		}
 		else if (graph.getModel().isEdge(state.getCell()))
 		{
@@ -2841,13 +2841,13 @@ public class JGraphXComponent extends JScrollPane implements Printable
 					|| style == EdgeStyle.SideToSide
 					|| style == EdgeStyle.TopToBottom)
 			{
-				return new mxElbowEdgeHandler(this, state);
+				return new ElbowEdgeHandler(this, state);
 			}
 
-			return new mxEdgeHandler(this, state);
+			return new EdgeHandler(this, state);
 		}
 
-		return new mxCellHandler(this, state);
+		return new CellHandler(this, state);
 	}
 
 	//
@@ -2924,7 +2924,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 
 		if (!overlays.isEmpty())
 		{
-			Hashtable<Object, mxICellOverlay[]> result2 = updateCellOverlays(root);
+			Hashtable<Object, ICellOverlay[]> result2 = updateCellOverlays(root);
 
 			// Overlays now contains the mappings from cells which
 			// are no longer in the model, the result contains the
@@ -2957,15 +2957,15 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	/**
 	 * 
 	 */
-	public void removeAllOverlays(Hashtable<Object, mxICellOverlay[]> map)
+	public void removeAllOverlays(Hashtable<Object, ICellOverlay[]> map)
 	{
-		Iterator<Map.Entry<Object, mxICellOverlay[]>> it = map.entrySet()
+		Iterator<Map.Entry<Object, ICellOverlay[]>> it = map.entrySet()
 				.iterator();
 
 		while (it.hasNext())
 		{
-			Map.Entry<Object, mxICellOverlay[]> entry = it.next();
-			mxICellOverlay[] c = entry.getValue();
+			Map.Entry<Object, ICellOverlay[]> entry = it.next();
+			ICellOverlay[] c = entry.getValue();
 
 			for (int i = 0; i < c.length; i++)
 			{
@@ -3056,7 +3056,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 */
 	public String validateGraph(Object cell, Hashtable<Object, Object> context)
 	{
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 		GraphView view = graph.getView();
 		boolean isValid = true;
 		int childCount = model.getChildCount(cell);
@@ -3145,17 +3145,17 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * @param overlay
 	 *            Overlay to be added for the cell.
 	 */
-	public mxICellOverlay addCellOverlay(Object cell, mxICellOverlay overlay)
+	public ICellOverlay addCellOverlay(Object cell, ICellOverlay overlay)
 	{
-		mxICellOverlay[] arr = getCellOverlays(cell);
+		ICellOverlay[] arr = getCellOverlays(cell);
 
 		if (arr == null)
 		{
-			arr = new mxICellOverlay[] { overlay };
+			arr = new ICellOverlay[] { overlay };
 		}
 		else
 		{
-			mxICellOverlay[] arr2 = new mxICellOverlay[arr.length + 1];
+			ICellOverlay[] arr2 = new ICellOverlay[arr.length + 1];
 			System.arraycopy(arr, 0, arr2, 0, arr.length);
 			arr2[arr.length] = overlay;
 			arr = arr2;
@@ -3182,7 +3182,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * @param cell
 	 *            Cell whose overlays should be returned.
 	 */
-	public mxICellOverlay[] getCellOverlays(Object cell)
+	public ICellOverlay[] getCellOverlays(Object cell)
 	{
 		return overlays.get(cell);
 	}
@@ -3197,7 +3197,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * @param overlay
 	 *            Optional overlay to be removed.
 	 */
-	public mxICellOverlay removeCellOverlay(Object cell, mxICellOverlay overlay)
+	public ICellOverlay removeCellOverlay(Object cell, ICellOverlay overlay)
 	{
 		if (overlay == null)
 		{
@@ -3205,12 +3205,12 @@ public class JGraphXComponent extends JScrollPane implements Printable
 		}
 		else
 		{
-			mxICellOverlay[] arr = getCellOverlays(cell);
+			ICellOverlay[] arr = getCellOverlays(cell);
 
 			if (arr != null)
 			{
 				// TODO: Use arraycopy from/to same array to speed this up
-				List<mxICellOverlay> list = new ArrayList<mxICellOverlay>(
+				List<ICellOverlay> list = new ArrayList<ICellOverlay>(
 						Arrays.asList(arr));
 
 				if (list.remove(overlay))
@@ -3218,7 +3218,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 					removeCellOverlayComponent(overlay, cell);
 				}
 
-				arr = list.toArray(new mxICellOverlay[list.size()]);
+				arr = list.toArray(new ICellOverlay[list.size()]);
 				overlays.put(cell, arr);
 			}
 		}
@@ -3234,9 +3234,9 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * @param cell
 	 *            Cell whose overlays should be removed.
 	 */
-	public mxICellOverlay[] removeCellOverlays(Object cell)
+	public ICellOverlay[] removeCellOverlays(Object cell)
 	{
-		mxICellOverlay[] ovls = overlays.remove(cell);
+		ICellOverlay[] ovls = overlays.remove(cell);
 
 		if (ovls != null)
 		{
@@ -3255,8 +3255,8 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * implementation removes the given overlay from its parent if it is a
 	 * component inside a component hierarchy.
 	 */
-	protected void removeCellOverlayComponent(mxICellOverlay overlay,
-			Object cell)
+	protected void removeCellOverlayComponent(ICellOverlay overlay,
+											  Object cell)
 	{
 		if (overlay instanceof Component)
 		{
@@ -3278,7 +3278,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * component inside a component hierarchy.
 	 */
 	protected void updateCellOverlayComponent(JGraphXCellState state,
-                                              mxICellOverlay overlay)
+                                              ICellOverlay overlay)
 	{
 		if (overlay instanceof Component)
 		{
@@ -3323,7 +3323,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 */
 	public void clearCellOverlays(Object cell)
 	{
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 
 		if (cell == null)
 		{
@@ -3352,7 +3352,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * @param warning
 	 *            String that represents the warning to be displayed.
 	 */
-	public mxICellOverlay setCellWarning(Object cell, String warning)
+	public ICellOverlay setCellWarning(Object cell, String warning)
 	{
 		return setCellWarning(cell, warning, null, false);
 	}
@@ -3370,8 +3370,8 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 *            Optional image to be used for the overlay. Default is
 	 *            warningImageBasename.
 	 */
-	public mxICellOverlay setCellWarning(Object cell, String warning,
-			ImageIcon icon)
+	public ICellOverlay setCellWarning(Object cell, String warning,
+									   ImageIcon icon)
 	{
 		return setCellWarning(cell, warning, icon, false);
 	}
@@ -3392,15 +3392,15 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 *            Optional boolean indicating if a click on the overlay should
 	 *            select the corresponding cell. Default is false.
 	 */
-	public mxICellOverlay setCellWarning(final Object cell, String warning,
-			ImageIcon icon, boolean select)
+	public ICellOverlay setCellWarning(final Object cell, String warning,
+									   ImageIcon icon, boolean select)
 	{
 		if (warning != null && warning.length() > 0)
 		{
 			icon = (icon != null) ? icon : warningIcon;
 
 			// Creates the overlay with the image and warning
-			mxCellOverlay overlay = new mxCellOverlay(icon, warning);
+			CellOverlay overlay = new CellOverlay(icon, warning);
 
 			// Adds a handler for single mouseclicks to select the cell
 			if (select)
@@ -3441,10 +3441,10 @@ public class JGraphXComponent extends JScrollPane implements Printable
 	 * then its overlays are temporarly removed from the rendering control, but
 	 * kept in the result.
 	 */
-	public Hashtable<Object, mxICellOverlay[]> updateCellOverlays(Object cell)
+	public Hashtable<Object, ICellOverlay[]> updateCellOverlays(Object cell)
 	{
-		Hashtable<Object, mxICellOverlay[]> result = new Hashtable<Object, mxICellOverlay[]>();
-		mxICellOverlay[] c = overlays.remove(cell);
+		Hashtable<Object, ICellOverlay[]> result = new Hashtable<Object, ICellOverlay[]>();
+		ICellOverlay[] c = overlays.remove(cell);
 		JGraphXCellState state = getGraph().getView().getState(cell);
 
 		if (c != null)
@@ -4408,7 +4408,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 		 */
 		protected void drawChildren(Object cell, boolean edges, boolean others)
 		{
-			mxIGraphModel model = graph.getModel();
+			IGraphModel model = graph.getModel();
 			int childCount = model.getChildCount(cell);
 
 			for (int i = 0; i < childCount; i++)
@@ -4430,7 +4430,7 @@ public class JGraphXComponent extends JScrollPane implements Printable
 		{
 			if (isFoldingEnabled() && canvas instanceof Graphics2DCanvas)
 			{
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 				Graphics2DCanvas g2c = (Graphics2DCanvas) canvas;
 				Graphics2D g2 = g2c.getGraphics();
 

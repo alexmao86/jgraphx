@@ -52,20 +52,20 @@ import com.mxgraph.analysis.GraphAnalysis;
 import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.canvas.IJGraphXCanvas;
 import com.mxgraph.canvas.SvgCanvas;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGraphModel;
-import com.mxgraph.model.mxIGraphModel;
-import com.mxgraph.shape.mxStencilShape;
+import com.mxgraph.model.Cell;
+import com.mxgraph.model.GraphModel;
+import com.mxgraph.model.IGraphModel;
+import com.mxgraph.shape.StencilShape;
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.mxGraphOutline;
-import com.mxgraph.swing.handler.mxConnectionHandler;
-import com.mxgraph.swing.util.mxGraphActions;
-import com.mxgraph.swing.view.mxCellEditor;
+import com.mxgraph.swing.GraphOutline;
+import com.mxgraph.swing.handler.ConnectionHandler;
+import com.mxgraph.swing.util.GraphActions;
+import com.mxgraph.swing.view.CellEditor;
 import com.mxgraph.util.mxCellRenderer.CanvasFactory;
 import com.mxgraph.util.XmlUtils;
-import com.mxgraph.util.png.mxPngEncodeParam;
-import com.mxgraph.util.png.mxPngImageEncoder;
-import com.mxgraph.util.png.mxPngTextDecoder;
+import com.mxgraph.util.png.PngEncodeParam;
+import com.mxgraph.util.png.PngImageEncoder;
+import com.mxgraph.util.png.PngTextDecoder;
 import com.mxgraph.view.JGraphX;
 
 /**
@@ -195,7 +195,7 @@ public class EditorActions
 				 */
 				public void actionPerformed(ActionEvent e)
 				{
-					final mxGraphOutline outline = editor.getGraphOutline();
+					final GraphOutline outline = editor.getGraphOutline();
 					outline.setVisible(!outline.isVisible());
 					outline.revalidate();
 
@@ -550,7 +550,7 @@ public class EditorActions
 			Codec codec = new Codec();
 			String xml = URLEncoder.encode(
 					XmlUtils.getXml(codec.encode(graph.getModel())), "UTF-8");
-			mxPngEncodeParam param = mxPngEncodeParam
+			PngEncodeParam param = PngEncodeParam
 					.getDefaultEncodeParam(image);
 			param.setCompressedText(new String[] { "mxGraphModel", xml });
 
@@ -559,7 +559,7 @@ public class EditorActions
 					filename));
 			try
 			{
-				mxPngImageEncoder encoder = new mxPngImageEncoder(outputStream,
+				PngImageEncoder encoder = new PngImageEncoder(outputStream,
 						param);
 
 				if (image != null)
@@ -835,7 +835,7 @@ public class EditorActions
 				JGraphXComponent graphComponent = (JGraphXComponent) e
 						.getSource();
 				JGraphX graph = graphComponent.getGraph();
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 
 				Object source = null;
 				Object target = null;
@@ -909,7 +909,7 @@ public class EditorActions
 				JGraphXComponent graphComponent = (JGraphXComponent) e
 						.getSource();
 				JGraphX graph = graphComponent.getGraph();
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 
 				Object parent = graph.getDefaultParent();
 				Object[] cells = graph.getSelectionCells();
@@ -968,7 +968,7 @@ public class EditorActions
 			{
 				JGraphXComponent graphComponent = (JGraphXComponent) e
 						.getSource();
-				mxConnectionHandler handler = graphComponent
+				ConnectionHandler handler = graphComponent
 						.getConnectionHandler();
 				handler.setHandleEnabled(!handler.isHandleEnabled());
 			}
@@ -1001,7 +1001,7 @@ public class EditorActions
 
 					if (graphComponent != null)
 					{
-						mxConnectionHandler handler = graphComponent
+						ConnectionHandler handler = graphComponent
 								.getConnectionHandler();
 						handler.setCreateTarget(!handler.isCreateTarget());
 						setSelected(handler.isCreateTarget());
@@ -1317,9 +1317,9 @@ public class EditorActions
 						.getSource();
 				Component editorComponent = null;
 
-				if (graphComponent.getCellEditor() instanceof mxCellEditor)
+				if (graphComponent.getCellEditor() instanceof CellEditor)
 				{
-					editorComponent = ((mxCellEditor) graphComponent
+					editorComponent = ((CellEditor) graphComponent
 							.getCellEditor()).getEditor();
 				}
 
@@ -1355,7 +1355,7 @@ public class EditorActions
 				}
 				else
 				{
-					mxIGraphModel model = graphComponent.getGraph().getModel();
+					IGraphModel model = graphComponent.getGraph().getModel();
 					model.beginUpdate();
 					try
 					{
@@ -1432,8 +1432,8 @@ public class EditorActions
 					JGraphX graph = editor.getGraphComponent().getGraph();
 
 					// Check modified flag and display save dialog
-					mxCell root = new mxCell();
-					root.insert(new mxCell());
+					Cell root = new Cell();
+					root.insert(new Cell());
 					graph.getModel().setRoot(root);
 
 					editor.setModified(false);
@@ -1471,7 +1471,7 @@ public class EditorActions
 			// Ensure the first char is a "<"
 			int lessthanIndex = nodeXml.indexOf("<");
 			nodeXml = nodeXml.substring(lessthanIndex);
-			mxStencilShape newShape = new mxStencilShape(nodeXml);
+			StencilShape newShape = new StencilShape(nodeXml);
 			String name = newShape.getName();
 			ImageIcon icon = null;
 
@@ -1598,7 +1598,7 @@ public class EditorActions
 		protected void openXmlPng(BasicGraphEditor editor, File file)
 				throws IOException
 		{
-			Map<String, String> text = mxPngTextDecoder
+			Map<String, String> text = PngTextDecoder
 					.decodeCompressedText(new FileInputStream(file));
 
 			if (text != null)
@@ -1643,7 +1643,7 @@ public class EditorActions
 				return;
 			}
 
-			((mxGraphModel) graph.getModel()).clear();
+			((GraphModel) graph.getModel()).clear();
 			GdCodec.decode(gdText, graph);
 			editor.getGraphComponent().zoomAndCenter();
 			editor.setCurrentFile(new File(lastDir + "/" + filename));
@@ -1802,7 +1802,7 @@ public class EditorActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			JGraphX graph = mxGraphActions.getGraph(e);
+			JGraphX graph = GraphActions.getGraph(e);
 
 			if (graph != null)
 			{
@@ -1837,7 +1837,7 @@ public class EditorActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			JGraphX graph = mxGraphActions.getGraph(e);
+			JGraphX graph = GraphActions.getGraph(e);
 
 			if (graph != null && !graph.isSelectionEmpty())
 			{
@@ -1895,7 +1895,7 @@ public class EditorActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			JGraphX graph = mxGraphActions.getGraph(e);
+			JGraphX graph = GraphActions.getGraph(e);
 
 			if (graph != null && !graph.isSelectionEmpty())
 			{
@@ -1939,7 +1939,7 @@ public class EditorActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			JGraphX graph = mxGraphActions.getGraph(e);
+			JGraphX graph = GraphActions.getGraph(e);
 
 			if (graph != null && !graph.isSelectionEmpty())
 			{
@@ -1976,7 +1976,7 @@ public class EditorActions
 		{
 			if (e.getSource() instanceof Component)
 			{
-				JGraphX graph = mxGraphActions.getGraph(e);
+				JGraphX graph = GraphActions.getGraph(e);
 
 				if (graph != null && !graph.isSelectionEmpty())
 				{
@@ -2024,7 +2024,7 @@ public class EditorActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			JGraphX graph = mxGraphActions.getGraph(e);
+			JGraphX graph = GraphActions.getGraph(e);
 
 			if (graph != null && !graph.isSelectionEmpty())
 			{
@@ -2044,12 +2044,12 @@ public class EditorActions
 		 */
 		public void actionPerformed(ActionEvent e)
 		{
-			JGraphX graph = mxGraphActions.getGraph(e);
+			JGraphX graph = GraphActions.getGraph(e);
 
 			if (graph != null && !graph.isSelectionEmpty())
 			{
 				Object[] cells = graph.getSelectionCells();
-				mxIGraphModel model = graph.getModel();
+				IGraphModel model = graph.getModel();
 
 				model.beginUpdate();
 				try

@@ -11,8 +11,8 @@ import com.mxgraph.examples.swing.editor.EditorPalette;
 import com.mxgraph.examples.swing.editor.SchemaEditorMenuBar;
 import com.mxgraph.examples.swing.editor.SchemaEditorToolBar;
 import com.mxgraph.examples.swing.editor.SchemaGraphComponent;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
+import com.mxgraph.model.Cell;
+import com.mxgraph.model.Geometry;
 import com.mxgraph.util.mxRectangle;
 import com.mxgraph.view.JGraphX;
 import com.mxgraph.view.JGraphXCellState;
@@ -61,7 +61,7 @@ public class SchemaEditor extends BasicGraphEditor
 		EditorPalette shapesPalette = insertPalette("Schema");
 		graphOutline.setVisible(false);
 
-		mxCell tableTemplate = new mxCell("New Table", new mxGeometry(0, 0,
+		Cell tableTemplate = new Cell("New Table", new Geometry(0, 0,
 				200, 280), null);
 		tableTemplate.getGeometry().setAlternateBounds(
 				new mxRectangle(0, 0, 140, 25));
@@ -88,10 +88,10 @@ public class SchemaEditor extends BasicGraphEditor
 		graph.getModel().beginUpdate();
 		try
 		{
-			mxCell v1 = (mxCell) graph.insertVertex(parent, null, "Customers",
+			Cell v1 = (Cell) graph.insertVertex(parent, null, "Customers",
 					20, 20, 200, 280);
 			v1.getGeometry().setAlternateBounds(new mxRectangle(0, 0, 140, 25));
-			mxCell v2 = (mxCell) graph.insertVertex(parent, null, "Orders",
+			Cell v2 = (Cell) graph.insertVertex(parent, null, "Orders",
 					280, 20, 200, 280);
 			v2.getGeometry().setAlternateBounds(new mxRectangle(0, 0, 140, 25));
 		}

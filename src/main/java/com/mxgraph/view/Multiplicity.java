@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 import com.mxgraph.util.JGraphXUtils;
 import org.w3c.dom.Element;
 
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.IGraphModel;
 
 public class Multiplicity
 {
@@ -152,7 +152,7 @@ public class Multiplicity
 	public boolean checkNeighbors(JGraphX graph, Object edge, Object source,
 			Object target)
 	{
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 		Object sourceValue = model.getValue(source);
 		Object targetValue = model.getValue(target);
 		boolean isValid = !validNeighborsAllowed;

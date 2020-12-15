@@ -8,8 +8,8 @@ import java.util.Map;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.mxgraph.model.mxGraphModel.mxChildChange;
-import com.mxgraph.model.mxICell;
+import com.mxgraph.model.GraphModel.mxChildChange;
+import com.mxgraph.model.ICell;
 
 /**
  * Codec for mxChildChanges. This class is created and registered
@@ -76,7 +76,7 @@ public class ChildChangeCodec extends ObjectCodec
 				// ignore the ones that are already there at decoding time. Note:
 				// This can only be resolved by moving the notify event into the
 				// execute of the edit.
-				enc.encodeCell((mxICell) child, node, true);
+				enc.encodeCell((ICell) child, node, true);
 			}
 		}
 
@@ -133,7 +133,7 @@ public class ChildChangeCodec extends ObjectCodec
 			else
 			{
 				String childRef = ((Element) node).getAttribute("child");
-				change.setChild((mxICell) dec.getObject(childRef));
+				change.setChild((ICell) dec.getObject(childRef));
 			}
 		}
 
@@ -154,7 +154,7 @@ public class ChildChangeCodec extends ObjectCodec
 			// parent must be restored on the cell for the case where the cell was
 			// added. This is needed for the local model to identify the cell as a
 			// new cell and register the ID.
-			((mxICell) change.getChild()).setParent((mxICell) change
+			((ICell) change.getChild()).setParent((ICell) change
 					.getPrevious());
 			change.setPrevious(change.getParent());
 			change.setPreviousIndex(change.getIndex());

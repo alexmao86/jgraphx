@@ -12,8 +12,8 @@ import org.w3c.dom.NodeList;
 
 import com.mxgraph.canvas.Graphics2DCanvas;
 import com.mxgraph.canvas.GraphicsCanvas2D;
-import com.mxgraph.shape.mxStencil;
-import com.mxgraph.shape.mxStencilRegistry;
+import com.mxgraph.shape.Stencil;
+import com.mxgraph.shape.StencilRegistry;
 import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.XmlUtils;
 import com.mxgraph.view.JGraphX;
@@ -42,8 +42,8 @@ public class Stencils extends JFrame
 			for (int i = 0; i < list.getLength(); i++)
 			{
 				Element shape = (Element) list.item(i);
-				mxStencilRegistry.addStencil(shape.getAttribute("name"),
-						new mxStencil(shape)
+				StencilRegistry.addStencil(shape.getAttribute("name"),
+						new Stencil(shape)
 						{
 							protected GraphicsCanvas2D createCanvas(
 									final Graphics2DCanvas gc)

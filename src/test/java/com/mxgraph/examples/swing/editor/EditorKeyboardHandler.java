@@ -9,14 +9,14 @@ import javax.swing.JComponent;
 import javax.swing.KeyStroke;
 
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.handler.mxKeyboardHandler;
-import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.swing.handler.KeyboardHandler;
+import com.mxgraph.swing.util.GraphActions;
 
 /**
  * @author Administrator
  * 
  */
-public class EditorKeyboardHandler extends mxKeyboardHandler
+public class EditorKeyboardHandler extends KeyboardHandler
 {
 
 	/**
@@ -66,8 +66,8 @@ public class EditorKeyboardHandler extends mxKeyboardHandler
 		map.put("open", new EditorActions.OpenAction());
 		map.put("undo", new EditorActions.HistoryAction(true));
 		map.put("redo", new EditorActions.HistoryAction(false));
-		map.put("selectVertices", mxGraphActions.getSelectVerticesAction());
-		map.put("selectEdges", mxGraphActions.getSelectEdgesAction());
+		map.put("selectVertices", GraphActions.getSelectVerticesAction());
+		map.put("selectEdges", GraphActions.getSelectEdgesAction());
 
 		return map;
 	}

@@ -47,9 +47,9 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableModel;
 
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.handler.mxCellHandler;
-import com.mxgraph.swing.handler.mxGraphTransferHandler;
-import com.mxgraph.swing.util.mxGraphTransferable;
+import com.mxgraph.swing.handler.CellHandler;
+import com.mxgraph.swing.handler.GraphTransferHandler;
+import com.mxgraph.swing.util.GraphTransferable;
 import com.mxgraph.view.JGraphX;
 
 /**
@@ -247,7 +247,7 @@ public class JTableRenderer extends JComponent
 			}
 
 			// Initiates a resize event in the handler
-			mxCellHandler handler = graphContainer.getSelectionCellsHandler().getHandler(
+			CellHandler handler = graphContainer.getSelectionCellsHandler().getHandler(
 					cell);
 
 			if (handler != null)
@@ -349,7 +349,7 @@ public class JTableRenderer extends JComponent
 					dragSource = JTableRenderer.this;
 					//mxRectangle bounds = new mxRectangle(0, 0, MyTable.this
 					//		.getWidth(), 20);
-					return new mxGraphTransferable(null, null, null);
+					return new GraphTransferable(null, null, null);
 				}
 
 			});
@@ -366,7 +366,7 @@ public class JTableRenderer extends JComponent
 		 */
 		public DropTarget getDropTarget()
 		{
-			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler())
+			if (!((GraphTransferHandler) graphContainer.getTransferHandler())
 					.isLocalDrag())
 			{
 				return super.getDropTarget();
@@ -392,7 +392,7 @@ public class JTableRenderer extends JComponent
 		 */
 		public void dragOver(DropTargetDragEvent e)
 		{
-			if (!((mxGraphTransferHandler) graphContainer.getTransferHandler())
+			if (!((GraphTransferHandler) graphContainer.getTransferHandler())
 					.isLocalDrag()
 					&& JTableRenderer.this != dragSource)
 			{

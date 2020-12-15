@@ -53,9 +53,9 @@ import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 
 import com.mxgraph.io.CodecRegistry;
-import com.mxgraph.model.mxCellPath;
-import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.CellPath;
+import com.mxgraph.model.ICell;
+import com.mxgraph.model.IGraphModel;
 
 /**
  * Contains various helper methods for use with mxGraph.
@@ -1105,8 +1105,8 @@ public class JGraphXUtils
 		{
 			public int compare(Object o1, Object o2)
 			{
-				int comp = mxCellPath.compare(mxCellPath.create((mxICell) o1),
-						mxCellPath.create((mxICell) o2));
+				int comp = CellPath.compare(CellPath.create((ICell) o1),
+						CellPath.create((ICell) o2));
 
 				return (comp == 0) ? 0 : (((comp > 0) == ascending) ? 1 : -1);
 			}
@@ -1208,8 +1208,8 @@ public class JGraphXUtils
 	 *            New value for the given key.
 	 * @deprecated Use <code>mxStyleUtils.setCellStyles(mxIGraphModel, Object[], String, String)</code> (Jan 2012)
 	 */
-	public static void setCellStyles(mxIGraphModel model, Object[] cells,
-			String key, String value)
+	public static void setCellStyles(IGraphModel model, Object[] cells,
+									 String key, String value)
 	{
 		mxStyleUtils.setCellStyles(model, cells, key, value);
 	}
@@ -1258,8 +1258,8 @@ public class JGraphXUtils
 	 *            Optional boolean value for the flag.
 	 * @deprecated Use <code>mxStyleUtils.setCellStyleFlags(mxIGraphModel, Object[],String, int, Boolean)</code> (Jan 2012)
 	 */
-	public static void setCellStyleFlags(mxIGraphModel model, Object[] cells,
-			String key, int flag, Boolean value)
+	public static void setCellStyleFlags(IGraphModel model, Object[] cells,
+										 String key, int flag, Boolean value)
 	{
 		mxStyleUtils.setCellStyleFlags(model, cells, key, flag, value);
 	}

@@ -5,8 +5,8 @@ package com.mxgraph.view;
 
 import java.util.List;
 
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.Geometry;
+import com.mxgraph.model.IGraphModel;
 import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
@@ -62,7 +62,7 @@ public class EdgeStyle
                           JGraphXCellState target, List<mxPoint> points, List<mxPoint> result)
 		{
 			GraphView view = state.getView();
-			mxIGraphModel model = view.getGraph().getModel();
+			IGraphModel model = view.getGraph().getModel();
 			double segment = JGraphXUtils.getDouble(state.getStyle(),
 					mxConstants.STYLE_SEGMENT, mxConstants.ENTITY_SEGMENT)
 					* state.view.getScale();
@@ -89,7 +89,7 @@ public class EdgeStyle
 				}
 				else
 				{
-					mxGeometry sourceGeometry = model.getGeometry(source.cell);
+					Geometry sourceGeometry = model.getGeometry(source.cell);
 	
 					if (sourceGeometry.isRelative())
 					{
@@ -121,7 +121,7 @@ public class EdgeStyle
 				}
 				else
 				{
-					mxGeometry targetGeometry = model.getGeometry(target.cell);
+					Geometry targetGeometry = model.getGeometry(target.cell);
 	
 					if (targetGeometry.isRelative())
 					{

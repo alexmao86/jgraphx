@@ -32,20 +32,20 @@ import javax.swing.JToolBar;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
-import com.mxgraph.layout.mxCircleLayout;
-import com.mxgraph.layout.mxCompactTreeLayout;
-import com.mxgraph.layout.mxEdgeLabelLayout;
-import com.mxgraph.layout.mxIGraphLayout;
-import com.mxgraph.layout.mxOrganicLayout;
-import com.mxgraph.layout.mxParallelEdgeLayout;
-import com.mxgraph.layout.mxPartitionLayout;
-import com.mxgraph.layout.mxStackLayout;
-import com.mxgraph.layout.hierarchical.mxHierarchicalLayout;
+import com.mxgraph.layout.CircleLayout;
+import com.mxgraph.layout.CompactTreeLayout;
+import com.mxgraph.layout.EdgeLabelLayout;
+import com.mxgraph.layout.IGraphLayout;
+import com.mxgraph.layout.OrganicLayout;
+import com.mxgraph.layout.ParallelEdgeLayout;
+import com.mxgraph.layout.PartitionLayout;
+import com.mxgraph.layout.StackLayout;
+import com.mxgraph.layout.hierarchical.HierarchicalLayout;
 import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.swing.handler.JGraphXRubberband;
-import com.mxgraph.swing.mxGraphOutline;
-import com.mxgraph.swing.handler.mxKeyboardHandler;
-import com.mxgraph.swing.util.mxMorphing;
+import com.mxgraph.swing.GraphOutline;
+import com.mxgraph.swing.handler.KeyboardHandler;
+import com.mxgraph.swing.util.Morphing;
 import com.mxgraph.util.*;
 import com.mxgraph.util.mxEventSource.mxIEventListener;
 import com.mxgraph.util.UndoManager;
@@ -83,7 +83,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	protected mxGraphOutline graphOutline;
+	protected GraphOutline graphOutline;
 
 	/**
 	 * 
@@ -123,7 +123,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	protected mxKeyboardHandler keyboardHandler;
+	protected KeyboardHandler keyboardHandler;
 
 	/**
 	 * 
@@ -187,7 +187,7 @@ public class BasicGraphEditor extends JPanel
 		undoManager.addListener(mxEvent.REDO, undoHandler);
 
 		// Creates the graph outline component
-		graphOutline = new mxGraphOutline(graphComponent);
+		graphOutline = new GraphOutline(graphComponent);
 
 		// Creates the library pane that contains the tabs with the palettes
 		libraryPane = new JTabbedPane();
@@ -443,7 +443,7 @@ public class BasicGraphEditor extends JPanel
 			 */
 			public void mouseWheelMoved(MouseWheelEvent e)
 			{
-				if (e.getSource() instanceof mxGraphOutline
+				if (e.getSource() instanceof GraphOutline
 						|| e.isControlDown())
 				{
 					BasicGraphEditor.this.mouseWheelMoved(e);
@@ -595,7 +595,7 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * 
 	 */
-	public mxGraphOutline getGraphOutline()
+	public GraphOutline getGraphOutline()
 	{
 		return graphOutline;
 	}
@@ -767,7 +767,7 @@ public class BasicGraphEditor extends JPanel
 	@SuppressWarnings("serial")
 	public Action graphLayout(final String key, boolean animate)
 	{
-		final mxIGraphLayout layout = createLayout(key, animate);
+		final IGraphLayout layout = createLayout(key, animate);
 
 		if (layout != null)
 		{
@@ -794,7 +794,7 @@ public class BasicGraphEditor extends JPanel
 					}
 					finally
 					{
-						mxMorphing morph = new mxMorphing(graphComponent, 20,
+						Morphing morph = new Morphing(graphComponent, 20,
 								1.2, 20);
 
 						morph.addListener(mxEvent.DONE, new mxIEventListener()
@@ -832,9 +832,9 @@ public class BasicGraphEditor extends JPanel
 	/**
 	 * Creates a layout instance for the given identifier.
 	 */
-	protected mxIGraphLayout createLayout(String ident, boolean animate)
+	protected IGraphLayout createLayout(String ident, boolean animate)
 	{
-		mxIGraphLayout layout = null;
+		IGraphLayout layout = null;
 
 		if (ident != null)
 		{
@@ -842,35 +842,35 @@ public class BasicGraphEditor extends JPanel
 
 			if (ident.equals("verticalHierarchical"))
 			{
-				layout = new mxHierarchicalLayout(graph);
+				layout = new HierarchicalLayout(graph);
 			}
 			else if (ident.equals("horizontalHierarchical"))
 			{
-				layout = new mxHierarchicalLayout(graph, JLabel.WEST);
+				layout = new HierarchicalLayout(graph, JLabel.WEST);
 			}
 			else if (ident.equals("verticalTree"))
 			{
-				layout = new mxCompactTreeLayout(graph, false);
+				layout = new CompactTreeLayout(graph, false);
 			}
 			else if (ident.equals("horizontalTree"))
 			{
-				layout = new mxCompactTreeLayout(graph, true);
+				layout = new CompactTreeLayout(graph, true);
 			}
 			else if (ident.equals("parallelEdges"))
 			{
-				layout = new mxParallelEdgeLayout(graph);
+				layout = new ParallelEdgeLayout(graph);
 			}
 			else if (ident.equals("placeEdgeLabels"))
 			{
-				layout = new mxEdgeLabelLayout(graph);
+				layout = new EdgeLabelLayout(graph);
 			}
 			else if (ident.equals("organicLayout"))
 			{
-				layout = new mxOrganicLayout(graph);
+				layout = new OrganicLayout(graph);
 			}
 			if (ident.equals("verticalPartition"))
 			{
-				layout = new mxPartitionLayout(graph, false)
+				layout = new PartitionLayout(graph, false)
 				{
 					/**
 					 * Overrides the empty implementation to return the size of the
@@ -884,7 +884,7 @@ public class BasicGraphEditor extends JPanel
 			}
 			else if (ident.equals("horizontalPartition"))
 			{
-				layout = new mxPartitionLayout(graph, true)
+				layout = new PartitionLayout(graph, true)
 				{
 					/**
 					 * Overrides the empty implementation to return the size of the
@@ -898,7 +898,7 @@ public class BasicGraphEditor extends JPanel
 			}
 			else if (ident.equals("verticalStack"))
 			{
-				layout = new mxStackLayout(graph, false)
+				layout = new StackLayout(graph, false)
 				{
 					/**
 					 * Overrides the empty implementation to return the size of the
@@ -912,7 +912,7 @@ public class BasicGraphEditor extends JPanel
 			}
 			else if (ident.equals("horizontalStack"))
 			{
-				layout = new mxStackLayout(graph, true)
+				layout = new StackLayout(graph, true)
 				{
 					/**
 					 * Overrides the empty implementation to return the size of the
@@ -926,7 +926,7 @@ public class BasicGraphEditor extends JPanel
 			}
 			else if (ident.equals("circleLayout"))
 			{
-				layout = new mxCircleLayout(graph);
+				layout = new CircleLayout(graph);
 			}
 		}
 

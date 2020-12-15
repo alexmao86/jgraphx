@@ -9,7 +9,7 @@ import java.util.Map;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 
-import com.mxgraph.model.mxCell;
+import com.mxgraph.model.Cell;
 
 /**
  * Codec for mxCells. This class is created and registered
@@ -24,7 +24,7 @@ public class CellCodec extends ObjectCodec
 	 */
 	public CellCodec()
 	{
-		this(new mxCell(), null, new String[] { "parent", "source", "target" },
+		this(new Cell(), null, new String[] { "parent", "source", "target" },
 				null);
 	}
 
@@ -62,9 +62,9 @@ public class CellCodec extends ObjectCodec
 	 */
 	public Node afterEncode(Codec enc, Object obj, Node node)
 	{
-		if (obj instanceof mxCell)
+		if (obj instanceof Cell)
 		{
-			mxCell cell = (mxCell) obj;
+			Cell cell = (Cell) obj;
 
 			if (cell.getValue() instanceof Node)
 			{
@@ -98,9 +98,9 @@ public class CellCodec extends ObjectCodec
 	{
 		Element inner = (Element) node;
 
-		if (obj instanceof mxCell)
+		if (obj instanceof Cell)
 		{
-			mxCell cell = (mxCell) obj;
+			Cell cell = (Cell) obj;
 			String classname = getName();
 			String nodeName = node.getNodeName();
 			

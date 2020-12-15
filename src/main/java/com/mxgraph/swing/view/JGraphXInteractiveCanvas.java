@@ -10,8 +10,8 @@ import java.awt.Shape;
 import java.awt.image.ImageObserver;
 
 import com.mxgraph.canvas.Graphics2DCanvas;
-import com.mxgraph.shape.mxBasicShape;
-import com.mxgraph.shape.mxIShape;
+import com.mxgraph.shape.BasicShape;
+import com.mxgraph.shape.IShape;
 import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
@@ -117,11 +117,11 @@ public class JGraphXInteractiveCanvas extends Graphics2DCanvas
 						mxConstants.STYLE_SHAPE, "").equals(
 						mxConstants.SHAPE_ARROW))
 				{
-					mxIShape shape = getShape(state.getStyle());
+					IShape shape = getShape(state.getStyle());
 
-					if (shape instanceof mxBasicShape)
+					if (shape instanceof BasicShape)
 					{
-						realShape = ((mxBasicShape) shape).createShape(this,
+						realShape = ((BasicShape) shape).createShape(this,
 								state);
 					}
 				}

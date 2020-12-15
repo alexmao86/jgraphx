@@ -54,9 +54,9 @@ import com.mxgraph.examples.swing.editor.EditorActions.TogglePropertyItem;
 import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
 import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
 import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.IGraphModel;
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.swing.util.GraphActions;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
@@ -120,17 +120,17 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("delete"), mxGraphActions.getDeleteAction(), "/com/mxgraph/examples/swing/images/delete.gif"));
+		menu.add(editor.bind(mxResources.get("delete"), GraphActions.getDeleteAction(), "/com/mxgraph/examples/swing/images/delete.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("selectAll"), mxGraphActions.getSelectAllAction()));
-		menu.add(editor.bind(mxResources.get("selectNone"), mxGraphActions.getSelectNoneAction()));
+		menu.add(editor.bind(mxResources.get("selectAll"), GraphActions.getSelectAllAction()));
+		menu.add(editor.bind(mxResources.get("selectNone"), GraphActions.getSelectNoneAction()));
 
 		menu.addSeparator();
 
 		menu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
-		menu.add(editor.bind(mxResources.get("edit"), mxGraphActions.getEditAction()));
+		menu.add(editor.bind(mxResources.get("edit"), GraphActions.getEditAction()));
 
 		// Creates the view menu
 		menu = add(new JMenu(mxResources.get("view")));
@@ -221,8 +221,8 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions.getZoomInAction()));
-		menu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions.getZoomOutAction()));
+		menu.add(editor.bind(mxResources.get("zoomIn"), GraphActions.getZoomInAction()));
+		menu.add(editor.bind(mxResources.get("zoomOut"), GraphActions.getZoomOutAction()));
 
 		menu.addSeparator();
 
@@ -231,7 +231,7 @@ public class EditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions.getZoomActualAction()));
+		menu.add(editor.bind(mxResources.get("actualSize"), GraphActions.getZoomActualAction()));
 
 		// Creates the format menu
 		menu = add(new JMenu(mxResources.get("format")));
@@ -519,36 +519,36 @@ public class EditorMenuBar extends JMenuBar
 	 */
 	public static void populateShapeMenu(JMenu menu, BasicGraphEditor editor)
 	{
-		menu.add(editor.bind(mxResources.get("home"), mxGraphActions.getHomeAction(), "/com/mxgraph/examples/swing/images/house.gif"));
+		menu.add(editor.bind(mxResources.get("home"), GraphActions.getHomeAction(), "/com/mxgraph/examples/swing/images/house.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("exitGroup"), mxGraphActions.getExitGroupAction(), "/com/mxgraph/examples/swing/images/up.gif"));
-		menu.add(editor.bind(mxResources.get("enterGroup"), mxGraphActions.getEnterGroupAction(),
+		menu.add(editor.bind(mxResources.get("exitGroup"), GraphActions.getExitGroupAction(), "/com/mxgraph/examples/swing/images/up.gif"));
+		menu.add(editor.bind(mxResources.get("enterGroup"), GraphActions.getEnterGroupAction(),
 				"/com/mxgraph/examples/swing/images/down.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("group"), mxGraphActions.getGroupAction(), "/com/mxgraph/examples/swing/images/group.gif"));
-		menu.add(editor.bind(mxResources.get("ungroup"), mxGraphActions.getUngroupAction(),
+		menu.add(editor.bind(mxResources.get("group"), GraphActions.getGroupAction(), "/com/mxgraph/examples/swing/images/group.gif"));
+		menu.add(editor.bind(mxResources.get("ungroup"), GraphActions.getUngroupAction(),
 				"/com/mxgraph/examples/swing/images/ungroup.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("removeFromGroup"), mxGraphActions.getRemoveFromParentAction()));
+		menu.add(editor.bind(mxResources.get("removeFromGroup"), GraphActions.getRemoveFromParentAction()));
 
-		menu.add(editor.bind(mxResources.get("updateGroupBounds"), mxGraphActions.getUpdateGroupBoundsAction()));
+		menu.add(editor.bind(mxResources.get("updateGroupBounds"), GraphActions.getUpdateGroupBoundsAction()));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("collapse"), mxGraphActions.getCollapseAction(),
+		menu.add(editor.bind(mxResources.get("collapse"), GraphActions.getCollapseAction(),
 				"/com/mxgraph/examples/swing/images/collapse.gif"));
-		menu.add(editor.bind(mxResources.get("expand"), mxGraphActions.getExpandAction(), "/com/mxgraph/examples/swing/images/expand.gif"));
+		menu.add(editor.bind(mxResources.get("expand"), GraphActions.getExpandAction(), "/com/mxgraph/examples/swing/images/expand.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("toBack"), mxGraphActions.getToBackAction(), "/com/mxgraph/examples/swing/images/toback.gif"));
-		menu.add(editor.bind(mxResources.get("toFront"), mxGraphActions.getToFrontAction(),
+		menu.add(editor.bind(mxResources.get("toBack"), GraphActions.getToBackAction(), "/com/mxgraph/examples/swing/images/toback.gif"));
+		menu.add(editor.bind(mxResources.get("toFront"), GraphActions.getToFrontAction(),
 				"/com/mxgraph/examples/swing/images/tofront.gif"));
 
 		menu.addSeparator();
@@ -986,7 +986,7 @@ public class EditorMenuBar extends JMenuBar
 				else if (analyzeType == AnalyzeType.COMPONENTS)
 				{
 					Object[][] components = GraphStructure.getGraphComponents(aGraph);
-					mxIGraphModel model = aGraph.getGraph().getModel();
+					IGraphModel model = aGraph.getGraph().getModel();
 
 					for (int i = 0; i < components.length; i++)
 					{
@@ -1064,7 +1064,7 @@ public class EditorMenuBar extends JMenuBar
 					Object[] cutVertices = GraphStructure.getCutVertices(aGraph);
 
 					System.out.print("Cut vertices of the graph are: [");
-					mxIGraphModel model = aGraph.getGraph().getModel();
+					IGraphModel model = aGraph.getGraph().getModel();
 
 					for (int i = 0; i < cutVertices.length; i++)
 					{
@@ -1078,7 +1078,7 @@ public class EditorMenuBar extends JMenuBar
 					Object[] cutEdges = GraphStructure.getCutEdges(aGraph);
 
 					System.out.print("Cut edges of the graph are: [");
-					mxIGraphModel model = aGraph.getGraph().getModel();
+					IGraphModel model = aGraph.getGraph().getModel();
 
 					for (int i = 0; i < cutEdges.length; i++)
 					{
@@ -1094,7 +1094,7 @@ public class EditorMenuBar extends JMenuBar
 					{
 						Object[] sourceVertices = GraphStructure.getSourceVertices(aGraph);
 						System.out.print("Source vertices of the graph are: [");
-						mxIGraphModel model = aGraph.getGraph().getModel();
+						IGraphModel model = aGraph.getGraph().getModel();
 
 						for (int i = 0; i < sourceVertices.length; i++)
 						{
@@ -1114,7 +1114,7 @@ public class EditorMenuBar extends JMenuBar
 					{
 						Object[] sinkVertices = GraphStructure.getSinkVertices(aGraph);
 						System.out.print("Sink vertices of the graph are: [");
-						mxIGraphModel model = aGraph.getGraph().getModel();
+						IGraphModel model = aGraph.getGraph().getModel();
 
 						for (int i = 0; i < sinkVertices.length; i++)
 						{

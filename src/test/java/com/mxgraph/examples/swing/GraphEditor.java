@@ -18,13 +18,13 @@ import org.w3c.dom.Document;
 import com.mxgraph.examples.swing.editor.BasicGraphEditor;
 import com.mxgraph.examples.swing.editor.EditorMenuBar;
 import com.mxgraph.examples.swing.editor.EditorPalette;
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxICell;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.Cell;
+import com.mxgraph.model.Geometry;
+import com.mxgraph.model.ICell;
+import com.mxgraph.model.IGraphModel;
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.util.mxGraphTransferable;
-import com.mxgraph.swing.util.mxSwingConstants;
+import com.mxgraph.swing.util.GraphTransferable;
+import com.mxgraph.swing.util.SwingConstants;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
@@ -83,9 +83,9 @@ public class GraphEditor extends BasicGraphEditor
 			{
 				Object tmp = evt.getProperty("transferable");
 
-				if (tmp instanceof mxGraphTransferable)
+				if (tmp instanceof GraphTransferable)
 				{
-					mxGraphTransferable t = (mxGraphTransferable) tmp;
+					GraphTransferable t = (GraphTransferable) tmp;
 					Object cell = t.getCells()[0];
 
 					if (graph.getModel().isEdge(cell))
@@ -464,9 +464,7 @@ public class GraphEditor extends BasicGraphEditor
 
 			// Loads the defalt stylesheet from an external file
 			Codec codec = new Codec();
-			Document doc = JGraphXUtils.loadDocument(GraphEditor.class.getResource(
-					"/com/mxgraph/examples/swing/resources/default-style.xml")
-					.toString());
+			Document doc = JGraphXUtils.loadDocument(GraphEditor.class.getResource("/com/mxgraph/examples/swing/resources/default-style.xml").toString());
 			codec.decode(doc.getDocumentElement(), graph.getStylesheet());
 
 			// Sets the background to white
@@ -486,15 +484,15 @@ public class GraphEditor extends BasicGraphEditor
 			{
 				target = getCellAt(location.x, location.y);
 
-				if (target instanceof mxICell && cells[0] instanceof mxICell)
+				if (target instanceof ICell && cells[0] instanceof ICell)
 				{
-					mxICell targetCell = (mxICell) target;
-					mxICell dropCell = (mxICell) cells[0];
+					ICell targetCell = (ICell) target;
+					ICell dropCell = (ICell) cells[0];
 
 					if (targetCell.isVertex() == dropCell.isVertex()
 							|| targetCell.isEdge() == dropCell.isEdge())
 					{
-						mxIGraphModel model = graph.getModel();
+						IGraphModel model = graph.getModel();
 						model.setStyle(target, model.getStyle(cells[0]));
 						graph.setSelectionCell(target);
 
@@ -541,7 +539,7 @@ public class GraphEditor extends BasicGraphEditor
 		public String getToolTipForCell(Object cell)
 		{
 			String tip = "<html>";
-			mxGeometry geo = getModel().getGeometry(cell);
+			Geometry geo = getModel().getGeometry(cell);
 			JGraphXCellState state = getView().getState(cell);
 
 			if (getModel().isEdge(cell))
@@ -642,7 +640,7 @@ public class GraphEditor extends BasicGraphEditor
 		{
 			if (edgeTemplate != null)
 			{
-				mxCell edge = (mxCell) cloneCells(new Object[] { edgeTemplate })[0];
+				Cell edge = (Cell) cloneCells(new Object[] { edgeTemplate })[0];
 				edge.setId(id);
 
 				return edge;
@@ -668,7 +666,7 @@ public class GraphEditor extends BasicGraphEditor
 			e1.printStackTrace();
 		}
 
-		mxSwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
+		SwingConstants.SHADOW_COLOR = Color.LIGHT_GRAY;
 		mxConstants.W3C_SHADOWCOLOR = "#D3D3D3";
 
 		GraphEditor editor = new GraphEditor();

@@ -23,29 +23,29 @@ import java.util.logging.Logger;
 
 import javax.swing.CellRendererPane;
 
-import com.mxgraph.shape.mxActorShape;
-import com.mxgraph.shape.mxArrowShape;
-import com.mxgraph.shape.mxCloudShape;
-import com.mxgraph.shape.mxConnectorShape;
-import com.mxgraph.shape.mxCurveShape;
-import com.mxgraph.shape.mxCylinderShape;
-import com.mxgraph.shape.mxDefaultTextShape;
-import com.mxgraph.shape.mxDoubleEllipseShape;
-import com.mxgraph.shape.mxDoubleRectangleShape;
-import com.mxgraph.shape.mxEllipseShape;
-import com.mxgraph.shape.mxHexagonShape;
-import com.mxgraph.shape.mxHtmlTextShape;
-import com.mxgraph.shape.mxIShape;
-import com.mxgraph.shape.mxITextShape;
-import com.mxgraph.shape.mxImageShape;
-import com.mxgraph.shape.mxLabelShape;
-import com.mxgraph.shape.mxLineShape;
-import com.mxgraph.shape.mxRectangleShape;
-import com.mxgraph.shape.mxRhombusShape;
-import com.mxgraph.shape.mxStencilRegistry;
-import com.mxgraph.shape.mxSwimlaneShape;
-import com.mxgraph.shape.mxTriangleShape;
-import com.mxgraph.swing.util.mxSwingConstants;
+import com.mxgraph.shape.ActorShape;
+import com.mxgraph.shape.ArrowShape;
+import com.mxgraph.shape.CloudShape;
+import com.mxgraph.shape.ConnectorShape;
+import com.mxgraph.shape.CcurveShape;
+import com.mxgraph.shape.CylinderShape;
+import com.mxgraph.shape.DefaultTextShape;
+import com.mxgraph.shape.DoubleEllipseShape;
+import com.mxgraph.shape.DoubleRectangleShape;
+import com.mxgraph.shape.EllipseShape;
+import com.mxgraph.shape.HhexagonShape;
+import com.mxgraph.shape.HtmlTextShape;
+import com.mxgraph.shape.IShape;
+import com.mxgraph.shape.ITextShape;
+import com.mxgraph.shape.ImageShape;
+import com.mxgraph.shape.LabelShape;
+import com.mxgraph.shape.LineShape;
+import com.mxgraph.shape.rectangleShape;
+import com.mxgraph.shape.rhombusShape;
+import com.mxgraph.shape.StencilRegistry;
+import com.mxgraph.shape.SwimlaneShape;
+import com.mxgraph.shape.TriangleShape;
+import com.mxgraph.swing.util.SwingConstants;
 import com.mxgraph.util.JGraphXUtils;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
@@ -78,38 +78,38 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * Maps from names to mxIVertexShape instances.
 	 */
-	protected static Map<String, mxIShape> shapes = new HashMap<String, mxIShape>();
+	protected static Map<String, IShape> shapes = new HashMap<String, IShape>();
 
 	/**
 	 * Maps from names to mxITextShape instances. There are currently three different
 	 * hardcoded text shapes available here: default, html and wrapped.
 	 */
-	protected static Map<String, mxITextShape> textShapes = new HashMap<String, mxITextShape>();
+	protected static Map<String, ITextShape> textShapes = new HashMap<String, ITextShape>();
 
 	/**
 	 * Static initializer.
 	 */
 	static
 	{
-		putShape(mxConstants.SHAPE_ACTOR, new mxActorShape());
-		putShape(mxConstants.SHAPE_ARROW, new mxArrowShape());
-		putShape(mxConstants.SHAPE_CLOUD, new mxCloudShape());
-		putShape(mxConstants.SHAPE_CONNECTOR, new mxConnectorShape());
-		putShape(mxConstants.SHAPE_CYLINDER, new mxCylinderShape());
-		putShape(mxConstants.SHAPE_CURVE, new mxCurveShape());
-		putShape(mxConstants.SHAPE_DOUBLE_RECTANGLE, new mxDoubleRectangleShape());
-		putShape(mxConstants.SHAPE_DOUBLE_ELLIPSE, new mxDoubleEllipseShape());
-		putShape(mxConstants.SHAPE_ELLIPSE, new mxEllipseShape());
-		putShape(mxConstants.SHAPE_HEXAGON, new mxHexagonShape());
-		putShape(mxConstants.SHAPE_IMAGE, new mxImageShape());
-		putShape(mxConstants.SHAPE_LABEL, new mxLabelShape());
-		putShape(mxConstants.SHAPE_LINE, new mxLineShape());
-		putShape(mxConstants.SHAPE_RECTANGLE, new mxRectangleShape());
-		putShape(mxConstants.SHAPE_RHOMBUS, new mxRhombusShape());
-		putShape(mxConstants.SHAPE_SWIMLANE, new mxSwimlaneShape());
-		putShape(mxConstants.SHAPE_TRIANGLE, new mxTriangleShape());
-		putTextShape(TEXT_SHAPE_DEFAULT, new mxDefaultTextShape());
-		putTextShape(TEXT_SHAPE_HTML, new mxHtmlTextShape());
+		putShape(mxConstants.SHAPE_ACTOR, new ActorShape());
+		putShape(mxConstants.SHAPE_ARROW, new ArrowShape());
+		putShape(mxConstants.SHAPE_CLOUD, new CloudShape());
+		putShape(mxConstants.SHAPE_CONNECTOR, new ConnectorShape());
+		putShape(mxConstants.SHAPE_CYLINDER, new CylinderShape());
+		putShape(mxConstants.SHAPE_CURVE, new CcurveShape());
+		putShape(mxConstants.SHAPE_DOUBLE_RECTANGLE, new DoubleRectangleShape());
+		putShape(mxConstants.SHAPE_DOUBLE_ELLIPSE, new DoubleEllipseShape());
+		putShape(mxConstants.SHAPE_ELLIPSE, new EllipseShape());
+		putShape(mxConstants.SHAPE_HEXAGON, new HhexagonShape());
+		putShape(mxConstants.SHAPE_IMAGE, new ImageShape());
+		putShape(mxConstants.SHAPE_LABEL, new LabelShape());
+		putShape(mxConstants.SHAPE_LINE, new LineShape());
+		putShape(mxConstants.SHAPE_RECTANGLE, new rectangleShape());
+		putShape(mxConstants.SHAPE_RHOMBUS, new rhombusShape());
+		putShape(mxConstants.SHAPE_SWIMLANE, new SwimlaneShape());
+		putShape(mxConstants.SHAPE_TRIANGLE, new TriangleShape());
+		putTextShape(TEXT_SHAPE_DEFAULT, new DefaultTextShape());
+		putTextShape(TEXT_SHAPE_HTML, new HtmlTextShape());
 	}
 
 	/**
@@ -151,7 +151,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public static void putShape(String name, mxIShape shape)
+	public static void putShape(String name, IShape shape)
 	{
 		shapes.put(name, shape);
 	}
@@ -159,14 +159,14 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public mxIShape getShape(Map<String, Object> style)
+	public IShape getShape(Map<String, Object> style)
 	{
 		String name = JGraphXUtils.getString(style, mxConstants.STYLE_SHAPE, null);
-		mxIShape shape = shapes.get(name);
+		IShape shape = shapes.get(name);
 
 		if (shape == null && name != null)
 		{
-			shape = mxStencilRegistry.getStencil(name);
+			shape = StencilRegistry.getStencil(name);
 		}
 
 		return shape;
@@ -175,7 +175,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public static void putTextShape(String name, mxITextShape shape)
+	public static void putTextShape(String name, ITextShape shape)
 	{
 		textShapes.put(name, shape);
 	}
@@ -183,7 +183,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	/**
 	 * 
 	 */
-	public mxITextShape getTextShape(Map<String, Object> style, boolean html)
+	public ITextShape getTextShape(Map<String, Object> style, boolean html)
 	{
 		String name;
 
@@ -230,7 +230,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	public Object drawCell(JGraphXCellState state)
 	{
 		Map<String, Object> style = state.getStyle();
-		mxIShape shape = getShape(style);
+		IShape shape = getShape(style);
 
 		if (g != null && shape != null)
 		{
@@ -256,7 +256,7 @@ public class Graphics2DCanvas extends BasicCanvas
 	public Object drawLabel(String text, JGraphXCellState state, boolean html)
 	{
 		Map<String, Object> style = state.getStyle();
-		mxITextShape shape = getTextShape(style, html);
+		ITextShape shape = getTextShape(style, html);
 
 		if (g != null && shape != null && drawLabels && text != null
 				&& text.length() > 0)
@@ -495,7 +495,7 @@ public class Graphics2DCanvas extends BasicCanvas
 			// Saves the state and configures the graphics object
 			Paint p = g.getPaint();
 			Color previousColor = g.getColor();
-			g.setColor(mxSwingConstants.SHADOW_COLOR);
+			g.setColor(SwingConstants.SHADOW_COLOR);
 			g.translate(shadowOffsetX, shadowOffsetY);
 
 			// Paints the shadow

@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.w3c.dom.Node;
 
-import com.mxgraph.model.mxGraphModel.mxTerminalChange;
+import com.mxgraph.model.GraphModel.mxTerminalChange;
 
 /**
  * Codec for mxChildChanges. This class is created and registered

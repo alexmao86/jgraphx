@@ -11,11 +11,11 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.mxgraph.model.mxGraphModel.mxCollapseChange;
-import com.mxgraph.model.mxGraphModel.mxGeometryChange;
-import com.mxgraph.model.mxGraphModel.mxStyleChange;
-import com.mxgraph.model.mxGraphModel.mxValueChange;
-import com.mxgraph.model.mxGraphModel.mxVisibleChange;
+import com.mxgraph.model.GraphModel.mxCollapseChange;
+import com.mxgraph.model.GraphModel.mxGeometryChange;
+import com.mxgraph.model.GraphModel.mxStyleChange;
+import com.mxgraph.model.GraphModel.mxValueChange;
+import com.mxgraph.model.GraphModel.mxVisibleChange;
 
 /**
  * Singleton class that acts as a global registry for codecs. See

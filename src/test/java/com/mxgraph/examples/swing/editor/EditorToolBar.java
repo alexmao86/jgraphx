@@ -23,7 +23,7 @@ import com.mxgraph.examples.swing.editor.EditorActions.OpenAction;
 import com.mxgraph.examples.swing.editor.EditorActions.PrintAction;
 import com.mxgraph.examples.swing.editor.EditorActions.SaveAction;
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.swing.util.GraphActions;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
@@ -80,7 +80,7 @@ public class EditorToolBar extends JToolBar
 
 		addSeparator();
 
-		add(editor.bind("Delete", mxGraphActions.getDeleteAction(),
+		add(editor.bind("Delete", GraphActions.getDeleteAction(),
 				"/com/mxgraph/examples/swing/images/delete.gif"));
 
 		addSeparator();

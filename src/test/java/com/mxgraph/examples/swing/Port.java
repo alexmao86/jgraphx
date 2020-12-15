@@ -4,8 +4,8 @@ import java.util.Map;
 
 import javax.swing.JFrame;
 
-import com.mxgraph.model.mxCell;
-import com.mxgraph.model.mxGeometry;
+import com.mxgraph.model.Cell;
+import com.mxgraph.model.Geometry;
 import com.mxgraph.swing.JGraphXComponent;
 import com.mxgraph.util.mxConstants;
 import com.mxgraph.util.mxPoint;
@@ -34,7 +34,7 @@ public class Port extends JFrame
 			// only used to compute the graphical connection point
 			public boolean isPort(Object cell)
 			{
-				mxGeometry geo = getCellGeometry(cell);
+				Geometry geo = getCellGeometry(cell);
 				
 				return (geo != null) ? geo.isRelative() : false;
 			}
@@ -68,30 +68,30 @@ public class Port extends JFrame
 		graph.getModel().beginUpdate();
 		try
 		{
-			mxCell v1 = (mxCell) graph.insertVertex(parent, null, "Hello", 20,
+			Cell v1 = (Cell) graph.insertVertex(parent, null, "Hello", 20,
 					20, 100, 100, "");
 			v1.setConnectable(false);
-			mxGeometry geo = graph.getModel().getGeometry(v1);
+			Geometry geo = graph.getModel().getGeometry(v1);
 			// The size of the rectangle when the minus sign is clicked
 			geo.setAlternateBounds(new mxRectangle(20, 20, 100, 50));
 
-			mxGeometry geo1 = new mxGeometry(0, 0.5, PORT_DIAMETER,
+			Geometry geo1 = new Geometry(0, 0.5, PORT_DIAMETER,
 					PORT_DIAMETER);
 			// Because the origin is at upper left corner, need to translate to
 			// position the center of port correctly
 			geo1.setOffset(new mxPoint(-PORT_RADIUS, -PORT_RADIUS));
 			geo1.setRelative(true);
 
-			mxCell port1 = new mxCell(null, geo1,
+			Cell port1 = new Cell(null, geo1,
 					"shape=ellipse;perimter=ellipsePerimeter");
 			port1.setVertex(true);
 
-			mxGeometry geo2 = new mxGeometry(1.0, 0.5, PORT_DIAMETER,
+			Geometry geo2 = new Geometry(1.0, 0.5, PORT_DIAMETER,
 					PORT_DIAMETER);
 			geo2.setOffset(new mxPoint(-PORT_RADIUS, -PORT_RADIUS));
 			geo2.setRelative(true);
 
-			mxCell port2 = new mxCell(null, geo2,
+			Cell port2 = new Cell(null, geo2,
 					"shape=ellipse;perimter=ellipsePerimeter");
 			port2.setVertex(true);
 

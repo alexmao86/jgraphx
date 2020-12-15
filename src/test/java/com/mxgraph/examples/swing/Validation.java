@@ -13,7 +13,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.handler.mxKeyboardHandler;
+import com.mxgraph.swing.handler.KeyboardHandler;
 import com.mxgraph.util.mxDomUtils;
 import com.mxgraph.util.mxEvent;
 import com.mxgraph.util.mxEventObject;
@@ -93,7 +93,7 @@ public class Validation extends JFrame
 
 		// Enables rubberband selection
 		new JGraphXRubberband(graphComponent);
-		new mxKeyboardHandler(graphComponent);
+		new KeyboardHandler(graphComponent);
 
 		// Installs automatic validation (use editor.validation = true
 		// if you are using an mxEditor instance)

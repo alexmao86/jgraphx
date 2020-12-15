@@ -36,7 +36,7 @@ import com.mxgraph.examples.swing.editor.EditorActions.ToggleRulersItem;
 import com.mxgraph.examples.swing.editor.EditorActions.WarningAction;
 import com.mxgraph.examples.swing.editor.EditorActions.ZoomPolicyAction;
 import com.mxgraph.swing.JGraphXComponent;
-import com.mxgraph.swing.util.mxGraphActions;
+import com.mxgraph.swing.util.GraphActions;
 import com.mxgraph.util.mxPoint;
 import com.mxgraph.util.mxResources;
 import com.mxgraph.view.JGraphX;
@@ -105,21 +105,21 @@ public class SchemaEditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("delete"), mxGraphActions
+		menu.add(editor.bind(mxResources.get("delete"), GraphActions
 				.getDeleteAction(),
 				"/com/mxgraph/examples/swing/images/delete.gif"));
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("selectAll"), mxGraphActions
+		menu.add(editor.bind(mxResources.get("selectAll"), GraphActions
 				.getSelectAllAction()));
-		menu.add(editor.bind(mxResources.get("selectNone"), mxGraphActions
+		menu.add(editor.bind(mxResources.get("selectNone"), GraphActions
 				.getSelectNoneAction()));
 
 		menu.addSeparator();
 
 		menu.add(editor.bind(mxResources.get("warning"), new WarningAction()));
-		menu.add(editor.bind(mxResources.get("edit"), mxGraphActions
+		menu.add(editor.bind(mxResources.get("edit"), GraphActions
 				.getEditAction()));
 
 		// Creates the view menu
@@ -214,9 +214,9 @@ public class SchemaEditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("zoomIn"), mxGraphActions
+		menu.add(editor.bind(mxResources.get("zoomIn"), GraphActions
 				.getZoomInAction()));
-		menu.add(editor.bind(mxResources.get("zoomOut"), mxGraphActions
+		menu.add(editor.bind(mxResources.get("zoomOut"), GraphActions
 				.getZoomOutAction()));
 
 		menu.addSeparator();
@@ -228,7 +228,7 @@ public class SchemaEditorMenuBar extends JMenuBar
 
 		menu.addSeparator();
 
-		menu.add(editor.bind(mxResources.get("actualSize"), mxGraphActions
+		menu.add(editor.bind(mxResources.get("actualSize"), GraphActions
 				.getZoomActualAction()));
 
 		// Creates the diagram menu

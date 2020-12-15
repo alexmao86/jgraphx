@@ -29,10 +29,10 @@ import com.mxgraph.analysis.AnalysisGraph;
 import com.mxgraph.analysis.GraphProperties.GraphType;
 import com.mxgraph.costfunction.CostFunction;
 import com.mxgraph.costfunction.DoubleValCostFunction;
-import com.mxgraph.layout.mxCircleLayout;
-import com.mxgraph.layout.mxCompactTreeLayout;
-import com.mxgraph.layout.mxOrganicLayout;
-import com.mxgraph.model.mxCell;
+import com.mxgraph.layout.CircleLayout;
+import com.mxgraph.layout.CompactTreeLayout;
+import com.mxgraph.layout.OrganicLayout;
+import com.mxgraph.model.Cell;
 import com.mxgraph.view.GraphView;
 import com.mxgraph.view.JGraphX;
 import com.mxgraph.view.JGraphX.mxICellVisitor;
@@ -260,7 +260,7 @@ public class GraphConfigDialog extends JDialog
 						generator.getNullGraph(aGraph, nodeCount);
 
 						GraphStructure.setDefaultGraphStyle(aGraph, false);
-						mxCircleLayout layout = new mxCircleLayout(graph);
+						CircleLayout layout = new CircleLayout(graph);
 						layout.execute(graph.getDefaultParent());
 					}
 					else if (graphType2 == GraphType.SIMPLE_RANDOM_TREE)
@@ -278,7 +278,7 @@ public class GraphConfigDialog extends JDialog
 						GraphProperties.setDirected(props, true);
 						GraphStructure.setDefaultGraphStyle(aGraph, false);
 						setVisible(false);
-						mxCompactTreeLayout layout = new mxCompactTreeLayout(graph, false);
+						CompactTreeLayout layout = new CompactTreeLayout(graph, false);
 						layout.execute(graph.getDefaultParent());
 						graph.getModel().endUpdate();
 					}
@@ -350,7 +350,7 @@ public class GraphConfigDialog extends JDialog
 
 					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
-					mxCircleLayout layout = new mxCircleLayout(graph);
+					CircleLayout layout = new CircleLayout(graph);
 					layout.execute(graph.getDefaultParent());
 					graph.getModel().endUpdate();
 				}
@@ -567,7 +567,7 @@ public class GraphConfigDialog extends JDialog
 					generator.getPetersenGraph(aGraph);
 					GraphStructure.setDefaultGraphStyle(aGraph, false);
 					setVisible(false);
-					mxCircleLayout layout = new mxCircleLayout(graph);
+					CircleLayout layout = new CircleLayout(graph);
 					layout.execute(graph.getDefaultParent());
 
 					graph.getModel().endUpdate();
@@ -937,7 +937,7 @@ public class GraphConfigDialog extends JDialog
 					generator.getSimpleRandomGraph(aGraph, nodeCount, edgeCount, allowSelfLoops, allowMultipleEdges, forceConnected);
 
 					GraphStructure.setDefaultGraphStyle(aGraph, false);
-					mxOrganicLayout layout = new mxOrganicLayout(graph);
+					OrganicLayout layout = new OrganicLayout(graph);
 					layout.execute(graph.getDefaultParent());
 					graph.getModel().endUpdate();
 					setVisible(false);
@@ -1060,8 +1060,8 @@ public class GraphConfigDialog extends JDialog
 							// simple visitor that prints current vertex
 							public boolean visit(Object vertex, Object edge)
 							{
-								mxCell v = (mxCell) vertex;
-								mxCell e = (mxCell) edge;
+								Cell v = (Cell) vertex;
+								Cell e = (Cell) edge;
 
 								if (e != null)
 								{
@@ -1090,8 +1090,8 @@ public class GraphConfigDialog extends JDialog
 							// simple visitor that prints current vertex
 							public boolean visit(Object vertex, Object edge)
 							{
-								mxCell v = (mxCell) vertex;
-								mxCell e = (mxCell) edge;
+								Cell v = (Cell) vertex;
+								Cell e = (Cell) edge;
 
 								if (e != null)
 								{
@@ -1120,8 +1120,8 @@ public class GraphConfigDialog extends JDialog
 							// simple visitor that prints current vertex
 							public boolean visit(Object vertex, Object edge)
 							{
-								mxCell v = (mxCell) vertex;
-								mxCell e = (mxCell) edge;
+								Cell v = (Cell) vertex;
+								Cell e = (Cell) edge;
 
 								if (e != null)
 								{
@@ -1150,8 +1150,8 @@ public class GraphConfigDialog extends JDialog
 							// simple visitor that prints current vertex
 							public boolean visit(Object vertex, Object edge)
 							{
-								mxCell v = (mxCell) vertex;
-								mxCell e = (mxCell) edge;
+								Cell v = (Cell) vertex;
+								Cell e = (Cell) edge;
 
 								if (e != null)
 								{
@@ -1176,7 +1176,7 @@ public class GraphConfigDialog extends JDialog
 							GraphStructure.makeTreeDirected(aGraph, startVertex);
 							graph.getModel().endUpdate();
 							graph.getModel().beginUpdate();
-							mxCompactTreeLayout layout = new mxCompactTreeLayout(graph);
+							CompactTreeLayout layout = new CompactTreeLayout(graph);
 							layout.setHorizontal(false);
 							layout.execute(graph.getDefaultParent());
 							graph.getModel().endUpdate();
@@ -1272,8 +1272,8 @@ public class GraphConfigDialog extends JDialog
 								// simple visitor that prints current vertex
 								public boolean visit(Object vertex, Object edge)
 								{
-									mxCell v = (mxCell) vertex;
-									mxCell e = (mxCell) edge;
+									Cell v = (Cell) vertex;
+									Cell e = (Cell) edge;
 									String eVal = "N/A";
 
 									if (e != null)

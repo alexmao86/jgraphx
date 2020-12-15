@@ -7,8 +7,8 @@ import java.util.Map;
 
 import org.w3c.dom.Node;
 
-import com.mxgraph.model.mxGraphModel.mxRootChange;
-import com.mxgraph.model.mxICell;
+import com.mxgraph.model.GraphModel.mxRootChange;
+import com.mxgraph.model.ICell;
 
 /**
  * Codec for mxChildChanges. This class is created and registered
@@ -44,7 +44,7 @@ public class RootChangeCodec extends ObjectCodec
 	{
 		if (obj instanceof mxRootChange)
 		{
-			enc.encodeCell((mxICell) ((mxRootChange) obj).getRoot(), node, true);
+			enc.encodeCell((ICell) ((mxRootChange) obj).getRoot(), node, true);
 		}
 
 		return node;

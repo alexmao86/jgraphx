@@ -11,8 +11,8 @@ import com.mxgraph.costfunction.CostFunction;
 import com.mxgraph.costfunction.DoubleValCostFunction;
 import com.mxgraph.generatorfunction.GeneratorFunction;
 import com.mxgraph.generatorfunction.GeneratorRandomFunction;
-import com.mxgraph.model.mxGeometry;
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.Geometry;
+import com.mxgraph.model.IGraphModel;
 import com.mxgraph.view.GraphView;
 import com.mxgraph.view.JGraphXCellState;
 import com.mxgraph.view.JGraphX;
@@ -175,14 +175,14 @@ public class GraphGenerator
 
 		Object parent = graph.getDefaultParent();
 		Object[] vertices = aGraph.getChildVertices(parent);
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 
 		for (int i = 0; i < numRows; i++)
 		{
 			for (int j = 0; j < numColumns; j++)
 			{
 				Object currVertex = vertices[i * numColumns + j];
-				mxGeometry geometry = model.getGeometry(currVertex);
+				Geometry geometry = model.getGeometry(currVertex);
 				geometry.setX(j * xSpacing);
 				geometry.setY(i * ySpacing);
 			}
@@ -253,7 +253,7 @@ public class GraphGenerator
 		double group1StartY = 0;
 		double group2StartY = 0;
 		Object parent = graph.getDefaultParent();
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 
 		if (numVerticesGroup1 < numVerticesGroup2)
 		{
@@ -272,7 +272,7 @@ public class GraphGenerator
 		for (int i = 0; i < numVerticesGroup1; i++)
 		{
 			Object currVertex = vertices[i];
-			mxGeometry geometry = model.getGeometry(currVertex);
+			Geometry geometry = model.getGeometry(currVertex);
 			geometry.setX(0);
 			geometry.setY(group1StartY + i * vertexSpacing);
 		}
@@ -281,7 +281,7 @@ public class GraphGenerator
 		for (int i = numVerticesGroup1; i < numVerticesGroup1 + numVerticesGroup2; i++)
 		{
 			Object currVertex = vertices[i];
-			mxGeometry geometry = model.getGeometry(currVertex);
+			Geometry geometry = model.getGeometry(currVertex);
 			geometry.setX(groupSpacing);
 			geometry.setY(group2StartY + (i - numVerticesGroup1) * vertexSpacing);
 		}
@@ -754,13 +754,13 @@ public class GraphGenerator
 		JGraphX graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		Object[] vertices = aGraph.getChildVertices(parent);
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 
 		for (int i = 0; i < vertices.length; i++)
 		{
 			Object currVertex = vertices[i];
 
-			mxGeometry geometry = model.getGeometry(currVertex);
+			Geometry geometry = model.getGeometry(currVertex);
 			geometry.setX(0);
 			geometry.setY(i * spacing);
 		}
@@ -811,7 +811,7 @@ public class GraphGenerator
 		JGraphX graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		Object[] vertices = aGraph.getChildVertices(parent);
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 		int vertexNum = vertices.length;
 		double centerX = graphSize / 2f;
 		double centerY = centerX;
@@ -830,12 +830,12 @@ public class GraphGenerator
 			x = Math.round(centerX + Math.round(graphSize * Math.sin(currRatio) / 2));
 			y = Math.round(centerY - Math.round(graphSize * Math.cos(currRatio) / 2));
 			Object currVertex = vertices[i];
-			mxGeometry geometry = model.getGeometry(currVertex);
+			Geometry geometry = model.getGeometry(currVertex);
 			geometry.setX(x);
 			geometry.setY(y);
 		}
 
-		mxGeometry geometry = model.getGeometry(vertices[vertexNum - 1]);
+		Geometry geometry = model.getGeometry(vertices[vertexNum - 1]);
 		geometry.setX(centerX);
 		geometry.setY(centerY);
 	};
@@ -999,7 +999,7 @@ public class GraphGenerator
 		JGraphX graph = aGraph.getGraph();
 		Object parent = graph.getDefaultParent();
 		Object[] vertices = aGraph.getChildVertices(parent);
-		mxIGraphModel model = graph.getModel();
+		IGraphModel model = graph.getModel();
 		int vertexNum = vertices.length;
 		double centerX = graphSize / 2f;
 		double centerY = centerX;
@@ -1055,7 +1055,7 @@ public class GraphGenerator
 				//shoot
 				int currIndex = i * (numVerticesInBranch) + j;
 				Object currVertex = vertices[currIndex];
-				mxGeometry geometry = model.getGeometry(currVertex);
+				Geometry geometry = model.getGeometry(currVertex);
 				geometry.setX(x);
 				geometry.setY(y);
 			}
@@ -1063,7 +1063,7 @@ public class GraphGenerator
 
 		//the center vertex is the last one
 		Object currVertex = vertices[vertexNum - 1];
-		mxGeometry geometry = model.getGeometry(currVertex);
+		Geometry geometry = model.getGeometry(currVertex);
 		geometry.setX(centerX);
 		geometry.setY(centerY);
 	};

@@ -6,7 +6,7 @@ package com.mxgraph.util;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.mxgraph.model.mxIGraphModel;
+import com.mxgraph.model.IGraphModel;
 
 /**
  * Contains various style helper methods for use with mxGraph.
@@ -178,8 +178,8 @@ public class mxStyleUtils
 	 * @param value
 	 *            New value for the given key.
 	 */
-	public static void setCellStyles(mxIGraphModel model, Object[] cells,
-			String key, String value)
+	public static void setCellStyles(IGraphModel model, Object[] cells,
+                                     String key, String value)
 	{
 		if (cells != null && cells.length > 0)
 		{
@@ -281,8 +281,8 @@ public class mxStyleUtils
 	 * @param value
 	 *            Optional boolean value for the flag.
 	 */
-	public static void setCellStyleFlags(mxIGraphModel model, Object[] cells,
-			String key, int flag, Boolean value)
+	public static void setCellStyleFlags(IGraphModel model, Object[] cells,
+                                         String key, int flag, Boolean value)
 	{
 		if (cells != null && cells.length > 0)
 		{
